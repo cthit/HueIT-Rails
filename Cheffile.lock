@@ -1,29 +1,41 @@
 SITE
   remote: http://community.opscode.com/api/v1
   specs:
+    7-zip (1.0.2)
+      windows (>= 1.2.2)
     apt (2.6.1)
+    ark (0.9.0)
+      7-zip (>= 0.0.0)
+      windows (>= 0.0.0)
     build-essential (2.1.3)
+    chef_handler (1.1.6)
+    homebrew (1.12.0)
+      build-essential (>= 2.1.2)
     ruby_build (0.8.0)
     vim (1.1.2)
+    windows (1.36.6)
+      chef_handler (>= 0.0.0)
     yum (3.5.3)
     yum-epel (0.6.0)
       yum (~> 3.0)
 
 GIT
-  remote: https://github.com/fnichol/chef-rbenv
+  remote: https://github.com/RayMangum/chef-rbenv
   ref: master
-  sha: 0a3018634bafe58ad21c6ee271af015220e444b9
+  sha: bd518e992ebcc0a5280ef6a4e9ef5128554b27bf
   specs:
     rbenv (0.7.3)
 
 GIT
-  remote: https://github.com/mdxp/nodejs-cookbook
+  remote: https://github.com/redguide/nodejs
   ref: master
-  sha: e2415cd8c4e03dccf21d7ef6ca31e1c5c81467ca
+  sha: 9455bf349f85cc6e9a207bce6bfcd858772607c9
   specs:
-    nodejs (1.3.0)
+    nodejs (2.2.1)
       apt (>= 0.0.0)
+      ark (>= 0.0.0)
       build-essential (>= 0.0.0)
+      homebrew (>= 0.0.0)
       yum-epel (>= 0.0.0)
 
 DEPENDENCIES
