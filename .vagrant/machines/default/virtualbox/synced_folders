@@ -1,0 +1,1 @@
+{"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/kerp/Projects/HueIT-Rails","disabled":false},"v-csc-1":{"id":"v-csc-1","guestpath":"/tmp/vagrant-chef/f653bdcd8d85a9418009da40a5d57691/cookbooks","hostpath":"/home/kerp/Projects/HueIT-Rails/cookbooks","disabled":false}}}
