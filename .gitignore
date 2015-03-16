@@ -9,6 +9,9 @@
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
 
+#vagrant
+.vagrant
+/cookbooks
 
 ### Windows ###
 # Windows image file caches
