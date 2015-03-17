@@ -99,3 +99,9 @@ bower.json
 # Ignore pow environment settings
 .powenv
 
+# Bundler
+bin/*
+.bundle/*
+
+.kitchen/
+.kitchen.local.yml
