@@ -1,2 +1,2 @@
-module LampsHelper
+module LightsHelper
 end
