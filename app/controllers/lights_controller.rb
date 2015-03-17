@@ -1,4 +1,4 @@
-class LampsController < ApplicationController
+class LightsController < ApplicationController
 
 	def index
 		@client = Hue::Client.new
