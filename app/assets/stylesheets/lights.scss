@@ -1,3 +1,71 @@
 // Place all the styles related to the light controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+*{
+	padding : 0;
+	margin : 0;
+	border : 0;
+}
+
+body{
+	background-color : rgba(0, 0, 0, 0.5);
+	background-image : url(' bi-background-cubes.png ');
+	background-attachment : fixed;
+	background-size : 100% auto;
+}
+
+.light_picker{
+	background-color : rgba(100, 100, 100, 1);
+	overflow: auto;
+	float: left;
+	width: 204;
+	height: 263;
+}
+
+.blended_grid{
+	display : block;
+	width : 1000px;
+	overflow : auto;
+	margin : 50px auto 0 auto;
+}
+
+.pageHeader{
+	background-color : rgba(0, 0, 256, 0.5);
+	float : left;
+	clear : none;
+	height : 200px;
+	width : 1000px;
+}
+
+.pageLeftMenu{
+	background-color : rgba(0, 256, 0, 0.5);
+	float : left;
+	clear : none;
+	height : 600px;
+	width : 160px;
+}
+
+.pageContent{
+	background-color : rgba(256, 0, 0, 0.5);
+	float : left;
+	clear : none;
+	height : 600px;
+	width : 680px;
+}
+
+.pageRightMenu{
+	background-color : rgba(256, 256, 0, 0.5);
+	float : left;
+	clear : none;
+	height : 600px;
+	width : 160px;
+}
+
+.pageFooter{
+	background-color : rgba(256, 0, 256, 0.5);
+	float : left;
+	clear : none;
+	height : 100px;
+	width : 1000px;
+}

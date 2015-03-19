@@ -7,15 +7,18 @@ class LightsController < ApplicationController
 
 #		client = Hue::Client.new
 
-#		for light in @lights
-#			light.set_state({
-#				:hue => [0,12750,36210,46920,56100].sample,
-#				:saturation => 254
-#				}, 0)
-#		end
+=begin
+		for light in @lights
+			light.set_state({
+				:hue => [0,12750,36210,46920,56100].sample,
+				:saturation => 254
+				}, 0)
+		end
+=end
 	end
 
 	def edit
+
 		client = Hue::Client.new
 
 		#for light in client.lights
@@ -56,6 +59,7 @@ class LightsController < ApplicationController
 		end
 
 		redirect_to(:action => 'index')
+
 	end
 
 
