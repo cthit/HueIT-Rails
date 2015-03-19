@@ -1,6 +1,17 @@
 <% @lights.each do |light| %>
 	<p><%= "Lampa #{light.id} Hue: #{light.hue} Saturation: #{light.saturation} On: #{light.on?}" %> </p>
 <% end %>
+<p>
+<%= form_tag("lights", method: "post") do %>
 
+<%= label_tag("Which light") %>
+<%= text_field_tag(:id) %>
+<%= label_tag(:newhue0, "Which hue:") %>
+<%= text_field_tag(:newhue0) %>
+<%= label_tag(:newsat0, "Which saturation:") %>
+<%= text_field_tag(:newsat0) %>
+<%= submit_tag("Change") %>
+<% end %>
 
+</p>
 <%= image_tag "hubben2.1.png" %>
