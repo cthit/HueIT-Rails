@@ -1,11 +1,11 @@
 class LightsController < ApplicationController
 	def index
-    require 'huey'
+   # require 'huey'
     @lights = Huey::Bulb.all
-    for light in @lights
-      light.update(transitiontime: 0, 
-                hue: [0, 12750, 36210, 46920, 56100].sample)
-    end
+   # for light in @lights
+   #   light.update(transitiontime: 0, 
+   #             hue: [0, 12750, 36210, 46920, 56100].sample)
+   # end
   end
 
 	def edit
@@ -33,9 +33,11 @@ class LightsController < ApplicationController
 
 		if (params[:newhue0].to_i != 0) then
 			if (params[:newsat0].to_i != 0) then
-				@lights[params[:id].to_i].set_state({
-				:hue => params[:newhue0].to_i,
-				:saturation => params[:newsat0].to_i}, 0)
+				@lights[params[:id].to_i].update(hue: params[:newhue0].to_i, 
+                                         sat: params[:newsat0].to_i)
+         # {
+				#:hue => params[:newhue0].to_i,
+				#:sat => params[:newsat0].to_i})
 			else
 				@lights[params[:id].to_i].set_state({
 				:hue => params[:newhue0].to_i}, 0)
