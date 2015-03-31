@@ -1,1 +1,37 @@
-<%= image_tag "hubben2.1.png" %>
+<div class="blended_grid">
+	<div class="pageHeader">
+	</div>
+	<div class="pageLeftMenu">
+	</div>
+	<div class="pageContent">
+
+		<div class="light_picker">
+			<% @lights.each do |light| %>
+			<p><%= "Lampa #{light.name} Hue: #{light.hue} Saturation: #{light.sat} On: #{light.on}" %> </p>
+			<% end %>
+			<p>
+				<%= form_tag("lights", method: "post") do %>
+
+				<%= label_tag("Which light") %>
+				<%= text_field_tag(:id) %> <br />
+				<%= label_tag(:newhue0, "Which hue:") %>
+				<%= text_field_tag(:newhue0) %> <br />
+				<%= label_tag(:newsat0, "Which saturation:") %>
+				<%= text_field_tag(:newsat0) %> <br />
+				<%= submit_tag("Change") %>
+				<% end %>
+
+			</p>
+
+
+			<%= image_tag "hubben2.1.png" %>
+			<%= image_submit_tag "light-green25x42.png" %>
+		</div>
+
+
+	</div>
+	<div class="pageRightMenu">
+	</div>
+	<div class="pageFooter">
+	</div>
+</div>
