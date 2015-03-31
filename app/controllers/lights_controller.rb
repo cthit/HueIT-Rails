@@ -1,33 +1,19 @@
 class LightsController < ApplicationController
-
 	def index
-		@client = Hue::Client.new
-
-		@lights = @client.lights
-
-#		client = Hue::Client.new
-
-		for light in @lights
-			light.set_state({
-				:hue => [0,12750,36210,46920,56100].sample,
-				:saturation => 254
-				}, 0)
-		end
-	end
+    require 'huey'
+    @lights = Huey::Bulb.all
+    for light in @lights
+      light.update(transitiontime: 0, 
+                hue: [0, 12750, 36210, 46920, 56100].sample)
+    end
+  end
 
 	def edit
-		client = Hue::Client.new
-
-		for light in client.lights
-			light.set_state({
-				:hue => [0,12750,36210,46920,56100].sample,
-				:saturation => 254
-				}, 0)
-		end
+    @light = Huey::Bulb.find(params[:id]) 
 	end
 
 	def show
-
+    render plain: params[:id]
 	end
 
 end
