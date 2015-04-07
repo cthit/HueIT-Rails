@@ -33,18 +33,18 @@ class LightsController < ApplicationController
 
 		if (params[:newhue0].to_i != 0) then
 			if (params[:newsat0].to_i != 0) then
-				@lights[params[:id].to_i].update(hue: params[:newhue0].to_i, 
+				@lights[params[:id].to_i-1].update(hue: params[:newhue0].to_i, 
                                          sat: params[:newsat0].to_i)
          # {
 				#:hue => params[:newhue0].to_i,
 				#:sat => params[:newsat0].to_i})
 			else
-				@lights[params[:id].to_i].set_state({
+				@lights[params[:id].to_i-1].set_state({
 				:hue => params[:newhue0].to_i}, 0)
 			end
 		else
 			if (params[:newsat0].to_i != 0) then
-				@lights[params[:id].to_i].set_state({
+				@lights[params[:id].to_i-1].set_state({
 				:saturation => params[:newsat0].to_i}, 0)
 
 			end
@@ -56,5 +56,25 @@ class LightsController < ApplicationController
 	def show
     render plain: params[:id]
 	end
+
+	
+	def turnOff
+		@light = Huey::Bulb.find(params[:id].to_i)
+		@light.update(on: false)
+		@light.save
+		redirect_to(:action => 'index')
+
+
+	end
+
+	def turnOn
+		@light = Huey::Bulb.all
+		@light.update(on: true)
+		@light.save
+		redirect_to(:action => 'index')
+		
+
+	end
+	
 
 end
