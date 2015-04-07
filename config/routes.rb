@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   resources :lights
 
   root 'lights#index'
+  get "lights/:id/turnOff" => "lights#turnOff"
+  get "lights/:id/turnOn" => "lights#turnOn"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

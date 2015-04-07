@@ -1,37 +1,64 @@
-<div class="blended_grid">
-	<div class="pageHeader">
-	</div>
-	<div class="pageLeftMenu">
-	</div>
-	<div class="pageContent">
+<!DOCTYPE html>
 
-		<div class="light_picker">
-			<% @lights.each do |light| %>
-			<p><%= "Lampa #{light.name} Hue: #{light.hue} Saturation: #{light.sat} On: #{light.on}" %> </p>
-			<% end %>
-			<p>
-				<%= form_tag("lights", method: "post") do %>
+<html>
+	<head>
+  		<%= stylesheet_link_tag "materialize" %>
+  		<%= javascript_include_tag 'materialize' %>
+	</head>
 
-				<%= label_tag("Which light") %>
-				<%= text_field_tag(:id) %> <br />
-				<%= label_tag(:newhue0, "Which hue:") %>
-				<%= text_field_tag(:newhue0) %> <br />
-				<%= label_tag(:newsat0, "Which saturation:") %>
-				<%= text_field_tag(:newsat0) %> <br />
-				<%= submit_tag("Change") %>
-				<% end %>
+	<body>
+		<div class = "container">
+			
+			<div class="row">
+				<div class = "col s12 cyan" >
+					<h1>HUE IT</h1>
+				</div>
+			</div>
 
-			</p>
+			<div class ="row">
+				<div class = "col s3 red">
+					MENU
+
+				</div>
+				<div class="col s9 green">
+					<div class = "row">
+
+						<% @lights.each do |light| %>
+						<div class = "card">
+
+							<p><%= "Lampa #{light.id} Hue: #{light.hue} Saturation: #{light.sat} On: #{light.on}" %> 
+		
+							<%= link_to "turnOff", controller: "lights", action: "turnOff", id: light.id %>
+
+							<%= link_to "turnOn", controller: "lights", action: "turnOn", id: light.id %>
+							</p>
+							<% end %>
+						</div>
+					</div>
+
+					<div class="light_picker">
+						<p>
+							<%= form_tag("lights", method: "post") do %>
+
+							<%= label_tag("Which light") %>
+							<%= text_field_tag(:id) %> <br />
+							<%= label_tag(:newhue0, "Which hue:") %>
+							<%= text_field_tag(:newhue0) %> <br />
+							<%= label_tag(:newsat0, "Which saturation:") %>
+							<%= text_field_tag(:newsat0) %> <br />
+							<%= submit_tag "Change", :class => "waves-effect btn "  %>
+							<% end %>
+
+						</p>
 
 
-			<%= image_tag "hubben2.1.png" %>
-			<%= image_submit_tag "light-green25x42.png" %>
+						<%= image_tag "hubben2.1.png" %>
+						<%= image_submit_tag "light-green25x42.png" %>
+					</div>
+				</div>
+			</div>
+
 		</div>
+	</body>
+</html>
 
-
-	</div>
-	<div class="pageRightMenu">
-	</div>
-	<div class="pageFooter">
-	</div>
-</div>
