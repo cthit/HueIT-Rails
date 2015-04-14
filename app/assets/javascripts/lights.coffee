@@ -3,6 +3,6 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-	$('.update').on 'change', (event) ->
+	$('.update').on 'input', (event) ->
 		console.log event 
 		$(this).parent().find('.update').val(this.value)
