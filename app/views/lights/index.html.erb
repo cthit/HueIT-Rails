@@ -4,9 +4,70 @@
 	<head>
   		<%= stylesheet_link_tag "materialize" %>
   		<%= javascript_include_tag 'materialize' %>
+	<script type="text/javascript">
+		
+		/**
+		 * Converts an HSL color value to RGB. Conversion formula
+		 * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
+		 * Assumes h, s, and l are contained in the set [0, 1] and
+		 * returns r, g, and b in the set [0, 255].
+		 *
+		 * @param   Number  h       The hue
+		 * @param   Number  s       The saturation
+		 * @param   Number  l       The lightness
+		 * @return  Array           The RGB representation
+		 */
+		function hslToRgb(h, s, l){
+			var r, g, b;
+
+			if(s == 0){
+				r = g = b = l; // achromatic
+			}else{
+				function hue2rgb(p, q, t){
+					if(t < 0) t += 1;
+					if(t > 1) t -= 1;
+					if(t < 1/6) return p + (q - p) * 6 * t;
+					if(t < 1/2) return q;
+					if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+					return p;
+				}
+
+				var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+				var p = 2 * l - q;
+				r = hue2rgb(p, q, h + 1/3);
+				g = hue2rgb(p, q, h);
+				b = hue2rgb(p, q, h - 1/3);
+			}
+
+   			return [r * 255, g * 255, b * 255];
+		}
+		/**
+		 * draw() is called first when the body loads, and then on each change of value (hue,bri,sat).
+		 * the h,s,l value is taken from each 	
+		 */
+		function draw(){
+			var canvas = document.getElementById("color_shower");
+			var ctx = canvas.getContext("2d");
+			h = document.getElementById("hue").value/65535;
+			s = document.getElementById("sat").value/254;
+			l = document.getElementById("bri").value/254;
+			rgb = hslToRgb(h,s,l);
+			r = Math.round(rgb[0]);
+			g = Math.round(rgb[1]);
+			b = Math.round(rgb[2]);
+			
+			ctx.beginPath();
+			ctx.arc(75,75,70,Math.PI,0,false);
+			ctx.moveTo(75,70);
+			ctx.lineTo(100,70);
+			ctx.closePath();
+			ctx.fillStyle= "rgb(" + r + "," + g + "," + b + ")";
+			ctx.fill();
+		}
+		</script>
 	</head>
 
-	<body>
+	<body onload="draw();">
 		<div class = "container">
 			
 			<div class="row">
@@ -48,23 +109,22 @@
 
 					<div class="light_picker">
 						<%= form_tag(multi_update_lights_path) do %>
+							<div class="section">
+								<p><%= label_tag("Brightness") %></p>
+								<%= range_field_tag :bri, 254, in: 0..254, class: 'update col s8', onchange:"draw();" %>
+								<%= text_field_tag :bri, 254, class: 'update col s2' %>
+							</div><br><br>
 
 							<div class="section">
-                <p><%= label_tag("Brightness") %></p>
-                <%= range_field_tag :bri, 254, in: 0..254, class: 'update col s8' %>
-                <%= text_field_tag :bri, 254, class: 'update col s2' %>
-              </div><br><br>
-
-              <div class="section">
-                <%= label_tag(:hue, "Hue:") %>
-                <%= number_field_tag :hue, range: 0..65535, class: 'update col s2' %>
-              </div><br>
-
+								<p><%= label_tag("Hue") %></p>
+								<%= range_field_tag :hue, 65535,in: 0..65535, class: 'update col s8', onchange:"draw();" %>
+								<%= text_field_tag :hue, 65535, class: 'update col s2' %>
+							</div><br><br>
 							<div class="section">
-                <p><%= label_tag(:sat, "Saturation:") %></p>
-								<%= range_field_tag :sat, 254, in: 0..254, class: 'update col s8' %> <%= text_field_tag :sat, 254, class: 'update col s2'%>
-              </div><br><br>
-
+								<p><%= label_tag(:sat, "Saturation:") %></p>
+								<%= range_field_tag :sat, 254, in: 0..254, class: 'update col s8', onchange:"draw();" %> 
+								<%= text_field_tag :sat, 254, class: 'update col s2'%>
+							</div><br><br>
 							<div class="hubben-pic">
 								<% @lights.each_with_index do |light, i| %>
 									<div>
@@ -75,7 +135,9 @@
 							</div>
 							<%= submit_tag "Change", :class => "waves-effect btn "  %>
 						<% end %>
-
+					</div>
+					<canvas id="color_shower" width="300" height="150">
+					</canvas>
 					</div>
 				</div>
 			</div>
