@@ -68,7 +68,7 @@ class LightsController < ApplicationController
 	end
 
 	def turnOn
-		@light = Huey::Bulb.all
+		@light = Huey::Bulb.find(params[:id].to_i)
 		@light.update(on: true)
 		@light.save
 		redirect_to(:action => 'index')
