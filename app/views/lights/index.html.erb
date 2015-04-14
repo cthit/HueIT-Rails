@@ -20,35 +20,51 @@
 					MENU
 
 				</div>
-				<div class="col s9 green">
+				<div class="col s9">
 					<div class = "row">
+            <table>
+              <tr>
+                <td>Lampa</td>
+                <td>Hue</td>
+                <td>Saturation</td>
+                <td>On?</td>
+                <td>Commands</td>
+              </tr>
 
-						<% @lights.each do |light| %>
-						<div class = "card">
-
-							<p><%= "Lampa #{light.id} Hue: #{light.hue} Saturation: #{light.sat} On: #{light.on}" %> 
-		
-							<%= link_to "turnOff", controller: "lights", action: "turnOff", id: light.id %>
-
-							<%= link_to "turnOn", controller: "lights", action: "turnOn", id: light.id %>
-							</p>
-							<% end %>
-						</div>
+              <% @lights.each do |light| %>
+                <tr>
+                  <td><%= light.id %></td>
+                  <td><%= light.hue %></td>
+                  <td><%= light.sat %></td>
+                  <td><%= light.on %></td>
+                  <td>
+                    <%= link_to "turnOff", controller: "lights", action: "turnOff", id: light.id %>
+                    <%= link_to "turnOn", controller: "lights", action: "turnOn", id: light.id %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
 					</div>
 
 					<div class="light_picker">
 						<%= form_tag(multi_update_lights_path) do %>
 
-							<div>
-								<%= label_tag("Brightness") %>
-								<%= range_field_tag :bri, 254, in: 0..254, class: 'update' %> <%= text_field_tag :bri, 254, class: 'update' %><br />
-							</div>
-							<%= label_tag(:hue, "Hue:") %>
-							<%= number_field_tag :hue, range: 0..65535, class: 'update' %> <br />
-							<div>
-								<%= label_tag(:sat, "Saturation:") %>
-								<%= range_field_tag :sat, 254, in: 0..254, class: 'update' %> <%= text_field_tag :sat, 254, class: 'update'%> <br />
-							</div>
+							<div class="section">
+                <p><%= label_tag("Brightness") %></p>
+                <%= range_field_tag :bri, 254, in: 0..254, class: 'update col s8' %>
+                <%= text_field_tag :bri, 254, class: 'update col s2' %>
+              </div><br><br>
+
+              <div class="section">
+                <%= label_tag(:hue, "Hue:") %>
+                <%= number_field_tag :hue, range: 0..65535, class: 'update col s2' %>
+              </div><br>
+
+							<div class="section">
+                <p><%= label_tag(:sat, "Saturation:") %></p>
+								<%= range_field_tag :sat, 254, in: 0..254, class: 'update col s8' %> <%= text_field_tag :sat, 254, class: 'update col s2'%>
+              </div><br><br>
+
 							<div class="hubben-pic">
 								<% @lights.each_with_index do |light, i| %>
 									<div>
@@ -63,7 +79,6 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</body>
 </html>
