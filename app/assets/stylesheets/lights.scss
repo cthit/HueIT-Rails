@@ -16,7 +16,7 @@ body{
 }
 
 .light_picker{
-	background-color : rgba(100, 100, 100, 1);
+	// background-color : rgba(100, 100, 100, 1);
 	overflow: auto;
 	float: left;
 	width: 204;
@@ -69,3 +69,23 @@ body{
 	height : 100px;
 	width : 1000px;
 }
+
+.hubben-pic{
+	background: image-url("hubben2.1.png") no-repeat;
+	width: 204px;
+	height: 263px;
+	position: relative;
+	label {
+		width: 25px;
+		height: 42px;
+		background: image-url('light-red25x42.png') no-repeat 0 0;
+		position: absolute;
+	}
+	input:checked ~ label{
+		background: image-url('light-green25x42.png') no-repeat 0 0;
+	}
+	input[type="checkbox"]{
+		display: none;
+	}
+}
+

@@ -20,15 +20,15 @@ class LightsController < ApplicationController
 	end
 
 
-	def new
+	def new 
 		#@lights.sample.set_state({
 		#	:hue => [0,12750,36210,46920,56100].sample,
 		#	:saturation => 255}, 0)
 		redirect_to(:action => 'index')
 	end
 
-	def create
 
+	def create
     @lights = Huey::Bulb.all
 
 		if (params[:newhue0].to_i != 0) then
@@ -51,6 +51,19 @@ class LightsController < ApplicationController
 		end
 
 		redirect_to(:action => 'index')
+	end
+
+	def multi_update
+		
+		lights = params[:lights].keys
+
+		lights.each do |light|
+			apabepa = Huey::Bulb.find light.to_i
+			args = params.slice(:sat, :bri, :hue).map { |k,v| [k, v.to_i] }.to_h
+			apabepa.update args
+		end
+		@lights = Huey::Bulb.all
+		render :index
 	end
 
 	def show

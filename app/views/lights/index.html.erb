@@ -37,23 +37,27 @@
 					</div>
 
 					<div class="light_picker">
-						<p>
-							<%= form_tag("lights", method: "post") do %>
+						<%= form_tag(multi_update_lights_path) do %>
 
-							<%= label_tag("Which light") %>
-							<%= text_field_tag(:id) %> <br />
-							<%= label_tag(:newhue0, "Which hue:") %>
-							<%= text_field_tag(:newhue0) %> <br />
-							<%= label_tag(:newsat0, "Which saturation:") %>
-							<%= text_field_tag(:newsat0) %> <br />
+							<div>
+								<%= label_tag("Brightness") %>
+								<%= range_field_tag :bri, 254, in: 0..254, class: 'update' %> <%= text_field_tag :bri, 254, class: 'update' %><br />
+							</div>
+							<%= label_tag(:hue, "Hue:") %>
+							<%= number_field_tag :hue, range: 0..65535, class: 'update' %> <br />
+							<%= label_tag(:sat, "Saturation:") %>
+							<%= range_field_tag :sat, 254, in: 0..254, class: 'update' %> <%= text_field_tag :sat, 254, class: 'update'%> <br />
+							<div class="hubben-pic">
+								<% @lights.each_with_index do |light, i| %>
+									<div>
+										<%= check_box_tag "lights[#{light.id}]", true, true, style: "right: #{40 + i/3 * 60}px; top: #{100 +  i%3 * 50}px" %>
+										<%= label_tag nil, nil, for: "lights_#{light.id}", style: "right: #{40 + i/3 * 60}px; top: #{100 +  i%3 * 50}px"%>
+									</div>
+								<% end %>
+							</div>
 							<%= submit_tag "Change", :class => "waves-effect btn "  %>
-							<% end %>
+						<% end %>
 
-						</p>
-
-
-						<%= image_tag "hubben2.1.png" %>
-						<%= image_submit_tag "light-green25x42.png" %>
 					</div>
 				</div>
 			</div>
