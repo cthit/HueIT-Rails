@@ -45,8 +45,10 @@
 							</div>
 							<%= label_tag(:hue, "Hue:") %>
 							<%= number_field_tag :hue, range: 0..65535, class: 'update' %> <br />
-							<%= label_tag(:sat, "Saturation:") %>
-							<%= range_field_tag :sat, 254, in: 0..254, class: 'update' %> <%= text_field_tag :sat, 254, class: 'update'%> <br />
+							<div>
+								<%= label_tag(:sat, "Saturation:") %>
+								<%= range_field_tag :sat, 254, in: 0..254, class: 'update' %> <%= text_field_tag :sat, 254, class: 'update'%> <br />
+							</div>
 							<div class="hubben-pic">
 								<% @lights.each_with_index do |light, i| %>
 									<div>
