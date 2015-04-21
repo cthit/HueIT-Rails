@@ -164,19 +164,19 @@
 						<%= form_tag(multi_update_lights_path) do %>
 							<div class="section">
 								<p><%= label_tag("Brightness") %></p>
-								<%= range_field_tag :bri, 254, in: 0..254, class: 'update col s8', onchange:"draw();" %>
-								<%= text_field_tag :bri, 254, class: 'update col s2' %>
+								<%= range_field_tag :bri, 254, in: 0..254, class: 'update col s8', oninput:"draw();"%>
+								<%= text_field_tag :bri, 254, class: 'update col s2', onkeypress:"draw();"%>
 							</div><br><br>
 
 							<div class="section">
 								<p><%= label_tag("Hue") %></p>
-								<%= range_field_tag :hue, 65535,in: 0..65535, class: 'update col s8', onchange:"draw();" %>
-								<%= text_field_tag :hue, 65535, class: 'update col s2' %>
+								<%= range_field_tag :hue, 65535,in: 0..65535, class: 'update col s8', oninput:"draw();" %>
+								<%= text_field_tag :hue, 65535, class: 'update col s2', onkeypress:"draw();" %>
 							</div><br><br>
 							<div class="section">
 								<p><%= label_tag(:sat, "Saturation:") %></p>
-								<%= range_field_tag :sat, 254, in: 0..254, class: 'update col s8', onchange:"draw();" %> 
-								<%= text_field_tag :sat, 254, class: 'update col s2'%>
+								<%= range_field_tag :sat, 254, in: 0..254, class: 'update col s8', oninput:"draw();" %> 
+								<%= text_field_tag :sat, 254, class: 'update col s2', onkeypress:"draw();" %>
 							</div><br><br>
 							<div class="hubben-pic">
 								<% @lights.each_with_index do |light, i| %>
