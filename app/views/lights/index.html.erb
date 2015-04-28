@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<%= stylesheet_link_tag "materialize" %>
+		<%= stylesheet_link_tag "materialize, table" %>
 		<%= javascript_include_tag 'materialize, draw_lightbulb' %>
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -27,7 +27,7 @@
 				</div>
 				<div class="col s9">
 					<div class = "row">
-            <table>
+            <table class="lights_table">
               <tr>
                 <td>Lampa</td>
                 <td>Hue</td>
