@@ -37,8 +37,8 @@
 			* draw() is called first when the body loads, and then on each change of value (hue,bri,sat).
 			* the h,s,l value is taken from each
 			*/
-			function draw(){
-				var canvas = document.getElementById("color_shower");
+			function draw(id){
+				var canvas = document.getElementById(id);
 				var ctx = canvas.getContext("2d");
 				h = document.getElementById("hue").value/65535;
 				s = document.getElementById("sat").value/254;
