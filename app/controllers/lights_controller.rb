@@ -80,8 +80,17 @@ class LightsController < ApplicationController
 		@light.update(on: true)
 		@light.save
 		redirect_to(:action => 'index')
-		
+	end
 
+	def switchOnOff
+		@light = Huey::Bulb.find(params[:id].to_i)
+		if (@light.on) then
+			@light.update(on: false)
+		else 
+			@light.update(on: true)
+		end
+		@light.save
+		redirect_to(:action => 'index')
 	end
 	
 

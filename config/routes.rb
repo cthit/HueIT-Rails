@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   root 'lights#index'
   get "lights/:id/turnOff" => "lights#turnOff"
   get "lights/:id/turnOn" => "lights#turnOn"
-
+  get "lights/:id/switchOnOff" => "lights#switchOnOff"
 
 
   # The priority is based upon order of creation: first created -> highest priority.

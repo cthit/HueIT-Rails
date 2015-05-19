@@ -5,9 +5,17 @@
 		<%= stylesheet_link_tag "materialize, table" %>
 		<%= javascript_include_tag 'materialize, draw_lightbulb' %>
 		<script type="text/javascript">
-			$(document).ready(function() {
+			$(document).ready(function() { 
 				draw("color_shower");
 			});
+			function switchOnOff(i) {
+				changeUrl = "/lights/" + parseInt(i) + "/switchOnOff"
+				$.ajax({
+					url: changeUrl,
+					type: 'GET'
+				});
+			}
+			
 		</script>
 	</head>
 
@@ -43,9 +51,16 @@
                   <td><%= light.hue %></td>
                   <td><%= light.sat %></td>
                   <td><%= light.on %></td>
-                  <td>
-                    <%= link_to "turnOff", controller: "lights", action: "turnOff", id: light.id %>
-                    <%= link_to "turnOn", controller: "lights", action: "turnOn", id: light.id %>
+                  <td>	
+                  		<!-- Switch -->
+					  <div class="switch">
+					    <label>
+					      Off
+					      <input type="checkbox" onclick="switchOnOff(<%= light.id%>)">
+					      <span class="lever"></span>
+					      On
+					    </label>
+					  </div>
                   </td>
                 </tr>
               <% end %>
