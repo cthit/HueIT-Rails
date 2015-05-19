@@ -22,35 +22,18 @@
 	<body >
 	<% if current_user.present? %>
 		<div class = "container">
-
-			<div class="row">
-				<div class = "col s12 cyan" >
-					<h1>HUE IT</h1>
-				</div>
-			</div>
+		<main>
+			<h1 class="center-align">HueIT</h1>
 
 			<div class ="row">
-				<div class = "col s3 red">
-					MENU
-
-				</div>
-				<div class="col s9">
+				<div class="col s12 offset-s3">
 					<div class = "row">
-            <table class="lights_table">
-              <tr>
-                <td>Lampa</td>
-                <td>Hue</td>
-                <td>Saturation</td>
-                <td>On?</td>
-                <td>Commands</td>
-              </tr>
+            <table class="">
+
 
               <% @lights.each do |light| %>
                 <tr>
-                  <td><%= light.id %></td>
-                  <td><%= light.hue %></td>
-                  <td><%= light.sat %></td>
-                  <td><%= light.on %></td>
+                  <td><div class="bulb" style="margin:0 auto; background-color: <%= light.rgb %>;"> </div></td>
                   <td>	
                   		<!-- Switch -->
 					  <div class="switch">
@@ -101,6 +84,7 @@
 					</div>
 				</div>
 			</div>
+			</main>
 			</div>
 	<% end %>
 	</body>
