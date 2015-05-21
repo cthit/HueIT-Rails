@@ -32,15 +32,15 @@
 		                <tr>
 		                  <td><div class="bulb" style="margin:0 auto; background-color: <%= light.rgb %>;"> </div></td>
 		                  <td>	
-		                  		<!-- Switch -->
-							  <div class="switch">
+								<!-- Switch -->
+							  	<div class="switch">
 							    <label>
 							      Off
-							      <input type="checkbox" <%=if light.on then "checked" end%> onclick="switchOnOff(<%= light.id%>)">
+							      <%=check_box_tag 'switch', 'on/off', light.on, :onclick=>"switchOnOff(#{light.id});"%>
 							      <span class="lever"></span>
 							      On
 							    </label>
-							  </div>
+							   </div>
 		                  </td>
 		                </tr>
 		              <% end %>
