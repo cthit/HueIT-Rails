@@ -53,9 +53,9 @@ class LightsController < ApplicationController
 		lights = params[:lights].keys
 
 		lights.each do |light|
-			apabepa = Huey::Bulb.find light.to_i
+			bulb = Huey::Bulb.find light.to_i
 			args = params.slice(:sat, :bri, :hue).map { |k,v| [k, v.to_i] }.to_h
-			apabepa.update args
+			bulb.update args if bulb.on 
 		end
 		@lights = Huey::Bulb.all
 		render :index
