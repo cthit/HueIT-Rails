@@ -26,30 +26,38 @@
 			<h1 class="center-align">HueIT</h1>
 
 			<div class ="row">
-				<div class="col s3 offset-s3">
+				
+				<%= form_tag(multi_update_lights_path, remote:true) do %>
+				<div class="col s4">
         			<table class="">
 		              <% @lights.each do |light| %>
 		                <tr>
-		                  <td><div class="bulb" style="margin:0 auto; background-color: <%= light.rgb %>;"> </div></td>
 		                  <td>	
 								<!-- Switch -->
 							  	<div class="switch">
 							    <label>
 							      Off
-							      <%=check_box_tag 'switch', 'on/off', light.on, :onclick=>"switchOnOff(#{light.id});"%>
+							      <%=check_box_tag 'switch', 'on/off', light.on, onclick:"switchOnOff(#{light.id});"%>
 							      <span class="lever"></span>
 							      On
 							    </label>
 							   </div>
 		                  </td>
+		                  <td><div class="bulb" style="margin:0 auto; background-color: <%= light.rgb %>;"></div></td>
+		                  <td>
+		                  	<%= check_box_tag "lights[#{light.id}]", 'yes', true %>
+									<%= label_tag "select", nil, for: "lights_#{light.id}"%>
+		                  </td>
 		                </tr>
 		              <% end %>
-        			</table>					
-				</div>	
-				<div class= "col s6">
-					<div class="light_picker">
-						<%= form_tag(multi_update_lights_path) do %>
-							<div class="section">
+        			</table>
+        			</div>
+        			<div class="col s3">
+						<canvas id="color_shower" width="300" height="400">
+						</canvas>		
+					</div>
+					<div class="col s5">
+						<div class="section">
 								<p><%= label_tag("Brightness") %></p>
 								<%= range_field_tag :bri, 254, in: 0..254, class: 'update col s8', oninput:'draw("color_shower");'%>
 								<%= text_field_tag :bri, 254, class: 'update col s2', onkeypress:'draw("color_shower");'%>
@@ -65,24 +73,11 @@
 								<%= range_field_tag :sat, 254, in: 0..254, class: 'update col s8', oninput:'draw("color_shower");' %>
 								<%= text_field_tag :sat, 254, class: 'update col s2', onkeypress:'draw("color_shower");' %>
 							</div><br><br>
-							<div class="col offset-s3">
-								<div class="hubben-pic">
-									<% @lights.each_with_index do |light, i| %>
-										<div>
-											<%= check_box_tag "lights[#{light.id}]", true, true, style: "right: #{40 + i/3 * 60}px; top: #{100 +  i%3 * 50}px" %>
-											<%= label_tag nil, nil, for: "lights_#{light.id}", style: "right: #{40 + i/3 * 60}px; top: #{100 +  i%3 * 50}px"%>
-										</div>
-									<% end %>
-								</div>
-							</div>
 							<div class="col offset-s5">
 								<%= submit_tag "Change", :class => "btn"  %>
 							</div>
-						<% end %>
 					</div>
-					<canvas id="color_shower" width="300" height="400">
-					</canvas>
-					</div>
+        			<% end %>			
 				</div>
 			</div>
 			</main>
