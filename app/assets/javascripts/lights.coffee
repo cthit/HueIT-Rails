@@ -6,3 +6,7 @@ $ ->
 	$('.update').on 'input', (event) ->
 		console.log event 
 		$(this).parent().find('.update').val(this.value)
+$ ->
+	$(document).on "ready", ->
+		redraw()
+	

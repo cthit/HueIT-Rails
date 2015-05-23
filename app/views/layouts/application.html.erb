@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>HueITRails</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <title>HueIT</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+	<!-- Compiled and minified CSS -->
+	<%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css" %>
+	<!-- Compiled and minified JavaScript -->
+	<%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"%>
+
   <%= csrf_meta_tags %>
+
+
 </head>
 <body>
 
-<%= yield %>
+	<%= yield %>
 
 </body>
 </html>

@@ -14,3 +14,12 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+function switchOnOff(i) {
+	redraw();
+	changeUrl = "/lights/" + parseInt(i) + "/switchOnOff"
+	$.ajax({
+		url: changeUrl,
+		type: 'GET'
+	});
+}
