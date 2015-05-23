@@ -37,19 +37,16 @@
 			* draw() is called first when the body loads, and then on each change of value (hue,bri,sat).
 			* the h,s,l value is taken from each
 			*/
-			function draw(id){
+			function draw(id,hue,sat,light){
 				var canvas = document.getElementById(id);
 				var ctx = canvas.getContext("2d");
-				h = document.getElementById("hue").value/65535;
-				s = document.getElementById("sat").value/254;
-				l = document.getElementById("bri").value/254;
-				if(l>0.8) {
-					l = 0.8;
-				}else if(l<0.2) {
-					l = 0.2;
+				if(light>0.8) {
+					light = 0.8;
+				}else if(light<0.2) {
+					light = 0.2;
 				}
 
-				rgb = hslToRgb(h,s,l);
+				rgb = hslToRgb(hue,sat,light);
 				r = Math.round(rgb[0]);
 				g = Math.round(rgb[1]);
 				b = Math.round(rgb[2]);
@@ -58,55 +55,34 @@
 				* So here we create a half circle and we set the fillStyle to the current color of Hue, Saturation and Brightness level
 				*/
 				ctx.beginPath();
-				ctx.arc(75,75,70,Math.PI,0,false);
-				ctx.closePath();
+				ctx.arc(15,15,14,0,2*Math.PI,false);
 				ctx.fillStyle= "rgb(" + r + "," + g + "," + b + ")";
 				ctx.fill();
 				ctx.lineWidth=2;
-				ctx.strokeStyle='black';
+				ctx.strokeStyle='#EDEDED';
 				ctx.stroke();
+			}
 
-				//Cone
-				ctx.beginPath();
-				ctx.moveTo(6,75);
-				ctx.lineTo(50,150);
-				ctx.lineTo(100,150);
-				ctx.lineTo(144,75);
-				ctx.closePath();
-				ctx.fillStyle="lightgray";
-				ctx.fill();
-				ctx.stroke();
+			function redraw() {
+				for (var i = 1; i <= 6; i++) {
+					if (!document.getElementById("switch_" + i).checked) {
+						draw("color_shower_" + i, 0, 0, 1);
+					} else if (document.getElementById("lights_" + i).checked) {
+						draw("color_shower_" + i, 
+							document.getElementById("hue").value/65535,
+							document.getElementById("sat").value/254,
+							document.getElementById("bri").value/254);
+					} 
+				};
+			}
 
-				//Bottom box
-				ctx.beginPath();
-				ctx.moveTo(50,150);
-				ctx.lineTo(50,190);
-				ctx.lineTo(100,190);
-				ctx.lineTo(100,150);
-				ctx.closePath();
-				ctx.fillStyle = "gray";
-				ctx.fill();
-				ctx.stroke();
-
-				//Bottom line
-				ctx.beginPath();
-				ctx.moveTo(60, 193);
-				ctx.lineTo(90, 193);
-				ctx.closePath();
-				ctx.lineWidth=3;
-				ctx.stroke();
-
-				//Coils
-				ctx.beginPath();
-				ctx.moveTo(55, 150);
-				ctx.lineTo(100, 160);
-				ctx.moveTo(50, 160);
-				ctx.lineTo(100, 170);
-				ctx.moveTo(50, 170);
-				ctx.lineTo(100, 180);
-				ctx.moveTo(50, 180);
-				ctx.lineTo(100, 190);
-				ctx.closePath();
-				ctx.lineWidth=1;
-				ctx.stroke();
+			function colorLamp(id, hue, sat, bri) {
+				if (!document.getElementById("lights_" + id).checked) {
+						draw("color_shower_" + id, 
+							document.getElementById("hue").value/65535,
+							document.getElementById("sat").value/254,
+							document.getElementById("bri").value/254);
+					} else {
+						draw("color_shower_" + id, hue/65535, sat/254, bri/254);
+					}
 			}

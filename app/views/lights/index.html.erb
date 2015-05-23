@@ -9,16 +9,16 @@
 	  
 		<script type="text/javascript">
 			$(document).ready(function() { 
-				draw("color_shower");
+				redraw();
 			});
 			function switchOnOff(i) {
+				redraw();
 				changeUrl = "/lights/" + parseInt(i) + "/switchOnOff"
 				$.ajax({
 					url: changeUrl,
 					type: 'GET'
 				});
 			}
-			
 		</script>
 	</head>
 
@@ -31,7 +31,7 @@
 			<div class ="row">
 				
 				<%= form_tag(multi_update_lights_path, remote:true) do %>
-				<div class="col s4">
+				<div class="col s5 offset-s1">
         			<table class="">
 		              <% @lights.each do |light| %>
 		                <tr>
@@ -40,41 +40,39 @@
 							  	<div class="switch">
 							    <label>
 							      Off
-							      <%=check_box_tag 'switch', 'on/off', light.on, onclick:"switchOnOff(#{light.id});"%>
+							      <%=check_box_tag "switch_#{light.id}", 'on/off', light.on, 
+							      onclick:"switchOnOff(#{light.id});"%>
 							      <span class="lever"></span>
 							      On
 							    </label>
 							   </div>
 		                  </td>
-		                  <td><div class="bulb" style="margin:0 auto; background-color: <%= light.rgb %>;"></div></td>
+		                  <td><canvas id="color_shower_<%=light.id%>" width="30" height="30"></td>
 		                  <td>
-		                  	<%= check_box_tag "lights[#{light.id}]", 'yes', true %>
-									<%= label_tag "select", nil, for: "lights_#{light.id}"%>
+		                  	<%= check_box_tag "lights[#{light.id}]", 'yes', true, class: 'filled-in'%>
+									<%= label_tag "select", nil, for: "lights_#{light.id}", 
+									onclick:"colorLamp(#{light.id}, #{light.hue}, #{light.sat}, #{light.bri});"%>
 		                  </td>
 		                </tr>
 		              <% end %>
         			</table>
         			</div>
-        			<div class="col s3">
-						<canvas id="color_shower" width="300" height="400">
-						</canvas>		
-					</div>
-					<div class="col s5">
+					<div class="col s6">
 						<div class="section">
 								<p><%= label_tag("Brightness") %></p>
-								<%= range_field_tag :bri, 254, in: 0..254, class: 'update col s8', oninput:'draw("color_shower");'%>
-								<%= text_field_tag :bri, 254, class: 'update col s2', onkeypress:'draw("color_shower");'%>
+								<%= range_field_tag :bri, 254, in: 0..254, class: 'update col s8', oninput:"redraw();"%>
+								<%= text_field_tag :bri, 254, class: 'update col s2', onkeypress:"redraw();"%>
 							</div><br><br>
 
 							<div class="section">
 								<p><%= label_tag("Hue") %></p>
-								<%= range_field_tag :hue, 65535,in: 0..65535, class: 'update col s8', oninput:'draw("color_shower");'%>
-								<%= text_field_tag :hue, 65535, class: 'update col s2', onkeypress:'draw("color_shower");' %>
+								<%= range_field_tag :hue, 65535,in: 0..65535, class: 'update col s8', oninput:"redraw();"%>
+								<%= text_field_tag :hue, 65535, class: 'update col s2', onkeypress:"redraw();" %>
 							</div><br><br>
 							<div class="section">
 								<p><%= label_tag(:sat, "Saturation:") %></p>
-								<%= range_field_tag :sat, 254, in: 0..254, class: 'update col s8', oninput:'draw("color_shower");' %>
-								<%= text_field_tag :sat, 254, class: 'update col s2', onkeypress:'draw("color_shower");' %>
+								<%= range_field_tag :sat, 254, in: 0..254, class: 'update col s8', oninput:"redraw();" %>
+								<%= text_field_tag :sat, 254, class: 'update col s2', onkeypress:"redraw();" %>
 							</div><br><br>
 							<div class="col offset-s5">
 								<%= submit_tag "Change", :class => "btn"  %>
