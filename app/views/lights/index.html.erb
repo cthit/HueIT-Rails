@@ -2,8 +2,11 @@
 
 <html>
 	<head>
-		<%= stylesheet_link_tag "materialize, table" %>
-		<%= javascript_include_tag 'materialize, draw_lightbulb' %>
+	  <!-- Compiled and minified CSS -->
+	  <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css" %>
+	  <!-- Compiled and minified JavaScript -->
+	  <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"%>
+	  
 		<script type="text/javascript">
 			$(document).ready(function() { 
 				draw("color_shower");

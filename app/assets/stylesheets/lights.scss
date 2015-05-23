@@ -9,7 +9,6 @@
 }
 
 body{
-	background-color : rgba(0, 0, 0, 0.5);
 	background-image : url(' bi-background-cubes.png ');
 	background-attachment : fixed;
 	background-size : 100% auto;
@@ -91,6 +90,6 @@ body{
 .bulb {
     height: 30px;
     width: 30px;
-    border: 2px solid rgba(237, 237, 237, 1);
-    border-radius: 15px;
+    border: 3px solid rgba(237, 237, 237, 1);
+    border-radius: 30px;
 }
