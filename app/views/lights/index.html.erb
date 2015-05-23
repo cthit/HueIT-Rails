@@ -1,3 +1,4 @@
+
 <main>
 	<% if current_user.present? %>
 		<div class = "container">
@@ -5,7 +6,7 @@
 			<div class ="row">
 		
 				<%= form_tag(multi_update_lights_path, remote:true) do %>
-				<div class="col s5 offset-s1">
+				<div class="col s8 m8 l5 offset-s1 offset-m1 ">
         			<table class="">
 		            	<% @lights.each do |light| %>
 		                <tr>
@@ -22,7 +23,7 @@
 		                  </td>
 		                  <td><canvas id="color_shower_<%=light.id%>" width="30" height="30"></td>
 		                  <td>
-		                  	<%= check_box_tag "lights[#{light.id}]", 'yes', true, class: 'filled-in'%>
+		                  	<%= check_box_tag "lights[#{light.id}]", 'yes', false, class: 'filled-in'%>
 									<%= label_tag "select", nil, for: "lights_#{light.id}", 
 									onclick:"colorLamp(#{light.id}, #{light.hue}, #{light.sat}, #{light.bri});"%>
 		                  </td>
@@ -30,7 +31,7 @@
 		              <% end %>
         			</table>
         			</div>
-					<div class="col s6">
+					<div class="col s8 m8 l6">
 						<div class="section">
 								<p><%= label_tag("Brightness") %></p>
 								<%= range_field_tag :bri, 254, in: 0..254, class: 'update col s8', oninput:"redraw();"%>
@@ -47,7 +48,7 @@
 								<%= range_field_tag :sat, 254, in: 0..254, class: 'update col s8', oninput:"redraw();" %>
 								<%= text_field_tag :sat, 254, class: 'update col s2', onkeypress:"redraw();" %>
 							</div><br><br>
-							<div class="col offset-s5">
+							<div class="col offset-s6">
 								<%= submit_tag "Change", :class => "btn"  %>
 							</div>
 					</div>
