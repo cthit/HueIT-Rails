@@ -1,12 +1,27 @@
-
 <main>
 	<% if current_user.present? %>
+		<% content_for :headJavascript do %>
+  			<script>
+  			(function () {
+			    if (window.addEventListener) {
+			        window.addEventListener('DOMContentLoaded', domReady, false);
+			    } else {
+			        window.attachEvent('onload', domReady);
+			    }
+			} ());
+  			function domReady() {
+				<% @lights.each do |light| %>
+					drawLamp(<%=light.id%>, <%=light.hue%>, <%=light.sat%>, <%=light.bri%>);
+				<% end %>
+  			}
+			</script>
+		<% end %>
 		<div class = "container">
 			<h1 class="center-align">HueIT</h1>
 			<div class ="row">
 		
 				<%= form_tag(multi_update_lights_path, remote:true) do %>
-				<div class="col s8 m8 l5 offset-s1 offset-m1 ">
+				<div class="col s8 m8 l5 offset-s1 offset-m1 offset-l1">
         			<table class="">
 		            	<% @lights.each do |light| %>
 		                <tr>
@@ -15,7 +30,7 @@
 							  <label>
 							  	Off
 							    <%=check_box_tag "switch_#{light.id}", 'on/off', light.on, 
-							      onclick:"switchOnOff(#{light.id});"%>
+							      	onclick:"switchOnOff(#{light.id});"%>
 							      <span class="lever"></span>
 							      On
 							   </label>
@@ -24,7 +39,7 @@
 		                  <td><canvas id="color_shower_<%=light.id%>" width="30" height="30"></td>
 		                  <td>
 		                  	<%= check_box_tag "lights[#{light.id}]", 'yes', false, class: 'filled-in'%>
-									<%= label_tag "select", nil, for: "lights_#{light.id}", 
+							<%= label_tag "select", nil, for: "lights_#{light.id}", 
 									onclick:"colorLamp(#{light.id}, #{light.hue}, #{light.sat}, #{light.bri});"%>
 		                  </td>
 		                </tr>
@@ -56,6 +71,7 @@
 				</div>
 			</div>
 		</div>
+
 	<% end %>
 </main>
 

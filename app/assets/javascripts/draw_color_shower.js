@@ -86,3 +86,7 @@
 						draw("color_shower_" + id, hue/65535, sat/254, bri/254);
 					}
 			}
+
+			function drawLamp(id, hue, sat, bri) {
+				draw("color_shower_" + id, hue/65535, sat/254, bri/254);
+			}
