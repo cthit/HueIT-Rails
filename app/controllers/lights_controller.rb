@@ -1,11 +1,11 @@
 class LightsController < ApplicationController
+	
 	def index
-    @lights = Huey::Bulb.all
-  end
+    	@lights = Huey::Bulb.all
+  	end
 
 	def edit
     @light = Huey::Bulb.find(params[:id]) 
-
 		for light in @lights
 			light.set_state({
 				:hue => [0,12750,36210,46920,56100].sample,
@@ -49,7 +49,6 @@ class LightsController < ApplicationController
 	end
 
 	def multi_update
-		
 		lights = params[:lights].keys
 
 		lights.each do |light|
@@ -58,11 +57,13 @@ class LightsController < ApplicationController
 			bulb.update args if bulb.on 
 		end
 		@lights = Huey::Bulb.all
-		render :index
+		respond_to do |format|
+			format.js
+		end
 	end
 
 	def show
-    render plain: params[:id]
+    	render plain: params[:id]
 	end
 
 	
@@ -86,9 +87,6 @@ class LightsController < ApplicationController
 		@light = Huey::Bulb.find(params[:id].to_i)
 		@light.on = !@light.on
 		@light.save
-		
 		redirect_to(:action => 'index')
 	end
-	
-
 end
