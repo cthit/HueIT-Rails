@@ -76,8 +76,13 @@
 				};
 			}
 
-			function colorLamp(id, hue, sat, bri) {
-				if (!document.getElementById("lights_" + id).checked) {
+			// Used when drawing a lamp and just checking a selector
+			// The onclick seems to react before the value of the selector changes
+			// So the value of the selector is reversed.
+			function colorLampFromSelect(id, hue, sat, bri) {
+				if (!document.getElementById("switch_" + id).checked) {
+					draw("color_shower_" + id, 0, 0, 1);
+				} else if (!document.getElementById("lights_" + id).checked) {
 						draw("color_shower_" + id, 
 							document.getElementById("hue").value/65535,
 							document.getElementById("sat").value/254,
@@ -87,6 +92,24 @@
 					}
 			}
 
+			// Used when drawing a lamp and regarding all possible factors
+			function colorLamp(id, hue, sat, bri) {
+				if (!document.getElementById("switch_" + id).checked) {
+					draw("color_shower_" + id, 0, 0, 1);
+				} else if (document.getElementById("lights_" + id).checked) {
+						draw("color_shower_" + id, 
+							document.getElementById("hue").value/65535,
+							document.getElementById("sat").value/254,
+							document.getElementById("bri").value/254);
+					} else {
+						draw("color_shower_" + id, hue/65535, sat/254, bri/254);
+					}
+			}
+			// Used when disregarding the value of the selectors, only wanting to draw the color of the bulb or if it is off
 			function drawLamp(id, hue, sat, bri) {
-				draw("color_shower_" + id, hue/65535, sat/254, bri/254);
+				if (!document.getElementById("switch_" + id).checked) {
+					draw("color_shower_" + id, 0, 0, 1);
+				} else {
+					draw("color_shower_" + id, hue/65535, sat/254, bri/254);
+				}
 			}
