@@ -1,0 +1,23 @@
+<!-- _lights_list.erb-->
+<% @lights.each do |light| %>
+	<tr>
+	  <td>
+		  <div class="switch">
+		  <label>
+		  	Off
+		    <%=check_box_tag "switch_#{light.id}", 'on/off', light.on, 
+		      	onclick:"switchOnOff(#{light.id},#{light.hue},#{light.sat},#{light.bri});"%>
+		      <span class="lever"></span>
+	      	On
+		   </label>
+		   </div>
+	  </td>
+	  <td><canvas id="color_shower_<%=light.id%>" width="30" height="30"></td>
+	  <td>
+	  	<%= check_box_tag "lights[#{light.id}]", 'yes', false, class: 'filled-in'%>
+		<%= label_tag "select_#{light.id}", "Select", for: "lights_#{light.id}", 
+			onclick:"colorLampFromSelect(#{light.id},#{light.hue},#{light.sat},#{light.bri});",
+			id:"light_tag_#{light.id}"%>
+	  </td>
+	</tr>
+<% end %>
