@@ -93,6 +93,30 @@ class LightsController < ApplicationController
 		redirect_to(:action => 'index')
 	end
 
+	def turn_all_off
+		lights = Huey::Bulb.all
+
+		lights.each do |light|
+			light.update(on: false, transitiontime: 1)
+			light.save
+		end
+		respond_to do |format|
+			format.js
+		end
+	end
+
+	def turn_all_on
+		lights = Huey::Bulb.all
+
+		lights.each do |light|
+			light.update(on: true, transitiontime: 1)
+			light.save
+		end
+		respond_to do |format|
+			format.js
+		end
+	end
+
 	def switchOnOff
 		@light = Huey::Bulb.find(params[:id].to_i)
 		@light.on = !@light.on

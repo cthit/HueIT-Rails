@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     collection do
       post :multi_update
       get :reset_lights
+      get :turn_all_on
+      get :turn_all_off
     end
   end
 
