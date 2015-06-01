@@ -7,4 +7,10 @@ $ ->
 		console.log event 
 		$(this).parent().find('.update').val(this.value)
 
+$ ->
+	$('#select_all_btn').on 'click', (e) ->
+		document.getElementById("lights_"+i).checked = true for i in [1..6]
+$ ->
+	$('#deselect_all_btn').on 'click', (e) ->
+		document.getElementById("lights_"+i).checked = false for i in [1..6]
 	

@@ -1,16 +1,20 @@
 <%= form_tag(multi_update_lights_path, remote:true) do %>
-<div class="col s11 m11 l5 offset-s1 offset-m1 offset-l1">
+<div class="col s9 m9 l6 offset-s2 offset-m2 offset-l1">
 	<table class="lights" id="lights_list">
 		<%= render partial: 'lights_list' %>	
 	</table>
 	</div>
-	<div class="col s12 m12 l6">
+	<div class="col s9 m9 l5 offset-s3 offset-m3">
 		<div class="section">
-			<p><%= label_tag"rgb picker" %></p>
+			<p><%= label_tag"Pick color" %></p>
 			<%= color_field :rgb, "color", class: "rgb_picker" %>
 		</div>
-		<div class="col offset-s3">
-			<%= submit_tag "Change", :class => "btn" %>
+		<div class="section">
+			<%= label_tag "Select all", "Select all", class: "btn", id: "select_all_btn" %>
+			<%= label_tag "Deselect all", "Deselect all", class: "btn", id: "deselect_all_btn" %>
+		</div>
+		<div class="section">
+			<%= submit_tag "Change", class: "btn cyan darken-1", id: "change_btn" %>
 		</div>
 	</div>
 <% end %>			
