@@ -66,14 +66,24 @@ class LightsController < ApplicationController
     	render plain: params[:id]
 	end
 
+	def reset_lights
+		lights = Huey::Bulb.all 
+
+		lights.each do |light|
+			light.rgb = '#cff974'
+			light.save
+		end
+		
+		respond_to do |format|
+			format.js
+		end
+	end
 	
 	def turnOff
 		@light = Huey::Bulb.find(params[:id].to_i)
 		@light.update(on: false)
 		@light.save
 		redirect_to(:action => 'index')
-
-
 	end
 
 	def turnOn

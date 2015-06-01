@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :lights do
     collection do
       post :multi_update
+      get :reset_lights
     end
   end
 

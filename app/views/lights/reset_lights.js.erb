@@ -1,0 +1,6 @@
+// multi_update.js.erb
+// Redraws the lights when pressing the update button
+	$("#lights_list").html("<%= escape_javascript(render partial: 'lights_list') %>"); 
+	<% @lights.each do |light| %>
+		drawLamp(<%=light.id%>, <%=light.hue%>, <%=light.sat%>, <%=light.bri%>);
+	<% end %>

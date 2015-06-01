@@ -21,6 +21,9 @@
 			<div class ="row">
 				<%= render 'form' %>			
 			</div>
+			<div class="row">
+				<%=link_to "Reset lights", reset_lights_lights_path, remote: true, class: "btn"%>
+			</div>
 		</div>
 	<% end %>
 </main>
