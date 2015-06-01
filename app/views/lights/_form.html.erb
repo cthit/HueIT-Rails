@@ -6,23 +6,11 @@
 	</div>
 	<div class="col s12 m12 l6">
 		<div class="section">
-				<p><%= label_tag("Brightness") %></p>
-				<%= range_field_tag :bri, 254, in: 0..254, class: 'update col s8', oninput:"redraw();"%>
-				<%= text_field_tag :bri, 254, class: 'update col s2', onkeypress:"redraw();"%>
-			</div><br><br>
-
-			<div class="section">
-				<p><%= label_tag("Hue") %></p>
-				<%= range_field_tag :hue, 65535,in: 0..65535, class: 'update col s8', oninput:"redraw();"%>
-				<%= text_field_tag :hue, 65535, class: 'update col s2', onkeypress:"redraw();" %>
-			</div><br><br>
-			<div class="section">
-				<p><%= label_tag(:sat, "Saturation:") %></p>
-				<%= range_field_tag :sat, 254, in: 0..254, class: 'update col s8', oninput:"redraw();" %>
-				<%= text_field_tag :sat, 254, class: 'update col s2', onkeypress:"redraw();" %>
-			</div><br><br>
-			<div class="col offset-s6">
-				<%= submit_tag "Change", :class => "btn" %>
-			</div>
+			<p><%= label_tag"rgb picker" %></p>
+			<%= color_field :rgb, "color", class: "rgb_picker" %>
+		</div>
+		<div class="col offset-s3">
+			<%= submit_tag "Change", :class => "btn" %>
+		</div>
 	</div>
 <% end %>			

@@ -53,9 +53,9 @@ class LightsController < ApplicationController
 
 		lights.each do |light|
 			bulb = Huey::Bulb.find light.to_i
-			args = params.slice(:sat, :bri, :hue).map { |k,v| [k, v.to_i] }.to_h
-			bulb.update args if bulb.on 
-		end
+			bulb.rgb = (params[:rgb][:color]).to_s
+			bulb.save
+		end	
 		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
