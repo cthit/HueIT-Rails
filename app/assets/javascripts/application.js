@@ -16,7 +16,7 @@
 //= require_tree .
 
 function switchOnOff(i,hue,sat,bri) {
-	colorLamp(i,hue,sat,bri);
+	drawLamp(i,hue,sat,bri);
 	changeUrl = "/lights/" + parseInt(i) + "/switchOnOff"
 	$.ajax({
 		url: changeUrl,
