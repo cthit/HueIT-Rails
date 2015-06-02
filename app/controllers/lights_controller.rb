@@ -94,24 +94,24 @@ class LightsController < ApplicationController
 	end
 
 	def turn_all_off
-		lights = Huey::Bulb.all
+		lights_group = Huey::Group.new(Huey::Bulb.find(1),Huey::Bulb.find(2),Huey::Bulb.find(3),
+			Huey::Bulb.find(4), Huey::Bulb.find(5), Huey::Bulb.find(6))
 
-		lights.each do |light|
-			light.update(on: false, transitiontime: 1)
-			light.save
-		end
+		lights_group.update(on: false, bri: 200, transitiontime: 0)
+
+		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
 		end
 	end
 
 	def turn_all_on
-		lights = Huey::Bulb.all
+		lights_group = Huey::Group.new(Huey::Bulb.find(1),Huey::Bulb.find(2),Huey::Bulb.find(3),
+			Huey::Bulb.find(4), Huey::Bulb.find(5), Huey::Bulb.find(6))
 
-		lights.each do |light|
-			light.update(on: true, transitiontime: 1)
-			light.save
-		end
+		lights_group.update(on: true, bri: 200, transitiontime: 0)
+
+		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
 		end
