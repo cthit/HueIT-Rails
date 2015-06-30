@@ -1,4 +1,8 @@
 class LightsController < ApplicationController
+	def change_logger
+		@@change_logger ||= Logger.new("#{Rails.root}/log/change.log")
+	end
+		
 #Creates sites
 	def index
 		@lights = Huey::Bulb.all
@@ -64,7 +68,7 @@ class LightsController < ApplicationController
 			format.js
 		end
 		@user = User.find_by_token cookies[:chalmersItAuth]
-		logger.info "[#{Time.now.inspect}] #{@user.cid}: Lamps ##{@changedLights}color changed to #{(params[:rgb][:color]).to_s}"
+		change_logger.info "#{@user.cid}: Lamps ##{@changedLights}color changed to #{(params[:rgb][:color]).to_s}"
 	end
 #shows a specific lamp (lights/1)
 	def show
@@ -83,7 +87,7 @@ class LightsController < ApplicationController
 			format.js
 		end
 		@user = User.find_by_token cookies[:chalmersItAuth]
-		logger.info "[#{Time.now.inspect}] #{@user.cid}: All lamps reset"
+		change_logger.info "#{@user.cid}: All lamps reset"
 	end
 
 	def turnOff
@@ -129,7 +133,7 @@ class LightsController < ApplicationController
 		@light.on = !@light.on
 		@light.save
 		@user = User.find_by_token cookies[:chalmersItAuth]
-		logger.info "[#{Time.now.inspect}] #{@user.cid}: Lamp ##{params[:id]} turned off"
+		change_logger.info "#{@user.cid}: Lamp ##{params[:id]} turned off"
 		redirect_to(:action => 'index')
 	end
 end
