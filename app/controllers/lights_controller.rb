@@ -51,16 +51,20 @@ class LightsController < ApplicationController
 	def multi_update
 		lights = params[:lights].keys
 
+		@changedLights = ""
+
 		lights.each do |light|
 			bulb = Huey::Bulb.find light.to_i
 			bulb.rgb = (params[:rgb][:color]).to_s
 			bulb.save
+			@changedLights += light.to_s+" "
 		end
 		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
 		end
-		logger.info "#{@user.cid}: Lamp color changed"
+		@user = User.find_by_token cookies[:chalmersItAuth]
+		logger.info "[#{Time.now.inspect}] #{@user.cid}: Lamps ##{@changedLights}color changed to #{(params[:rgb][:color]).to_s}"
 	end
 #shows a specific lamp (lights/1)
 	def show
@@ -79,7 +83,7 @@ class LightsController < ApplicationController
 			format.js
 		end
 		@user = User.find_by_token cookies[:chalmersItAuth]
-		logger.info "#{@user.cid}: Lamp reset"
+		logger.info "[#{Time.now.inspect}] #{@user.cid}: All lamps reset"
 	end
 
 	def turnOff
@@ -124,7 +128,8 @@ class LightsController < ApplicationController
 		@light = Huey::Bulb.find(params[:id].to_i)
 		@light.on = !@light.on
 		@light.save
-		logger.info "#{@user.cid}: Lamp turned off"
+		@user = User.find_by_token cookies[:chalmersItAuth]
+		logger.info "[#{Time.now.inspect}] #{@user.cid}: Lamp ##{params[:id]} turned off"
 		redirect_to(:action => 'index')
 	end
 end
