@@ -137,7 +137,7 @@ class LightsController < ApplicationController
 		@light.on = !@light.on
 		@light.save
 		@user = User.find_by_token cookies[:chalmersItAuth]
-		change_logger.info "#{@user.cid}: Lamp ##{params[:id]} turned off"
+		change_logger.info "#{@user.cid}: Lamp ##{params[:id]} toggled"
 		redirect_to(:action => 'index')
 	end
 end
