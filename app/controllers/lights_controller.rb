@@ -79,7 +79,7 @@ class LightsController < ApplicationController
 		lights = Huey::Bulb.all
 
 		lights.each do |light|
-			light.rgb = '#cff974'
+			light.update(rgb: '#cff974', bri: 200)
 			light.save
 		end
 

@@ -9,7 +9,7 @@
 			<div class="section">	 
 				<p><%= label_tag "Saturation (of color)"%></p>
 				<%= range_field_tag :sat, 254, in: 0..254, class: 'update col s9', oninput:"draw_shower();"%>
-				<%= text_field_tag :sat, 254, class: 'update col s2', onkeypress:"draw_shower();"%>
+				<%= text_field_tag :sat, 254, class: 'update col s3', onkeypress:"draw_shower();"%>
 			</div><br><br>
 			<div class="section">	
 				<p><%= label_tag "Hue value (of color)"%></p>
@@ -30,7 +30,7 @@
 			</div>
 		</div> 
 		<div class="col s9 m9 l4">
-			<canvas id="color_shower" width="300" height="400">
+			<canvas id="color_shower" width="200" height="160">
 			</canvas>
 		</div>
 		</div>
