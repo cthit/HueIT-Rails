@@ -114,6 +114,8 @@ class LightsController < ApplicationController
 		respond_to do |format|
 			format.js
 		end
+		@user = User.find_by_token cookies[:chalmersItAuth]
+		change_logger.info "#{@user.cid}: All lights OFF"
 	end
 
 	def turn_all_on
@@ -126,6 +128,8 @@ class LightsController < ApplicationController
 		respond_to do |format|
 			format.js
 		end
+		@user = User.find_by_token cookies[:chalmersItAuth]
+		change_logger.info "#{@user.cid}: All lights ON"
 	end
 #Toggles light state
 	def switchOnOff
