@@ -13,6 +13,7 @@
 				<% @lights.each do |light| %>
 					drawLamp(<%=light.id%>, <%=light.hue%>, <%=light.sat%>, <%=light.bri%>);
 				<% end %>
+				draw_shower();
   			}
 			</script>
 		<% end %>

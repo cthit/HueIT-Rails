@@ -59,7 +59,7 @@ class LightsController < ApplicationController
 
 		lights.each do |light|
 			bulb = Huey::Bulb.find light.to_i
-			bulb.rgb = (params[:rgb][:color]).to_s
+			bulb.update(sat: (params[:sat]).to_i, hue: (params[:hue].to_i), bri: (params[:bri].to_i))
 			bulb.save
 			@changedLights += light.to_s+" "
 		end

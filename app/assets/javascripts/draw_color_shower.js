@@ -71,3 +71,28 @@ function drawLamp(id, hue, sat, bri) {
 		draw("color_shower_" + id, hue/65535, sat/254, bri/254);
 	}
 }
+
+//Draws the square that shows the value of the hue and saturation sliders
+function draw_shower(){
+	var canvas = document.getElementById("color_shower");
+	var ctx = canvas.getContext("2d");
+	light = 0.5;
+	hue = document.getElementById("hue").value/65535;
+	sat = document.getElementById("sat").value/254;
+
+	rgb = hslToRgb(hue,sat,light);
+	r = Math.round(rgb[0]);
+	g = Math.round(rgb[1]);
+	b = Math.round(rgb[2]);
+
+	/**
+	* So here we create a half circle and we set the fillStyle to the current color of Hue, Saturation and Brightness level
+	*/
+	ctx.beginPath();
+	ctx.rect(0,40,200,150);
+	ctx.fillStyle= "rgb(" + r + "," + g + "," + b + ")";
+	ctx.fill();
+	ctx.lineWidth=3;
+	ctx.strokeStyle='#EDEDED';
+	ctx.stroke();
+}

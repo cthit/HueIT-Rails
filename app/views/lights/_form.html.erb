@@ -1,20 +1,38 @@
 <%= form_tag(multi_update_lights_path, remote:true) do %>
-<div class="col s9 m9 l6 offset-s2 offset-m2 offset-l1">
+<div class="col s9 m9 l4 offset-s2 offset-m2 offset-l1">
 	<table class="lights" id="lights_list">
 		<%= render partial: 'lights_list' %>	
 	</table>
-	</div>
-	<div class="col s9 m9 l5 offset-s3 offset-m3">
-		<div class="section">
-			<p><%= label_tag"Pick color" %></p>
-			<%= color_field :rgb, "color", class: "rgb_picker" %>
+</div>
+	<div class="col s9 m9 l7 offset-s3 offset-m3">
+		<div class="col l8">
+			<div class="section">	 
+				<p><%= label_tag "Saturation (of color)"%></p>
+				<%= range_field_tag :sat, 254, in: 0..254, class: 'update col s9', oninput:"draw_shower();"%>
+				<%= text_field_tag :sat, 254, class: 'update col s2', onkeypress:"draw_shower();"%>
+			</div><br><br>
+			<div class="section">	
+				<p><%= label_tag "Hue value (of color)"%></p>
+				<%= range_field_tag :hue, 65535,in: 0..65535, class: 'update col s9', oninput:"draw_shower();"%>
+				<%= text_field_tag :hue, 65535, class: 'update col s3', onkeypress:"draw_shower();"%>
+			</div><br><br><br>
+			<div class="section">	
+				<p><%= label_tag "Brightness (of bulbs)"%></p>
+				<%= range_field_tag :bri, 254,in: 0..254, class: 'update col s9'%>
+				<%= text_field_tag :bri, 254, class: 'update col s3'%>
+			</div><br><br>
+			<div class="section">
+				<%= label_tag "Select all", "Select all", class: "btn", id: "select_all_btn" %>
+				<%= label_tag "Deselect all", "Deselect all", class: "btn", id: "deselect_all_btn" %>
+			</div>
+			<div class="section">
+				<%= submit_tag "Change", class: "btn cyan darken-1", id: "change_btn" %>
+			</div>
+		</div> 
+		<div class="col s9 m9 l4">
+			<canvas id="color_shower" width="300" height="400">
+			</canvas>
 		</div>
-		<div class="section">
-			<%= label_tag "Select all", "Select all", class: "btn", id: "select_all_btn" %>
-			<%= label_tag "Deselect all", "Deselect all", class: "btn", id: "deselect_all_btn" %>
-		</div>
-		<div class="section">
-			<%= submit_tag "Change", class: "btn cyan darken-1", id: "change_btn" %>
 		</div>
 	</div>
 <% end %>			
