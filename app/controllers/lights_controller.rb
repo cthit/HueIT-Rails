@@ -60,7 +60,7 @@ class LightsController < ApplicationController
 		respond_to do |format|
 			format.js
 		end
-		logger.info "Lamp color changed"
+		logger.info "#{@user.cid}: Lamp color changed"
 	end
 #shows a specific lamp (lights/1)
 	def show
@@ -78,7 +78,8 @@ class LightsController < ApplicationController
 		respond_to do |format|
 			format.js
 		end
-		logger.info "Lamp reset"
+		@user = User.find_by_token cookies[:chalmersItAuth]
+		logger.info "#{@user.cid}: Lamp reset"
 	end
 
 	def turnOff
@@ -123,7 +124,7 @@ class LightsController < ApplicationController
 		@light = Huey::Bulb.find(params[:id].to_i)
 		@light.on = !@light.on
 		@light.save
-		logger.info "Lamp turned off"
+		logger.info "#{@user.cid}: Lamp turned off"
 		redirect_to(:action => 'index')
 	end
 end
