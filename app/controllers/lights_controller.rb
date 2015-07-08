@@ -2,7 +2,7 @@ class LightsController < ApplicationController
 	def change_logger
 		@@change_logger ||= Logger.new("#{Rails.root}/log/change.log")
 	end
-		
+
 #Creates sites
 	def index
 		@lights = Huey::Bulb.all
@@ -69,6 +69,7 @@ class LightsController < ApplicationController
 		end
 		@user = User.find_by_token cookies[:chalmersItAuth]
 		change_logger.info "#{@user.cid}: Lamps ##{@changedLights}color changed to #{(params[:rgb][:color]).to_s}"
+		@db.query("INSTERT INTO 'changes'('user', 'change') VALUES ('#{@user.cid}','Lamps ##{@changedLights}color change to #{(params[:rgb][:color]).to_s}')")
 	end
 #shows a specific lamp (lights/1)
 	def show
@@ -88,6 +89,7 @@ class LightsController < ApplicationController
 		end
 		@user = User.find_by_token cookies[:chalmersItAuth]
 		change_logger.info "#{@user.cid}: All lamps reset"
+		@db.query("INSTERT INTO 'changes'('user', 'change') VALUES ('#{@user.cid}','All lamps reset')")
 	end
 
 	def turnOff
@@ -116,6 +118,7 @@ class LightsController < ApplicationController
 		end
 		@user = User.find_by_token cookies[:chalmersItAuth]
 		change_logger.info "#{@user.cid}: All lights OFF"
+		@db.query("INSTERT INTO 'changes'('user', 'change') VALUES ('#{@user.cid}','All lamps OFF')")
 	end
 
 	def turn_all_on
@@ -130,6 +133,7 @@ class LightsController < ApplicationController
 		end
 		@user = User.find_by_token cookies[:chalmersItAuth]
 		change_logger.info "#{@user.cid}: All lights ON"
+		@db.query("INSTERT INTO 'changes'('user', 'change') VALUES ('#{@user.cid}','All lamps ON')")
 	end
 #Toggles light state
 	def switchOnOff
@@ -138,6 +142,7 @@ class LightsController < ApplicationController
 		@light.save
 		@user = User.find_by_token cookies[:chalmersItAuth]
 		change_logger.info "#{@user.cid}: Lamp ##{params[:id]} toggled"
+		@db.query("INSTERT INTO 'changes'('user', 'change') VALUES ('#{@user.cid}','Lamp ##{params[:id]} toggled')")
 		redirect_to(:action => 'index')
 	end
 end
