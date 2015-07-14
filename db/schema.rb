@@ -11,15 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150428182823) do
+ActiveRecord::Schema.define(version: 20150714223013) do
+
+  create_table "log_entries", force: :cascade do |t|
+    t.string   "cid",        limit: 255
+    t.string   "change",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "users", id: false, force: :cascade do |t|
-    t.string   "cid"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "nick"
-    t.string   "mail"
-    t.string   "groups"
+    t.string   "cid",        limit: 255
+    t.string   "first_name", limit: 255
+    t.string   "last_name",  limit: 255
+    t.string   "nick",       limit: 255
+    t.string   "mail",       limit: 255
+    t.string   "groups",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
