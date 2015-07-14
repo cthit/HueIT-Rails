@@ -67,9 +67,7 @@ class LightsController < ApplicationController
 		respond_to do |format|
 			format.js
 		end
-		@user = User.find_by_token cookies[:chalmersItAuth]
-		change_logger.info "#{@user.cid}: Lamps ##{@changedLights}color changed to #{(params[:rgb][:color]).to_s}"
-		@db.query("INSTERT INTO 'changes'('user', 'change') VALUES ('#{@user.cid}','Lamps ##{@changedLights}color change to #{(params[:rgb][:color]).to_s}')")
+		log("Lamps ##{@changedLights}color changed to #{(params[:rgb][:color]).to_s}")
 	end
 #shows a specific lamp (lights/1)
 	def show
@@ -87,9 +85,7 @@ class LightsController < ApplicationController
 		respond_to do |format|
 			format.js
 		end
-		@user = User.find_by_token cookies[:chalmersItAuth]
-		change_logger.info "#{@user.cid}: All lamps reset"
-		@db.query("INSTERT INTO 'changes'('user', 'change') VALUES ('#{@user.cid}','All lamps reset')")
+		log("All lamps reset")
 	end
 
 	def turnOff
@@ -116,9 +112,7 @@ class LightsController < ApplicationController
 		respond_to do |format|
 			format.js
 		end
-		@user = User.find_by_token cookies[:chalmersItAuth]
-		change_logger.info "#{@user.cid}: All lights OFF"
-		@db.query("INSTERT INTO 'changes'('user', 'change') VALUES ('#{@user.cid}','All lamps OFF')")
+		log("All lights OFF")
 	end
 
 	def turn_all_on
@@ -131,18 +125,20 @@ class LightsController < ApplicationController
 		respond_to do |format|
 			format.js
 		end
-		@user = User.find_by_token cookies[:chalmersItAuth]
-		change_logger.info "#{@user.cid}: All lights ON"
-		@db.query("INSTERT INTO 'changes'('user', 'change') VALUES ('#{@user.cid}','All lamps ON')")
+		log("All lights ON")
 	end
 #Toggles light state
 	def switchOnOff
 		@light = Huey::Bulb.find(params[:id].to_i)
 		@light.on = !@light.on
 		@light.save
+		log("Lamp ##{params[:id]} toggled")
+	end
+	def log(change)
+		entry = LogEntry.new
 		@user = User.find_by_token cookies[:chalmersItAuth]
-		change_logger.info "#{@user.cid}: Lamp ##{params[:id]} toggled"
-		@db.query("INSTERT INTO 'changes'('user', 'change') VALUES ('#{@user.cid}','Lamp ##{params[:id]} toggled')")
-		redirect_to(:action => 'index')
+		entry.cid = @user.cid
+		entry.change = change
+		entry.save
 	end
 end
