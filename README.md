@@ -1,5 +1,7 @@
 Interface for controlling Philliphs Hue Lights in Hubben 2.1
 
+Is used together with https://github.com/cthit/hubbIT-sniffer
+
 Currently using Ruby `2.1.2p95`
 
 ```
