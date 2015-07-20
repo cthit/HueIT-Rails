@@ -1,15 +1,8 @@
 <!-- _log_list.html.erb-->
-<h1>hej</h1>
 <% @log_entries.each do |log_entry| %>
 	<tr>
-		<td>
-			<% log_entry.created_at %>
-		</td>
-		<td>
-			<% log_entry.cid %>
-		</td>
-		<td>
-			<% log_entry.change %>
-		</td>
+		<td> <%= log_entry.created_at %> </td>
+		<td> <%= log_entry.cid %> </td>
+		<td> <%= log_entry.change %> </td>
 	</tr>
 <% end %>
