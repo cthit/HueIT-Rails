@@ -5,7 +5,12 @@ class LightsController < ApplicationController
 
 #Creates sites
 	def index
-		@lights = Huey::Bulb.all
+		begin
+			@lights = Huey::Bulb.all
+
+		rescue Huey::Errors::CouldNotFindHue
+			
+		end
 	end
 
 	def edit
