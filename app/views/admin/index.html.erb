@@ -1,5 +1,7 @@
 <main>
 <%if current_user.admin? %>
-	<%= render partial: 'log_list' %>
+	<table>
+		<%= render partial: 'log_list' %>
+	</table>
 <%end%>
 </main>
