@@ -68,11 +68,15 @@ class LightsController < ApplicationController
 			bulb.save
 			@changedLights += light.to_s+" "
 		end
+		
+		@user = User.find_by_token cookies[:chalmersItAuth]
+		change_logger.info "#{@user.cid}: Lamps ##{@changedLights}color changed to #{(params[:rgb][:color]).to_s}"
+		log("Lamps ##{@changedLights}color changed to #{(params[:rgb][:color]).to_s}")
+
 		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
 		end
-		log("Lamps ##{@changedLights}color changed to #{(params[:rgb][:color]).to_s}")
 	end
 #shows a specific lamp (lights/1)
 	def show
@@ -87,10 +91,14 @@ class LightsController < ApplicationController
 			light.save
 		end
 
+		@user = User.find_by_token cookies[:chalmersItAuth]
+		change_logger.info "#{@user.cid}: All lamps reset"
+		log("All lamps reset")
+		
+		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
 		end
-		log("All lamps reset")
 	end
 
 	def turnOff
