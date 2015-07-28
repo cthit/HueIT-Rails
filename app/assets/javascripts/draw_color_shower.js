@@ -1,3 +1,18 @@
+// Constants for the triangle from http://www.developers.meethue.com/documentation/core-concepts
+RedCornerX = 0.675
+RedCornerY = 0.322
+GreenCornerX = 0.4091
+GreenCornerY = 0.518
+BlueCornerX = 0.167
+BlueCornerY = 0.04
+
+BlueGreenLineK = 1.97439075;
+BlueGreenLineM = 0.28972325;
+BlueRedLineK = 0.5511811;
+BlueRedLineM = 0.0527047;
+GreenRedLineK = -0.73711922;
+GreenRedLineM = 0.81955547198;
+
 /**
 * Converts an HSL color value to RGB. Conversion formula
 * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
@@ -40,12 +55,8 @@ function hslToRgb(h, s, l){
 function draw(id,hue,sat,light){
 	var canvas = document.getElementById(id);
 	var ctx = canvas.getContext("2d");
-	if(light>0.8) {
-		light = 0.8;
-	}else if(light<0.2) {
-		light = 0.2;
-	}
-
+	light = 0.5;
+	
 	rgb = hslToRgb(hue,sat,light);
 	r = Math.round(rgb[0]);
 	g = Math.round(rgb[1]);
@@ -81,7 +92,7 @@ function draw_shower(){
 	sat = document.getElementById("sat").value/254;
 
 	rgb = hslToRgb(hue,sat,light);
-	
+	// Here we go from rgb to XY, limit the XY values to the red triangle and then go back to rgb
 	XY = rgb_to_XY(rgb[0],rgb[1],rgb[2]);
 	XY = limit_XY_values(XY[0],XY[1]);
 	rgb = XY_to_rgb(XY[0], XY[1], light);
@@ -102,38 +113,76 @@ function draw_shower(){
 	ctx.stroke();
 }
 
+// Function that returns the value of the line in the triangle that goes from blue to green
+// Left line
+// http://www.developers.meethue.com/documentation/core-concepts
+function blueGreenLine(x) {
+	return BlueGreenLineK*x-BlueGreenLineM;
+}
+// Function that returns the value of the line in the triangle that goes from green to red
+// Right line
+// http://www.developers.meethue.com/documentation/core-concepts
+function blueRedLine(x) {
+	return BlueRedLineK*x-BlueRedLineM;
+}
+// Function that returns the value of the line in the triangle that goes from green to red
+// Lower line
+// http://www.developers.meethue.com/documentation/core-concepts
+function greenRedLine(x) {
+	return GreenRedLineK*x+GreenRedLineM;
+}
+
 function limit_XY_values(x,y) {
 	//Limits the x values to the red triangle in http://www.developers.meethue.com/documentation/core-concepts
-	if (x < 0.167) {
-		x = 0.167;
-	} else if (x > 0.675) {
-		x = 0.675;
-	}
 
-	//Limits the y values to the red triangle in http://www.developers.meethue.com/documentation/core-concepts
-	if (x >= 0.167 && x <= 0.4091 && (1.97439075*x-0.28972325) > y) {
-		y = 1.97439075*x-0.28972325;
-	} else if (x >= 0.167 && x <= 0.675 && (0.5511811*x-0.0527047) < y) {
-		y = 0.5511811*x-0.0527047;
-	} else if (x >=0.4091 && x <= 0.675 && (-0.73711922*x+0.81955547198) > y) {
-		y = -0.73711922*x+0.81955547198;
+
+	if (x < GreenCornerX && blueGreenLine(x) < y) {
+		k = -BlueGreenLineK;
+		x = (-k*x + y + BlueGreenLineM)/(BlueGreenLineK - k);
+		// If the value is outside of the triangle (i.e. )
+		if (x > GreenCornerX) {
+			x = GreenCornerX;
+		} else if (x < BlueCornerX) {
+			x = BlueCornerX;
+		}
+		y = blueGreenLine(x);
+	}
+	else if (x >= BlueCornerX && x <= RedCornerX && blueRedLine(x) > y) {
+		k = -BlueRedLineK;
+		x = (-k*x + y + BlueRedLineM)/(BlueRedLineK - k);
+		if (x > RedCornerX) {
+			x = RedCornerX;
+		} else if (x < BlueCornerX) {
+			x = BlueCornerX;
+		}
+		y = blueRedLine(x);
+	}
+	else if (x >= GreenCornerX && greenRedLine(x) < y) {
+		k = -GreenRedLineK;
+		x = (-k*x + y - GreenRedLineM)/(GreenRedLineK - k);
+		if (x > RedCornerX) {
+			x = RedCornerX;
+		} else if (x < GreenCornerX) {
+			x = GreenCornerX;
+		}
+		y = greenRedLine(x);
 	}
 
 	return [x, y];
 }
 
 // Takes RGB values and returns array with XY values
-function rgb_to_XY(ired,igreen,iblue){
+function rgb_to_XY(red,green,blue){
 	// For the hue bulb the corners of the triangle are:
 	// -Red: 0.675, 0.322
 	// -Green: 0.4091, 0.518
 	// -Blue: 0.167, 0.04
-	var normalizedToOne = [ired / 255, igreen / 255, iblue / 255]
+	//var normalizedToOne = [ired / 255, igreen / 255, iblue / 255]
 
-	var red, green, blue;
+	//var red, green, blue;
 
 	// Make red more vivid
-	if (normalizedToOne[0] > 0.04045) {
+	/*if (normalizedToOne[0] > 0.04045) {
 	    red = Math.pow(
 	            (normalizedToOne[0] + 0.055) / (1.0 + 0.055), 2.4);
 	} else {
@@ -152,7 +201,7 @@ function rgb_to_XY(ired,igreen,iblue){
 	    blue =  Math.pow((normalizedToOne[2] + 0.055) / (1.0 + 0.055), 2.4);
 	} else {
 	    blue = (normalizedToOne[2] / 12.92);
-	}
+	}*/
 
 	var X =  (red * 0.649926 + green * 0.103455 + blue * 0.197109);
 	var Y =  (red * 0.234327 + green * 0.743075 + blue * 0.022598);
@@ -165,10 +214,10 @@ function rgb_to_XY(ired,igreen,iblue){
 
 }
 
-function XY_to_rgb(x,y,bri) {
+function XY_to_rgb(x,y,light) {
 	// Based on https://github.com/PhilipsHue/PhilipsHueSDK-iOS-OSX/commit/f41091cf671e13fe8c32fcced12604cd31cceaf3
 	var z = 1.0 - x - y;
-	var Y = bri;
+	var Y = light;
 	var X = (Y/y)*x;
 	var Z = (Y/y)*z;
 	// calculate rgb values
@@ -177,7 +226,7 @@ function XY_to_rgb(x,y,bri) {
     var b = X  * 0.0349342 - Y * 0.0968930 + Z * 1.2884099;
 
     // Apply gamma correction
-    if (r <= 0.0031308) {
+    /*if (r <= 0.0031308) {
     	r = 12.92 * r;
     } else {
     	r = (1.0 + 0.055) * Math.pow(r, (1.0 / 2.4)) - 0.055;
@@ -193,7 +242,7 @@ function XY_to_rgb(x,y,bri) {
     	b = 12.92 * b;
     } else {
     	b = (1.0 + 0.055) * Math.pow(b, (1.0 / 2.4)) - 0.055;
-    }
+    }*/
 
     return [r * 255, g * 255, b * 255];
 }
