@@ -11,6 +11,8 @@ vagrant up
 vagrant ssh
 
 # Install dependencies
+sudo apt-get install libmysqlclient-dev
+
 cd /vagrant
 bundle install
 
