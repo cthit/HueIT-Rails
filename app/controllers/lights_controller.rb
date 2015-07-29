@@ -64,9 +64,11 @@ class LightsController < ApplicationController
 
 		lights.each do |light|
 			bulb = Huey::Bulb.find light.to_i
-			bulb.update(sat: (params[:sat]).to_i, hue: (params[:hue].to_i), bri: (params[:bri].to_i))
-			bulb.save
-			@changedLights += light.to_s+" "
+			if bulb.on 
+				bulb.update(sat: (params[:sat]).to_i, hue: (params[:hue].to_i), bri: (params[:bri].to_i)) 
+				bulb.save 
+				@changedLights += light.to_s+" " 
+			end
 		end
 		
 		@lights = Huey::Bulb.all
@@ -87,8 +89,10 @@ class LightsController < ApplicationController
 		lights = Huey::Bulb.all
 
 		lights.each do |light|
-			light.update(rgb: '#cff974', bri: 200)
-			light.save
+			if light.on 
+				light.update(rgb: '#cff974', bri: 200)
+				light.save
+			end
 		end
 
 		@user = User.find_by_token cookies[:chalmersItAuth]
