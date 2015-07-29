@@ -69,14 +69,14 @@ class LightsController < ApplicationController
 			@changedLights += light.to_s+" "
 		end
 		
-		@user = User.find_by_token cookies[:chalmersItAuth]
-		change_logger.info "#{@user.cid}: Lamps ##{@changedLights}color changed to #{(params[:rgb][:color]).to_s}"
-		log("Lamps ##{@changedLights}color changed to #{(params[:rgb][:color]).to_s}")
-
 		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
 		end
+
+		@user = User.find_by_token cookies[:chalmersItAuth]
+		change_logger.info "#{@user.cid}: Lamps ##{@changedLights}values changed to hue:#{(params[:hue]).to_s} sat: #{(params[:sat]).to_s} bri: #{(params[:bri]).to_s}"
+		log "Lamps ##{@changedLights}color changed to hue:#{(params[:hue]).to_s} sat: #{(params[:sat]).to_s} bri: #{(params[:bri]).to_s}"
 	end
 #shows a specific lamp (lights/1)
 	def show
