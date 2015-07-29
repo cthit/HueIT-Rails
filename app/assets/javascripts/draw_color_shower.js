@@ -51,13 +51,21 @@ function hslToRgb(h, s, l){
 /**
 * draw() is called first when the body loads, and then on each change of value (hue,bri,sat).
 * the h,s,l value is taken from each
+* Correct is a boolean for if the given value should be corrected to the triangle
 */
-function draw(id,hue,sat,light){
+function draw(id,hue,sat,light,correct){
 	var canvas = document.getElementById(id);
 	var ctx = canvas.getContext("2d");
-	light = 0.5;
+	light = 0.55;
 	
 	rgb = hslToRgb(hue,sat,light);
+	if (correct) {
+		// Here we go from rgb to XY, limit the XY values to the red triangle and then go back to rgb
+		XY = rgb_to_XY(rgb[0],rgb[1],rgb[2]);
+		XY = limit_XY_values(XY[0],XY[1]);
+		rgb = XY_to_rgb(XY[0], XY[1], light);
+	}
+
 	r = Math.round(rgb[0]);
 	g = Math.round(rgb[1]);
 	b = Math.round(rgb[2]);
@@ -77,9 +85,9 @@ function draw(id,hue,sat,light){
 // Used when disregarding the value of the selectors, only wanting to draw the color of the bulb or if it is off
 function drawLamp(id, hue, sat, bri) {
 	if (!document.getElementById("switch_" + id).checked) {
-		draw("color_shower_" + id, 0, 0, 1);
+		draw("color_shower_" + id, 0, 0, 1, false);
 	} else {
-		draw("color_shower_" + id, hue/65535, sat/254, bri/254);
+		draw("color_shower_" + id, hue/65535, sat/254, bri/254, true);
 	}
 }
 
@@ -87,15 +95,18 @@ function drawLamp(id, hue, sat, bri) {
 function draw_shower(){
 	var canvas = document.getElementById("color_shower");
 	var ctx = canvas.getContext("2d");
-	light = 0.5;
+	light = 0.55;
 	hue = document.getElementById("hue").value/65535;
 	sat = document.getElementById("sat").value/254;
 
 	rgb = hslToRgb(hue,sat,light);
+	console.log("RGB value: r: " + rgb[0] + "g :" + rgb[1] + "b: " + rgb[2]);
 	// Here we go from rgb to XY, limit the XY values to the red triangle and then go back to rgb
-	XY = rgb_to_XY(rgb[0],rgb[1],rgb[2]);
-	XY = limit_XY_values(XY[0],XY[1]);
-	rgb = XY_to_rgb(XY[0], XY[1], light);
+	xy = rgb_to_XY(rgb[0],rgb[1],rgb[2]);
+	console.log("Before limiting: x: " + xy[0] + " y: " + xy[1]);
+	xy = limit_XY_values(xy[0],xy[1])
+	console.log("After limiting: x: " + xy[0] + " y: " + xy[1]);
+	rgb = XY_to_rgb(xy[0], xy[1], light);
 
 	r = Math.round(rgb[0]);
 	g = Math.round(rgb[1]);
@@ -172,14 +183,18 @@ function limit_XY_values(x,y) {
 }
 
 // Takes RGB values and returns array with XY values
-function rgb_to_XY(red,green,blue){
+function rgb_to_XY(ired,igreen,iblue){
 	// For the hue bulb the corners of the triangle are:
 	// -Red: 0.675, 0.322
 	// -Green: 0.4091, 0.518
 	// -Blue: 0.167, 0.04
-	//var normalizedToOne = [ired / 255, igreen / 255, iblue / 255]
+	var normalizedToOne = [ired / 255, igreen / 255, iblue / 255]
 
-	//var red, green, blue;
+	var red, green, blue;
+
+	red = normalizedToOne[0];
+	green = normalizedToOne[1];
+	blue = normalizedToOne[2];
 
 	// Make red more vivid
 	/*if (normalizedToOne[0] > 0.04045) {
@@ -203,15 +218,44 @@ function rgb_to_XY(red,green,blue){
 	    blue = (normalizedToOne[2] / 12.92);
 	}*/
 
-	var X =  (red * 0.649926 + green * 0.103455 + blue * 0.197109);
-	var Y =  (red * 0.234327 + green * 0.743075 + blue * 0.022598);
-	var Z =  (red * 0.0000000 + green * 0.053077 + blue * 1.035763);
+	if ( red > 0.04045 ) {
+		red = Math.pow(( ( red + 0.055 ) / 1.055 ), 2.4);
+	}
+	else {
+		red = red / 12.92;
+	}
+	if ( green > 0.04045 ) {
+		green = Math.pow(( (green + 0.055) / 1.055 ),2.4);
+	}
+	else {
+		green = green / 12.92;
+	}
+	if ( blue > 0.04045 ) {
+		blue = Math.pow((blue + 0.055 ) / 1.055, 2.4);
+	}
+	else {
+		blue = blue / 12.92;
+	}
+
+	red = red * 100;
+	green = green * 100;
+	blue = blue * 100;
+
+	//Observer. = 2°, Illuminant = D65
+	X = red * 0.4124 + green * 0.3576 + blue * 0.1805;
+	Y = red * 0.2126 + green * 0.7152 + blue * 0.0722;
+	Z = red * 0.0193 + green * 0.1192 + blue * 0.9505;
+
+
+	/*var X = red * 0.4360747 + green * 0.3850649 + blue * 0.1430804;
+	var Y = red * 0.2225045 + green * 0.7168786 + blue * 0.0606169;
+	var Z = red * 0.0139322 + green * 0.0971045 + blue * 0.7141733;*/
+	console.log(X + " " + Y + " " + Z);
 
 	var x = X / (X + Y + Z);
 	var y = Y / (X + Y + Z);
 
 	return [x, y];
-
 }
 
 function XY_to_rgb(x,y,light) {
