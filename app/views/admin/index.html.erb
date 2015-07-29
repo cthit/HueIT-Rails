@@ -1,7 +1,25 @@
 <main>
 <%if current_user.admin? %>
-	<table>
-		<%= render partial: 'log_list' %>
-	</table>
+	<div class="container">
+		<div>
+			<table class='striped'>
+				<thead>
+					<tr>
+						<th data-field="time"> Time </th>
+						<th data-field="cid"> CID </th>
+						<th data-field="entry"> Entry </th>
+					</tr>
+				</thead>
+				<tbody>
+					<%= render partial: 'log_list' %>
+				</tbody>
+			</table>
+		</div>
+		<% if @is_locked %>
+			<%= link_to("unlock", "lock", class: 'btn') %>
+		<% else %>
+			<%= link_to("lock", "lock", class: 'btn') %>
+		<% end %>
+	</div>
 <%end%>
 </main>
