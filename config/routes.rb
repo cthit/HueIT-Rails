@@ -15,9 +15,10 @@ Rails.application.routes.draw do
   get "lights/:id/switchOnOff" => "lights#switchOnOff"
 
   get 'admin/index'
-
   get 'admin' => 'admin#index'
 
+  get 'admin/lock'
+  get 'lock' => 'admin#lock'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
