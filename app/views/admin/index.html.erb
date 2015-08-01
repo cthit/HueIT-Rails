@@ -1,7 +1,10 @@
 <main>
-<%if current_user.admin? %>
-	<table>
-		<%= render partial: 'log_list' %>
-	</table>
-<%end%>
+	<% if current_user.in_group?(@group) || current_user.admin?%>
+		<table>
+			<%= render partial: 'log_list' %>
+		</table>
+		<a href="lock?lock_type=only_group">Lock for only group(and admin)</a><br>
+		<a href="lock?lock_type=only_admin">Lock for only admin</a><br>
+		<a href="lock?lock_type=unlocked">Unlock</a><br>
+	<%end%>
 </main>

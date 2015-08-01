@@ -1,8 +1,11 @@
 class LightsController < ApplicationController
+	include AdminHelper
+
+	before_action :check_lock_state, except: [:index]
+
 	def change_logger
 		@@change_logger ||= Logger.new("#{Rails.root}/log/change.log")
 	end
-
 #Creates sites
 	def index
 		begin
@@ -147,11 +150,29 @@ class LightsController < ApplicationController
 		@light.save
 		log("Lamp ##{params[:id]} toggled")
 	end
+	
+	private
 	def log(change)
 		entry = LogEntry.new
 		@user = User.find_by_token cookies[:chalmersItAuth]
 		entry.cid = @user.cid
 		entry.change = change
 		entry.save
+	end
+
+	def check_lock_state
+		#Gets all lockstates orders by creation and gets the latest one
+		latest_lock = LockState.order(:created_at).last
+		#if exp date is later than current time
+		if latest_lock.expiration_date >= Time.now
+			#checks lock state
+			if latest_lock.state.eql?("only_group") || latest_lock.state.eql?("only_admin")
+				#call to active booking to get @group (can this be done better?)
+				active_booking
+				unless current_user.in_group(@group) || current_user.admin?
+					render :file => "app/views/lights/lock.html", :status => :unauthorized
+				end
+			end
+		end
 	end
 end
