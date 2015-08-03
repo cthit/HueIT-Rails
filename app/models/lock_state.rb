@@ -1,3 +1,3 @@
 class LockState < ActiveRecord::Base
-	validates :expiration_date
+	has_one :expiration_date
 end
