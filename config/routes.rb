@@ -9,6 +9,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :admin do
+    collection do
+      get :lock
+    end
+  end
+
   root 'lights#index'
   get "lights/:id/turnOff" => "lights#turnOff"
   get "lights/:id/turnOn" => "lights#turnOn"

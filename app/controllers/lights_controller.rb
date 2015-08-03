@@ -67,19 +67,21 @@ class LightsController < ApplicationController
 
 		lights.each do |light|
 			bulb = Huey::Bulb.find light.to_i
-			bulb.update(sat: (params[:sat]).to_i, hue: (params[:hue].to_i), bri: (params[:bri].to_i))
-			bulb.save
-			@changedLights += light.to_s+" "
+			if bulb.on 
+				bulb.update(sat: (params[:sat]).to_i, hue: (params[:hue].to_i), bri: (params[:bri].to_i)) 
+				bulb.save 
+				@changedLights += light.to_s+" " 
+			end
 		end
 		
-		@user = User.find_by_token cookies[:chalmersItAuth]
-		change_logger.info "#{@user.cid}: Lamps ##{@changedLights}color changed to #{(params[:rgb][:color]).to_s}"
-		log("Lamps ##{@changedLights}color changed to #{(params[:rgb][:color]).to_s}")
-
 		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
 		end
+
+		@user = User.find_by_token cookies[:chalmersItAuth]
+		change_logger.info "#{@user.cid}: Lamps ##{@changedLights}values changed to hue:#{(params[:hue]).to_s} sat: #{(params[:sat]).to_s} bri: #{(params[:bri]).to_s}"
+		log "Lamps ##{@changedLights}color changed to hue:#{(params[:hue]).to_s} sat: #{(params[:sat]).to_s} bri: #{(params[:bri]).to_s}"
 	end
 #shows a specific lamp (lights/1)
 	def show
@@ -90,8 +92,10 @@ class LightsController < ApplicationController
 		lights = Huey::Bulb.all
 
 		lights.each do |light|
-			light.update(rgb: '#cff974', bri: 200)
-			light.save
+			if light.on 
+				light.update(rgb: '#cff974', bri: 200)
+				light.save
+			end
 		end
 
 		@user = User.find_by_token cookies[:chalmersItAuth]
@@ -158,21 +162,5 @@ class LightsController < ApplicationController
 		entry.cid = @user.cid
 		entry.change = change
 		entry.save
-	end
-
-	def check_lock_state
-		#Gets all lockstates orders by creation and gets the latest one
-		latest_lock = LockState.order(:created_at).last
-		#if exp date is later than current time
-		if latest_lock.expiration_date >= Time.now
-			#checks lock state
-			if latest_lock.state.eql?("only_group") || latest_lock.state.eql?("only_admin")
-				#call to active booking to get @group (can this be done better?)
-				active_booking
-				unless current_user.in_group(@group) || current_user.admin?
-					render :file => "app/views/lights/lock.html", :status => :unauthorized
-				end
-			end
-		end
 	end
 end

@@ -6,6 +6,16 @@ class AdminController < ActionController::Base
 	def index
 		#Gets entries from last 3 hours
 		@log_entries = LogEntry.where("created_at >= ?", Time.now - 3.hour)
+		@is_locked = locked?
+	end
+
+	def lock
+		index
+	end
+
+	def locked?
+		check_lock_state
+		@is_locked
 	end
 
 	def lock
@@ -20,14 +30,16 @@ class AdminController < ActionController::Base
 				if @group 
 					lock_state.group = @group
 					lock_state.expiration_date = @exp_date
+					@lock_type = params[:lock_type] + " until: " + @exp_date.to_s
 				else
 					lock_state.group = "digit"
 					lock_state.expiration_date = DateTime.now + 1.hour
+					@lock_type = params[:lock_type] + " until: " + (DateTime.now + 1.hour).to_s
+
 				end
 				lock_state.user = current_user.cid
 				lock_state.save
 				#To print later
-				@lock_type = params[:lock_type]
 			else
 				@lock_type = "INVALID TYPE"
 			end  

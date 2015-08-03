@@ -1,26 +1,33 @@
 <%= form_tag(multi_update_lights_path, remote:true) do %>
-<div class="col s9 m9 l4 offset-s2 offset-m2 offset-l1">
-	<table class="lights" id="lights_list">
-		<%= render partial: 'lights_list' %>	
-	</table>
+
+<div class="row">
+	<div class="col s11 m11 l11 offset-s1 offset-m1 offset-l1">
+		<table class="lights">
+			<div id="lights_list">
+				<%= render partial: 'lights_list' %>
+			</div>	
+		</table>
+
+	</div>
 </div>
-	<div class="col s9 m9 l7 offset-s3 offset-m3">
+<div class="row">
+	<div class="col s9 m9 l9 offset-s1 offset-m1 offset-l1">
 		<div class="col l8">
 			<div class="section">	 
 				<p><%= label_tag "Saturation (of color)"%></p>
 				<%= range_field_tag :sat, 254, in: 0..254, class: 'update col s9', oninput:"draw_shower();"%>
 				<%= text_field_tag :sat, 254, class: 'update col s3', onkeypress:"draw_shower();"%>
-			</div><br><br>
+			</div><br>
 			<div class="section">	
 				<p><%= label_tag "Hue value (of color)"%></p>
 				<%= range_field_tag :hue, 65535,in: 0..65535, class: 'update col s9', oninput:"draw_shower();"%>
 				<%= text_field_tag :hue, 65535, class: 'update col s3', onkeypress:"draw_shower();"%>
-			</div><br><br><br>
+			</div><br><br>
 			<div class="section">	
 				<p><%= label_tag "Brightness (of bulbs)"%></p>
 				<%= range_field_tag :bri, 254,in: 0..254, class: 'update col s9'%>
 				<%= text_field_tag :bri, 254, class: 'update col s3'%>
-			</div><br><br>
+			</div><br>
 			<div class="section">
 				<%= label_tag "Select all", "Select all", class: "btn", id: "select_all_btn" %>
 				<%= label_tag "Deselect all", "Deselect all", class: "btn", id: "deselect_all_btn" %>
@@ -34,5 +41,6 @@
 			</canvas>
 		</div>
 		</div>
+	</div>
 	</div>
 <% end %>			
