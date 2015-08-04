@@ -5,7 +5,7 @@ class AdminController < ActionController::Base
   	rescue_from SecurityError, with: :not_signed_in
 	def index
 		#Gets last 50 entries
-		@log_entries = LogEntry.last(50)
+		@log_entries = LogEntry.last(30)
 		@is_locked = locked?
 	end
 
