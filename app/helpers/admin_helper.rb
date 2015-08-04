@@ -32,7 +32,7 @@ module AdminHelper
 		#if exp date is later than current time
 		if latest_lock.expiration_date >= Time.now
 			#checks lock state
-			if latest_lock.state.eql?("only_group") || latest_lock.state.eql?("only_admin")
+			if latest_lock.state.eql?("locked")
 				@is_locked = true
 				#call to active booking to get @group (can this be done better?)
 				active_booking

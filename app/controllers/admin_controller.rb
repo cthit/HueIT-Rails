@@ -23,7 +23,7 @@ class AdminController < ActionController::Base
 		active_booking
 		if current_user.in_group?(@group) || current_user.admin?
 			#If the params of url are valid
-			if params[:lock_type].eql?("only_group") || params[:lock_type].eql?("only_admin") || params[:lock_type].eql?("unlocked")
+			if params[:lock_type].eql?("locked") || params[:lock_type].eql?("unlocked")
 				#Create new lockstate using params
 				lock_state = LockState.new
 				lock_state.state = params[:lock_type]
@@ -41,7 +41,7 @@ class AdminController < ActionController::Base
 				lock_state.save
 				#To print later
 			else
-				@lock_type = "INVALID TYPE"
+				@lock_type = "INVALID STATE"
 			end  
 		end
 	end
