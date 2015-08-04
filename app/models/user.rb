@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
 	end
 
 	def in_group?(group)
-		groups.include? group
+		groups.include? group.to_sym
 	end
 
 	def self.find_by_token(token)
