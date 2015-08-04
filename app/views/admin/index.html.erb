@@ -1,5 +1,5 @@
 <main>
-<%if current_user.in_group?(@group) || current_user.admin? %>
+<%if current_user.in_group?(@group.to_s) || current_user.admin? %>
 	<div class="container">
 		<div>
 			<table class='striped'>

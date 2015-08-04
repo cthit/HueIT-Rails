@@ -21,7 +21,7 @@ class AdminController < ActionController::Base
 	def lock
 		#Call to active_booking to get @group, can this be done less ugly?
 		active_booking
-		if current_user.in_group?(@group) || current_user.admin?
+		if @user.in_group?(@group.to_s) || @user.admin?
 			#If the params of url are valid
 			if params[:lock_type].eql?("locked") || params[:lock_type].eql?("unlocked")
 				#Create new lockstate using params
