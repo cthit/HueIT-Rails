@@ -16,10 +16,10 @@
 			</table>
 		</div>
 		<% if @is_locked %>
-			<%= link_to("lock", "lock?lock_type=unlocked", class: 'btn') %>
+			<%= link_to("unlock", "lock?lock_type=unlocked", class: 'btn') %>
 		<% else %>
-			<%= link_to("lock", "lock?lock_type=only_group",  class: 'btn') %>
-			<%= link_to("lock", "lock?lock_type=only_admin", class: 'btn') %>
+			<%= link_to("lock for only group(and admin)", "lock?lock_type=only_group",  class: 'btn') %>
+			<%= link_to("lock for only admin", "lock?lock_type=only_admin", class: 'btn') %>
 		<% end %>
 	</div>
 <%end%>
