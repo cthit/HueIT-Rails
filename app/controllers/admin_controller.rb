@@ -4,8 +4,8 @@ class AdminController < ActionController::Base
 
   	rescue_from SecurityError, with: :not_signed_in
 	def index
-		#Gets entries from last 3 hours
-		@log_entries = LogEntry.where("created_at >= ?", Time.now - 3.hour)
+		#Gets last 50 entries
+		@log_entries = LogEntry.last(50)
 		@is_locked = locked?
 	end
 
