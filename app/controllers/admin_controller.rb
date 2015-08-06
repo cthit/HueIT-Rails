@@ -1,7 +1,7 @@
 class AdminController < ActionController::Base
 	include AdminHelper
   	helper_method :current_user
-
+  	before_action :active_booking
   	rescue_from SecurityError, with: :not_signed_in
 	def index
 		#Gets last 50 entries
@@ -19,8 +19,6 @@ class AdminController < ActionController::Base
 	end
 
 	def lock
-		#Call to active_booking to get @group, can this be done less ugly?
-		active_booking
 		if @user.in_group?(@group.to_s) || @user.admin?
 			#If the params of url are valid
 			if params[:lock_type].eql?("locked") || params[:lock_type].eql?("unlocked")
