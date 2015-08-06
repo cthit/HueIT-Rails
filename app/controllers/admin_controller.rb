@@ -19,7 +19,7 @@ class AdminController < ActionController::Base
 	end
 
 	def lock
-		if @user.in_group?(@group.to_s) || @user.admin?
+		if current_user.in_group?(@group.to_s) || current_user.admin?
 			#If the params of url are valid
 			if params[:lock_type].eql?("locked") || params[:lock_type].eql?("unlocked")
 				#Create new lockstate using params
