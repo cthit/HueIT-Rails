@@ -36,7 +36,7 @@ module AdminHelper
 				@is_locked = true
 				#call to active booking to get @group (can this be done better?)
 				active_booking
-				unless current_user.in_group?(@group) || current_user.admin?
+				unless current_user.in_group?(@group.to_s) || current_user.admin?
 					render :file => "app/views/lights/lock.html", :status => :unauthorized
 				end
 			end
