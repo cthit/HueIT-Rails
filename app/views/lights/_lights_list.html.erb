@@ -42,7 +42,7 @@
 			<label>
 		  		Off
 		    	<%=check_box_tag "switch_5", 'on/off', @lights[4].on, 
-		      		onclick:"switchOnOff(5,#@lights[4].hue},#{@lights[4].sat},#{@lights[4].bri});"%>
+		      		onclick:"switchOnOff(5,#{@lights[4].hue},#{@lights[4].sat},#{@lights[4].bri});"%>
 		    	  <span class="lever"></span>
 	    	 	On
 		   </label>
