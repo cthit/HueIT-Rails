@@ -88,8 +88,8 @@ function draw_shower(){
 	var canvas = document.getElementById("color_shower");
 	var ctx = canvas.getContext("2d");
 	light = 0.5;
-	hue = document.getElementById("hue").value/65535;
-	sat = document.getElementById("sat").value/254;
+	hue = document.getElementById("hue_text").value/65535;
+	sat = document.getElementById("sat_text").value/254;
 
 	rgb = hslToRgb(hue,sat,light);
 	// Here we go from rgb to XY, limit the XY values to the red triangle and then go back to rgb
