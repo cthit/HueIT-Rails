@@ -12,7 +12,7 @@
 		   </label>
 	   </div>
 	</div>
-	<div class="col s1"><canvas id="color_shower_4" width="30" height="30"></div>
+	<div class="col s1"><canvas onclick="setSliders(4)" id="color_shower_4" width="30" height="30"></div>
 	<div class="col s2">
 		<%= check_box_tag "lights[4]", 'yes', false, class: 'filled-in'%>
 		<%= label_tag "select_4", "Select", for: "lights_4"%>
@@ -29,7 +29,7 @@
 		   </label>
 	   </div>
 	</div>
-	<div class="col s1"><canvas id="color_shower_1" width="30" height="30"></div>
+	<div class="col s1"><canvas onclick="setSliders(1)" id="color_shower_1" width="30" height="30"></div>
 	<div class="col s2">
 		<%= check_box_tag "lights[1]", 'yes', false, class: 'filled-in'%>
 		<%= label_tag "select_1", "Select", for: "lights_1"%>
@@ -48,7 +48,7 @@
 		   </label>
 	   </div>
 	</div>
-	<div class="col s1"><canvas id="color_shower_5" width="30" height="30"></div>
+	<div class="col s1"><canvas onclick="setSliders(5)" id="color_shower_5" width="30" height="30"></div>
 	<div class="col s2">
 		<%= check_box_tag "lights[5]", 'yes', false, class: 'filled-in'%>
 		<%= label_tag "select_5", "Select", for: "lights_5"%>
@@ -65,7 +65,7 @@
 		   </label>
 	   </div>
 	</div>
-	<div class="col s1"><canvas id="color_shower_2" width="30" height="30"></div>
+	<div class="col s1"><canvas onclick="setSliders(2)" id="color_shower_2" width="30" height="30"></div>
 	<div class="col s2">
 		<%= check_box_tag "lights[2]", 'yes', false, class: 'filled-in'%>
 		<%= label_tag "select_2", "Select", for: "lights_2"%>
@@ -84,7 +84,7 @@
 		   </label>
 	   </div>
 	</div>
-	<div class="col s1"><canvas id="color_shower_6" width="30" height="30"></div>
+	<div class="col s1"><canvas onclick="setSliders(6)" id="color_shower_6" width="30" height="30"></div>
 	<div class="col s2">
 		<%= check_box_tag "lights[6]", 'yes', false, class: 'filled-in'%>
 		<%= label_tag "select_6", "Select", for: "lights_6"%>
@@ -101,7 +101,7 @@
 		   </label>
 	   </div>
 	</div>
-	<div class="col s1"><canvas id="color_shower_3" width="30" height="30"></div>
+	<div class="col s1"><canvas onclick="setSliders(3)" id="color_shower_3" width="30" height="30"></div>
 	<div class="col s2">
 		<%= check_box_tag "lights[3]", 'yes', false, class: 'filled-in'%>
 		<%= label_tag "select_3", "Select", for: "lights_3"%>
