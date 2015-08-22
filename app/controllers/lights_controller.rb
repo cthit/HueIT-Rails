@@ -68,7 +68,7 @@ class LightsController < ApplicationController
 		lights.each do |light|
 			bulb = Huey::Bulb.find light.to_i
 			if bulb.on 
-				bulb.update(sat: (params[:sat]).to_i, hue: (params[:hue].to_i), bri: (params[:bri].to_i)) 
+				bulb.update(sat: (params[:sat_text]).to_i, hue: (params[:hue_text].to_i), bri: (params[:bri_text].to_i)) 
 				bulb.save 
 				@changedLights += light.to_s+" " 
 			end
@@ -80,8 +80,8 @@ class LightsController < ApplicationController
 		end
 
 		@user = User.find_by_token cookies[:chalmersItAuth]
-		change_logger.info "#{@user.cid}: Lamps ##{@changedLights}values changed to hue:#{(params[:hue]).to_s} sat: #{(params[:sat]).to_s} bri: #{(params[:bri]).to_s}"
-		log "Lamps ##{@changedLights}color changed to hue:#{(params[:hue]).to_s} sat: #{(params[:sat]).to_s} bri: #{(params[:bri]).to_s}"
+		change_logger.info "#{@user.cid}: Lamps ##{@changedLights}values changed to hue:#{(params[:hue_text]).to_s} sat: #{(params[:sat_text]).to_s} bri: #{(params[:bri_text]).to_s}"
+		log "Lamps ##{@changedLights}color changed to hue:#{(params[:hue_text]).to_s} sat: #{(params[:sat_text]).to_s} bri: #{(params[:bri_text]).to_s}"
 	end
 #shows a specific lamp (lights/1)
 	def show
