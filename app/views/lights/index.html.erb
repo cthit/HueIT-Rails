@@ -29,6 +29,9 @@
 						<%=link_to "Reset", reset_lights_lights_path, remote: true, class: "btn yellow darken-4"%>
 						<%=link_to "On all", turn_all_on_lights_path, remote: true, class: "btn"%>
 						<%=link_to "Off all", turn_all_off_lights_path, remote: true, class: "btn"%>
+						<%if current_user.in_group?(@group.to_s) || current_user.admin? %>
+							<%=link_to "Administration", '/admin', remote: false, class: "btn"%>
+						<%end%>
 					</div>
 				</div>
 			</div>	
