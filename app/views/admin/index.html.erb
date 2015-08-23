@@ -1,6 +1,12 @@
 <main>
 <%if current_user.in_group?(@group.to_s) || current_user.admin? %>
 	<div class="container">
+		<%= link_to("Home", "/", class: 'btn') %>
+		<% if @is_locked %>
+			<%= link_to("Unlock", "lock?lock_type=unlocked", class: 'btn') %>
+		<% else %>
+			<%= link_to("Lock", "lock?lock_type=locked", class: 'btn') %>
+		<% end %>
 		<div>
 			<table class='striped'>
 				<thead>
@@ -15,11 +21,6 @@
 				</tbody>
 			</table>
 		</div>
-		<% if @is_locked %>
-			<%= link_to("unlock", "lock?lock_type=unlocked", class: 'btn') %>
-		<% else %>
-			<%= link_to("LOCK", "lock?lock_type=locked", class: 'btn') %>
-		<% end %>
 	</div>
 <%end%>
 </main>
