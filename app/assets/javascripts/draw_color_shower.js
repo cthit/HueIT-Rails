@@ -96,16 +96,16 @@ function draw_shower(){
 	var canvas = document.getElementById("color_shower");
 	var ctx = canvas.getContext("2d");
 	light = 0.55;
-	hue = document.getElementById("hue").value/65535;
-	sat = document.getElementById("sat").value/254;
+	hue = document.getElementById("hue_text").value/65535;
+	sat = document.getElementById("sat_text").value/254;
 
 	rgb = hslToRgb(hue,sat,light);
-	console.log("RGB value: r: " + rgb[0] + "g :" + rgb[1] + "b: " + rgb[2]);
+	//console.log("RGB value: r: " + rgb[0] + "g :" + rgb[1] + "b: " + rgb[2]);
 	// Here we go from rgb to XY, limit the XY values to the red triangle and then go back to rgb
 	xy = rgb_to_XY(rgb[0],rgb[1],rgb[2]);
-	console.log("Before limiting: x: " + xy[0] + " y: " + xy[1]);
+	//console.log("Before limiting: x: " + xy[0] + " y: " + xy[1]);
 	xy = limit_XY_values(xy[0],xy[1])
-	console.log("After limiting: x: " + xy[0] + " y: " + xy[1]);
+	//console.log("After limiting: x: " + xy[0] + " y: " + xy[1]);
 	rgb = XY_to_rgb(xy[0], xy[1], light);
 
 	r = Math.round(rgb[0]);
@@ -250,7 +250,7 @@ function rgb_to_XY(ired,igreen,iblue){
 	/*var X = red * 0.4360747 + green * 0.3850649 + blue * 0.1430804;
 	var Y = red * 0.2225045 + green * 0.7168786 + blue * 0.0606169;
 	var Z = red * 0.0139322 + green * 0.0971045 + blue * 0.7141733;*/
-	console.log(X + " " + Y + " " + Z);
+	//console.log(X + " " + Y + " " + Z);
 
 	var x = X / (X + Y + Z);
 	var y = Y / (X + Y + Z);
