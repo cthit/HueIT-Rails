@@ -63,15 +63,15 @@ function setSliders(id) {
 	var HSB = rgb2hsb(r,g,b);
 	var hueSlider = document.getElementById("hue_range");
 	var hueText = document.getElementById("hue_text");
-	hueSlider.value = HSB.hue;
-	hueText.value = HSB.hue;
+	hueSlider.value = Math.round(HSB.hue);
+	hueText.value = Math.round(HSB.hue);
 	var satSlider = document.getElementById("sat_range");
 	var satText = document.getElementById("sat_text");
-	satSlider.value = HSB.sat;
-	satText.value = HSB.sat;
+	satSlider.value = Math.round(HSB.sat);
+	satText.value = Math.round(HSB.sat);
 	var briSlider = document.getElementById("bri_range");
 	var briText = document.getElementById("bri_text");
-	briSlider.value = HSB.bri;
-	briText.value = HSB.bri;
+	briSlider.value = Math.round(HSB.bri);
+	briText.value = Math.round(HSB.bri);
 
 }
