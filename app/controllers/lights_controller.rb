@@ -73,15 +73,15 @@ class LightsController < ApplicationController
 				@changedLights += light.to_s+" " 
 			end
 		end
-		
+	
+		@user = User.find_by_token cookies[:chalmersItAuth]
+		change_logger.info "#{@user.cid}: Lamps ##{@changedLights}values changed to hue:#{(params[:hue_text]).to_s} sat: #{(params[:sat_text]).to_s} bri: #{(params[:bri_text]).to_s}"
+		log "Lamps ##{@changedLights}color changed to hue:#{(params[:hue_text]).to_s} sat: #{(params[:sat_text]).to_s} bri: #{(params[:bri_text]).to_s}"
+
 		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
 		end
-
-		@user = User.find_by_token cookies[:chalmersItAuth]
-		change_logger.info "#{@user.cid}: Lamps ##{@changedLights}values changed to hue:#{(params[:hue_text]).to_s} sat: #{(params[:sat_text]).to_s} bri: #{(params[:bri_text]).to_s}"
-		log "Lamps ##{@changedLights}color changed to hue:#{(params[:hue_text]).to_s} sat: #{(params[:sat_text]).to_s} bri: #{(params[:bri_text]).to_s}"
 	end
 #shows a specific lamp (lights/1)
 	def show
@@ -128,11 +128,12 @@ class LightsController < ApplicationController
 
 		lights_group.update(on: false, bri: 200, transitiontime: 0)
 
+		log("All lights OFF")
+
 		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
 		end
-		log("All lights OFF")
 	end
 
 	def turn_all_on
@@ -141,11 +142,12 @@ class LightsController < ApplicationController
 
 		lights_group.update(on: true, bri: 200, transitiontime: 0)
 
+		log("All lights ON")
+
 		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
 		end
-		log("All lights ON")
 	end
 #Toggles light state
 	def switchOnOff
