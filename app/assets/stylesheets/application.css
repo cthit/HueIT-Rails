@@ -13,3 +13,7 @@
  *= require_tree .
  *= require_self
  */
+.party-theme{
+	/*background: -webkit-canvas(squares);*/
+	background-color: red;
+}
