@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get :reset_lights
       get :turn_all_on
       get :turn_all_off
+      get :party_on_off
     end
   end
 

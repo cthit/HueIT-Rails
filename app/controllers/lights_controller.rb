@@ -2,10 +2,13 @@ class LightsController < ApplicationController
 	include AdminHelper
 
 	before_action :check_lock_state, except: [:index]
+	before_action :check_party, except: [:index, :party_on_off, :party_off, :party_on]
 
 	def change_logger
 		@@change_logger ||= Logger.new("#{Rails.root}/log/change.log")
 	end
+
+
 #Creates sites
 	def index
 		begin
@@ -17,7 +20,7 @@ class LightsController < ApplicationController
 	end
 
 	def edit
-    @light = Huey::Bulb.find(params[:id])
+    	@light = Huey::Bulb.find(params[:id])
 		for light in @lights
 			light.set_state({
 				:hue => [0,12750,36210,46920,56100].sample,
@@ -36,7 +39,7 @@ class LightsController < ApplicationController
 
 
 	def create
-    @lights = Huey::Bulb.all
+    	@lights = Huey::Bulb.all
 
 		if (params[:newhue0].to_i != 0) then
 			if (params[:newsat0].to_i != 0) then
@@ -74,8 +77,8 @@ class LightsController < ApplicationController
 			end
 		end
 	
-		@user = User.find_by_token cookies[:chalmersItAuth]
-		change_logger.info "#{@user.cid}: Lamps ##{@changedLights}values changed to hue:#{(params[:hue_text]).to_s} sat: #{(params[:sat_text]).to_s} bri: #{(params[:bri_text]).to_s}"
+		#@user = User.find_by_token cookies[:chalmersItAuth]
+		#change_logger.info "#{@user.cid}: Lamps ##{@changedLights}values changed to hue:#{(params[:hue_text]).to_s} sat: #{(params[:sat_text]).to_s} bri: #{(params[:bri_text]).to_s}"
 		log "Lamps ##{@changedLights}color changed to hue:#{(params[:hue_text]).to_s} sat: #{(params[:sat_text]).to_s} bri: #{(params[:bri_text]).to_s}"
 
 		@lights = Huey::Bulb.all
@@ -98,8 +101,8 @@ class LightsController < ApplicationController
 			end
 		end
 
-		@user = User.find_by_token cookies[:chalmersItAuth]
-		change_logger.info "#{@user.cid}: All lamps reset"
+		#@user = User.find_by_token cookies[:chalmersItAuth]
+		#change_logger.info "#{@user.cid}: All lamps reset"
 		log("All lamps reset")
 		
 		@lights = Huey::Bulb.all
@@ -156,6 +159,14 @@ class LightsController < ApplicationController
 		@light.save
 		log("Lamp ##{params[:id]} toggled")
 	end
+
+	def party_on_off
+		if LogEntry.last.change.eql?("PARTY MODE ENGAGED :DDDDD") 
+			party_off
+		else
+			party_on
+		end
+	end
 	
 	private
 	def log(change)
@@ -164,5 +175,50 @@ class LightsController < ApplicationController
 		entry.cid = @user.cid
 		entry.change = change
 		entry.save
+		entry 
+	end
+
+	def party_on
+		entry = log("PARTY MODE ENGAGED :DDDDD")
+
+		Thread.new do 
+			lights = Huey::Bulb.all
+
+			hue_array = Array.new
+			sat_array = Array.new
+			bri_array = Array.new
+
+			lights.each_with_index do |light, i|
+				hue_array[i] = light.hue 
+				sat_array[i] = light.sat
+				bri_array[i] = light.bri
+			end
+
+			while entry.id == LogEntry.last.id
+				# Loop that runs indefinitely until something else is logged
+				# Changes color of lights from a sample
+				lights.each do |light| 
+					light.update(hue: [0, 1000, 10000, 15000, 20000, 45000, 55000, 62000].sample, 
+						sat: [200, 255].sample, bri: 255, transitiontime: 0) 
+					light.save  
+				end
+			end
+
+			lights.each_with_index do |light, i|
+				light.update(sat: sat_array[1], hue: hue_array[i], bri: bri_array[i]) 
+				light.save 
+			end
+
+		end
+	end
+
+	def party_off
+		log("no more party :(")
+	end
+
+	def check_party
+		if LogEntry.last.change.eql?("PARTY MODE ENGAGED :DDDDD") 
+			party_off
+		end
 	end
 end
