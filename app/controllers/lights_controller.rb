@@ -201,6 +201,7 @@ class LightsController < ApplicationController
 					light.update(hue: [0, 1000, 10000, 15000, 20000, 45000, 55000, 62000].sample, 
 						sat: [200, 255].sample, bri: 255, transitiontime: 0) 
 					light.save  
+					sleep(0.2)
 				end
 			end
 
