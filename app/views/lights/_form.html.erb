@@ -31,10 +31,10 @@
 				<%= range_field_tag :hue_range, 65535,in: 0..65535, class: 'update col s9', oninput:"draw_sat_canvas();"%>
 				
 			</div><br><br>
-			<div class="section">	
+			<div class="section col s11" id='wrapper'>	
 				<p><%= label_tag "Brightness (of bulbs)"%></p>
+				<canvas class='pink' id='bri_canvas'></canvas>
 				<%= range_field_tag :bri_range, 254,in: 0..254, class: 'update col s9'%>
-				<%= text_field_tag :bri_text, 254, class: 'update col s3'%>
 			</div><br>
 			<div class="section">
 				<%= label_tag "Select all", "Select all", class: "btn", id: "select_all_btn" %>
