@@ -13,6 +13,8 @@ BlueRedLineM = 0.0527047;
 GreenRedLineK = -0.73711922;
 GreenRedLineM = 0.81955547198;
 
+
+
 /**
 * Converts an HSL color value to RGB. Conversion formula
 * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
@@ -50,35 +52,36 @@ function hslToRgb(h, s, l){
 }
 /**
 * draw() is called first when the body loads, and then on each change of value (hue,bri,sat).
-* the h,s,l value is taken from each
 * Correct is a boolean for if the given value should be corrected to the triangle
+* the h,s,l value is taken from each light
 */
 function draw(id,hue,sat,light,correct){
 	var canvas = document.getElementById(id);
 	var ctx = canvas.getContext("2d");
-	light = 0.55;
-	
-	rgb = hslToRgb(hue,sat,light);
-	if (correct) {
-		// Here we go from rgb to XY, limit the XY values to the red triangle and then go back to rgb
-		XY = rgb_to_XY(rgb[0],rgb[1],rgb[2]);
-		XY = limit_XY_values(XY[0],XY[1]);
-		rgb = XY_to_rgb(XY[0], XY[1], light);
+	var rgb = null;
+
+	if(correct) {
+		rgb = get_limited_rgb(hue, sat, light);
+	} else {
+		rgb = hslToRgb(hue, sat, light)
 	}
 
-	r = Math.round(rgb[0]);
-	g = Math.round(rgb[1]);
-	b = Math.round(rgb[2]);
+	var light = get_light();
+	
+	var rgb = hslToRgb(hue,sat,light);
+	rgb[0] = Math.round(rgb[0]);
+	rgb[1] = Math.round(rgb[1]);
+	rgb[2] = Math.round(rgb[2]);
 
 	/**
 	* So here we create a half circle and we set the fillStyle to the current color of Hue, Saturation and Brightness level
 	*/
 	ctx.beginPath();
-	ctx.arc(15,15,14,0,2*Math.PI,false);
-	ctx.fillStyle= "rgb(" + r + "," + g + "," + b + ")";
+	ctx.arc(15, 15, 14, 0, 2 * Math.PI, false);
+	ctx.fillStyle = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
 	ctx.fill();
-	ctx.lineWidth=2;
-	ctx.strokeStyle='#EDEDED';
+	ctx.lineWidth = 2;
+	ctx.strokeStyle = '#EDEDED';
 	ctx.stroke();
 }
 
@@ -87,60 +90,94 @@ function drawLamp(id, hue, sat, bri) {
 	if (!document.getElementById("switch_" + id).checked) {
 		draw("color_shower_" + id, 0, 0, 1, false);
 	} else {
-		draw("color_shower_" + id, hue/65535, sat/254, bri/254, true);
+		draw("color_shower_" + id, hue / 65535, sat / 254, bri / 254, true);
 	}
+}
+//Returns the value of the hue slider normalized.
+function get_hue() {
+	var range = document.getElementById("hue_range")
+	return range.value / range.max
+}
+//Returns the value of the saturation slider normalized.
+function get_sat() {
+	var range = document.getElementById("sat_range")
+	return range.value / range.max;
+}
+
+function get_light() {
+	return 0.5;
+}
+
+//Returns hue, sat, and light parameters and limits them to the values that our bulbs can display.
+function get_limited_rgb(hue, sat, light) {
+	var rgb = hslToRgb(hue, sat, light);
+	// Here we go from rgb to XY, limit the XY values to the red triangle and then go back to rgb
+	var XY = rgb_to_XY(rgb[0], rgb[1], rgb[2]);
+	XY = limit_XY_values(XY[0], XY[1]);
+	rgb = XY_to_rgb(XY[0], XY[1], light);
+
+	rgb[0] = Math.round(rgb[0]);
+	rgb[1] = Math.round(rgb[1]);
+	rgb[2] = Math.round(rgb[2]);
+
+	return rgb
 }
 
 //Draws the square that shows the value of the hue and saturation sliders
 function draw_shower(){
 	var canvas = document.getElementById("color_shower");
-	var ctx = canvas.getContext("2d");
-	light = 0.55;
-	hue = document.getElementById("hue_text").value/65535;
-	sat = document.getElementById("sat_text").value/254;
+	var context = canvas.getContext("2d");
 
-	rgb = hslToRgb(hue,sat,light);
-	//console.log("RGB value: r: " + rgb[0] + "g :" + rgb[1] + "b: " + rgb[2]);
-	// Here we go from rgb to XY, limit the XY values to the red triangle and then go back to rgb
-	xy = rgb_to_XY(rgb[0],rgb[1],rgb[2]);
-	//console.log("Before limiting: x: " + xy[0] + " y: " + xy[1]);
-	xy = limit_XY_values(xy[0],xy[1])
-	//console.log("After limiting: x: " + xy[0] + " y: " + xy[1]);
-	rgb = XY_to_rgb(xy[0], xy[1], light);
-
-	r = Math.round(rgb[0]);
-	g = Math.round(rgb[1]);
-	b = Math.round(rgb[2]);
-
+	var rgb = get_limited_rgb(get_hue(), get_sat(), get_light())
 	/**
 	* So here we create a half circle and we set the fillStyle to the current color of Hue, Saturation and Brightness level
 	*/
-	ctx.beginPath();
-	ctx.rect(0,40,200,150);
-	ctx.fillStyle= "rgb(" + r + "," + g + "," + b + ")";
-	ctx.fill();
-	ctx.lineWidth=3;
-	ctx.strokeStyle='#EDEDED';
-	ctx.stroke();
+	context.beginPath();
+	context.rect(0, 40, 200, 150);
+	context.fillStyle = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
+	context.fill();
+	context.lineWidth = 3;
+	context.strokeStyle = '#EDEDED';
+	context.stroke();
+}
+//Draws the canvas behind the hue slider with an approximation of what colour the lights will have at that position.
+function draw_hue_canvas(){
+	var canvas = document.getElementById("hue_canvas");
+	var context = canvas.getContext("2d");
+
+	for (var x = 0; x < canvas.width; x += 1) {
+		var hue = x * Math.round(65535 / canvas.width) / 65535;
+		var rgb = get_limited_rgb(hue, get_sat(), get_light())
+		draw_vertical_line_on_x(context, x, canvas.height, rgb)
+	};
+}
+
+function draw_vertical_line_on_x(context, x, y, color) {
+	context.strokeStyle = "rgb(" + color[0] + "," + color[1] + "," + color[2] + ")";
+	context.beginPath();
+	context.moveTo(x, 0);
+	context.lineTo(x, y);
+	context.closePath();
+	context.stroke();
 }
 
 // Function that returns the value of the line in the triangle that goes from blue to green
 // Left line
 // http://www.developers.meethue.com/documentation/core-concepts
 function blueGreenLine(x) {
-	return BlueGreenLineK*x-BlueGreenLineM;
+	return BlueGreenLineK * x - BlueGreenLineM;
 }
 // Function that returns the value of the line in the triangle that goes from green to red
 // Right line
 // http://www.developers.meethue.com/documentation/core-concepts
 function blueRedLine(x) {
-	return BlueRedLineK*x-BlueRedLineM;
+	return BlueRedLineK * x - BlueRedLineM;
 }
 // Function that returns the value of the line in the triangle that goes from green to red
 // Lower line
 // http://www.developers.meethue.com/documentation/core-concepts
 function greenRedLine(x) {
-	return GreenRedLineK*x+GreenRedLineM;
+	return GreenRedLineK * x + GreenRedLineM;
 }
 
 function limit_XY_values(x,y) {
@@ -148,8 +185,8 @@ function limit_XY_values(x,y) {
 
 
 	if (x < GreenCornerX && blueGreenLine(x) < y) {
-		k = -BlueGreenLineK;
-		x = (-k*x + y + BlueGreenLineM)/(BlueGreenLineK - k);
+		var k = -BlueGreenLineK;
+		x = (-k * x + y + BlueGreenLineM) / (BlueGreenLineK - k);
 		// If the value is outside of the triangle (i.e. )
 		if (x > GreenCornerX) {
 			x = GreenCornerX;
@@ -159,8 +196,8 @@ function limit_XY_values(x,y) {
 		y = blueGreenLine(x);
 	}
 	else if (x >= BlueCornerX && x <= RedCornerX && blueRedLine(x) > y) {
-		k = -BlueRedLineK;
-		x = (-k*x + y + BlueRedLineM)/(BlueRedLineK - k);
+		var k = -BlueRedLineK;
+		x = (-k * x + y + BlueRedLineM) / (BlueRedLineK - k);
 		if (x > RedCornerX) {
 			x = RedCornerX;
 		} else if (x < BlueCornerX) {
@@ -169,8 +206,8 @@ function limit_XY_values(x,y) {
 		y = blueRedLine(x);
 	}
 	else if (x >= GreenCornerX && greenRedLine(x) < y) {
-		k = -GreenRedLineK;
-		x = (-k*x + y - GreenRedLineM)/(GreenRedLineK - k);
+		var k = -GreenRedLineK;
+		x = (-k * x + y - GreenRedLineM) / (GreenRedLineK - k);
 		if (x > RedCornerX) {
 			x = RedCornerX;
 		} else if (x < GreenCornerX) {
@@ -183,12 +220,12 @@ function limit_XY_values(x,y) {
 }
 
 // Takes RGB values and returns array with XY values
-function rgb_to_XY(ired,igreen,iblue){
+function rgb_to_XY(red, green, blue){
 	// For the hue bulb the corners of the triangle are:
 	// -Red: 0.675, 0.322
 	// -Green: 0.4091, 0.518
 	// -Blue: 0.167, 0.04
-	var normalizedToOne = [ired / 255, igreen / 255, iblue / 255]
+	var normalizedToOne = [red / 255, green / 255, blue / 255]
 
 	var red, green, blue;
 
@@ -262,8 +299,8 @@ function XY_to_rgb(x,y,light) {
 	// Based on https://github.com/PhilipsHue/PhilipsHueSDK-iOS-OSX/commit/f41091cf671e13fe8c32fcced12604cd31cceaf3
 	var z = 1.0 - x - y;
 	var Y = light;
-	var X = (Y/y)*x;
-	var Z = (Y/y)*z;
+	var X = (Y / y) * x;
+	var Z = (Y / y) * z;
 	// calculate rgb values
 	var r = X  * 1.4628067 - Y * 0.1840623 - Z * 0.2743606;
     var g = -X * 0.5217933 + Y * 1.4472381 + Z * 0.0677227;

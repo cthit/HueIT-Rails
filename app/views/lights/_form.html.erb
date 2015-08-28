@@ -25,10 +25,11 @@
 				<%= range_field_tag :sat_range, 254, in: 0..254, class: 'update col s9', oninput:"draw_shower();"%>
 				<%= text_field_tag :sat_text, 254, class: 'update col s3', onkeypress:"draw_shower();"%>
 			</div><br>
-			<div class="section">	
-				<p><%= label_tag "Hue value (of color)"%></p>
+			<div class="section col s11" id="wrapper">	
+				<p><%= label_tag "Hue value (of color)" %></p>
+				<canvas class = "pink" id="hue_canvas"></canvas> 
 				<%= range_field_tag :hue_range, 65535,in: 0..65535, class: 'update col s9', oninput:"draw_shower();"%>
-				<%= text_field_tag :hue_text, 65535, class: 'update col s3', onkeypress:"draw_shower();"%>
+				
 			</div><br><br>
 			<div class="section">	
 				<p><%= label_tag "Brightness (of bulbs)"%></p>
