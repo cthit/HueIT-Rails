@@ -140,6 +140,19 @@ function draw_shower(){
 	context.strokeStyle = '#EDEDED';
 	context.stroke();
 }
+
+//Draws the canvas behind the saturation slider with an approximation of what colour the lights will have at that position.
+function draw_sat_canvas() {
+	var canvas = document.getElementById("sat_canvas");
+	var context = canvas.getContext("2d");
+
+	for (var x = 0; x < canvas.width; x += 1) {
+		var sat = x * Math.round(256 / canvas.width) / 256;
+		var rgb = get_limited_rgb(get_hue(), sat, get_light())
+		draw_vertical_line_on_x(context, x, canvas.height, rgb)
+	};
+}
+
 //Draws the canvas behind the hue slider with an approximation of what colour the lights will have at that position.
 function draw_hue_canvas(){
 	var canvas = document.getElementById("hue_canvas");
