@@ -141,6 +141,19 @@ function draw_shower(){
 	context.stroke();
 }
 
+//Draws the canvas behind the brightness slider to visualize how the brightness changes
+function draw_bri_canvas() {
+	var canvas = document.getElementById("bri_canvas");
+	var context = canvas.getContext("2d");
+
+	var gradient = context.createLinearGradient(0, 0, canvas.width, 0);
+	gradient.addColorStop(0, "black");
+	gradient.addColorStop(1, "white");
+
+	context.fillStyle = gradient;
+	context.fillRect(0, 0, canvas.width, canvas.height);
+}
+
 //Draws the canvas behind the saturation slider with an approximation of what colour the lights will have at that position.
 function draw_sat_canvas() {
 	var canvas = document.getElementById("sat_canvas");
