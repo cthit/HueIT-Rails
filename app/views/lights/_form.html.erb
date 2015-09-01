@@ -35,20 +35,32 @@
 				<p><%= label_tag "Brightness (of bulbs)"%></p>
 				<canvas class='pink' id='bri_canvas'></canvas>
 				<%= range_field_tag :bri_range, 254,in: 0..254, class: 'update col s9'%>
-			</div><br>
-			<div class="section">
-				<%= label_tag "Select all", "Select all", class: "btn", id: "select_all_btn" %>
-				<%= label_tag "Deselect all", "Deselect all", class: "btn", id: "deselect_all_btn" %>
-			</div>
-			<div class="section">
+				<div class="row section">
 				<%= submit_tag "Change", class: "btn cyan darken-1", id: "change_btn" %>
-			</div>
+		</div>
+			</div><br>
 		</div> 
-		<div class="col s9 m9 l4">
-			<canvas id="color_shower" width="200" height="160">
-			</canvas>
-		</div>
+			<div class='col s9 m9 l4'>
+				<div class='row'>
+					<%=link_to "On all", turn_all_on_lights_path, remote: true, class: "btn"%>
+					<%=link_to "Off all", turn_all_off_lights_path, remote: true, class: "btn"%>
+				</div>
+				<div class='row'>
+					<%= label_tag "Select all", "Select all", class: "btn", id: "select_all_btn" %>
+					<%= label_tag "Deselect all", "Deselect all", class: "btn", id: "deselect_all_btn" %>
+				</div>
+				<div class='row'>
+					<%=link_to "Reset", reset_lights_lights_path, remote: true, class: "btn yellow darken-4"%>
+					<%=link_to "Party", party_on_off_lights_path, remote: true, id: "party_btn", onclick: "togglePartyMode();", class: "btn", :style=>'background: -webkit-canvas(party_btn);', onload: "ruinParty();" %>		
+				</div>
+				<div class='row'>
+					<%if current_user.in_group?(@group.to_s) || current_user.admin? %>
+						<%=link_to "Administration", '/admin', remote: false, class: "btn"%>
+					<%end%>
+				</div>
 		</div>
 	</div>
-	</div>
+</div>
+
+</div>
 <% end %>			
