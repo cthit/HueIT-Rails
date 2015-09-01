@@ -59,16 +59,14 @@ function draw(id,hue,sat,light,correct){
 	var canvas = document.getElementById(id);
 	var ctx = canvas.getContext("2d");
 	var rgb = null;
+	var light = get_light();
 
 	if(correct) {
 		rgb = get_limited_rgb(hue, sat, light);
 	} else {
 		rgb = hslToRgb(hue, sat, light)
 	}
-
-	var light = get_light();
 	
-	var rgb = hslToRgb(hue,sat,light);
 	rgb[0] = Math.round(rgb[0]);
 	rgb[1] = Math.round(rgb[1]);
 	rgb[2] = Math.round(rgb[2]);
