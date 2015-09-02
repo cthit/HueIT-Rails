@@ -13,6 +13,7 @@ class LightsController < ApplicationController
 	def index
 		begin
 			@lights = Huey::Bulb.all
+			@is_locked = check_lock_state
 
 		rescue Huey::Errors::CouldNotFindHue
 			

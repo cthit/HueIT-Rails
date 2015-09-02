@@ -19,7 +19,12 @@
 				<div class ="row">
 					<%= render 'form' %>
 				</div>
-			</div>	
+			<% if @is_locked %>
+				<div class='card-panel red lighten-1 center' id='lockbar'>
+					Hue is locked
+				</div>
+			<% end %>	
+			</div>
 		</div>
 	<% end %>
 </main>

@@ -41,5 +41,6 @@ module AdminHelper
 				end
 			end
 		end
+		@is_locked
 	end
 end
