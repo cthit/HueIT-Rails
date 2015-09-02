@@ -161,7 +161,7 @@ class LightsController < ApplicationController
 	end
 
 	def party_on_off
-		if LogEntry.last.change.eql?("PARTY MODE ENGAGED :DDDDD") 
+		if Rails.application.config.is_party_on
 			party_off
 		else
 			party_on
@@ -180,6 +180,7 @@ class LightsController < ApplicationController
 
 	def party_on
 		entry = log("PARTY MODE ENGAGED :DDDDD")
+		Rails.application.config.is_party_on = true
 
 		Thread.new do 
 			lights = Huey::Bulb.all
@@ -194,7 +195,7 @@ class LightsController < ApplicationController
 				bri_array[i] = light.bri
 			end
 
-			while entry.id == LogEntry.last.id
+			while Rails.application.config.is_party_on 
 				# Loop that runs indefinitely until something else is logged
 				# Changes color of lights from a sample
 				lights.each do |light| 
@@ -215,10 +216,11 @@ class LightsController < ApplicationController
 
 	def party_off
 		log("no more party :(")
+		Rails.application.config.is_party_on = false
 	end
 
 	def check_party
-		if LogEntry.last.change.eql?("PARTY MODE ENGAGED :DDDDD") 
+		if Rails.application.config.is_party_on 
 			party_off
 		end
 	end
