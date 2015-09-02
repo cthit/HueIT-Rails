@@ -125,4 +125,14 @@ function togglePartyMode(){
 		runParty();
 	}
 }
-$(document).on('page:load', ruinParty());
+
+var ready = function() {
+	ruinParty();
+	ruby_ready();
+	draw_hue_canvas();
+	draw_sat_canvas();
+	draw_bri_canvas();
+}
+
+$(document).on('page:load', ready);
+$(document).ready(ready);

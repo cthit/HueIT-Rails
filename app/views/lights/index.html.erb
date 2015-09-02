@@ -2,20 +2,10 @@
 	<% if current_user.present? %>
 		<% content_for :headJavascript do %>
   			<script>
-  			(function () {
-			    if (window.addEventListener) {
-			        window.addEventListener('DOMContentLoaded', domReady, false);
-			    } else {
-			        window.attachEvent('onload', domReady);
-			    }
-			} ());
-  			function domReady() {
+  			function ruby_ready() {
 				<% @lights.each do |light| %>
 					drawLamp(<%=light.id%>, <%=light.hue%>, <%=light.sat%>, <%=light.bri%>);
 				<% end %>
-				draw_hue_canvas();
-				draw_sat_canvas();
-				draw_bri_canvas();
 				<% if Rails.application.config.is_party_on %>
 					togglePartyMode();
 				<% end %>
