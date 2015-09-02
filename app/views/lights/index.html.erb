@@ -16,6 +16,9 @@
 				draw_hue_canvas();
 				draw_sat_canvas();
 				draw_bri_canvas();
+				<% if Rails.application.config.is_party_on %>
+					togglePartyMode();
+				<% end %>
   			}
 			</script>
 		<% end %>
