@@ -30,7 +30,7 @@ module AdminHelper
 		#Gets all lockstates orders by creation and gets the latest one
 		latest_lock = LockState.order(:created_at).last
 		#if exp date is later than current time
-		if latest_lock.expiration_date >= Time.now
+		if latest_lock.present? and latest_lock.expiration_date >= Time.now
 			#checks lock state
 			if latest_lock.state.eql?("locked")
 				@is_locked = true
