@@ -20,6 +20,9 @@
 					<%= render partial: 'log_list' %>
 				</tbody>
 			</table>
+			<div class='section'>
+				<%= will_paginate @log_entries, renderer: MaterializePagination::Rails %>
+			</div>
 		</div>
 	</div>
 <%end%>

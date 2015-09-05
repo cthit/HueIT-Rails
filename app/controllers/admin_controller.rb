@@ -5,7 +5,9 @@ class AdminController < ApplicationController
   	rescue_from SecurityError, with: :not_signed_in
 	def index
 		#Gets last 50 entries
-		@log_entries = LogEntry.order(id: :desc).first(15)
+		#@log_entries = LogEntry.paginate(page: params[:page], per_page: 15).order(id: :desc).first()
+		@log_entries = LogEntry.paginate(:page => params[:page], per_page: 15)
+		
 		@is_locked = locked?
 	end
 
