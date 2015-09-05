@@ -1,0 +1,14 @@
+<footer class=''>
+
+	<div class='container'>
+		<div class='row'>
+			<%= link_to("Home", "/", class: 'btn') %>
+			<% if @is_locked %>
+				<%= link_to("Unlock", "lock?lock_type=unlocked", class: 'btn') %>
+			<% else %>
+				<%= link_to("Lock", "lock?lock_type=locked", class: 'btn') %>
+			<% end %>
+		</div>
+	</div>
+
+</footer>
