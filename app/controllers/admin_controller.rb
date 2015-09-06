@@ -36,7 +36,14 @@ class AdminController < ApplicationController
 				end
 				lock_state.user = current_user.cid
 				lock_state.save
-				#To print later
+
+				if params[:lock_type].eql?("locked")
+					flash[:lock_state_changed] = "Hue is " + @lock_type
+				else
+					flash[:lock_state_changed] = "Hue is unlocked"
+				end
+
+				redirect_to :action => 'index'
 			else
 				@lock_type = "INVALID STATE"
 			end  

@@ -8,6 +8,11 @@
 			<% else %>
 				<%= link_to("Lock", "lock?lock_type=locked", class: 'btn') %>
 			<% end %>
+
+			<% if flash[:lock_state_changed] %>
+				<%= flash[:lock_state_changed]%>
+			<% end %>
+
 		</div>
 	</div>
 
