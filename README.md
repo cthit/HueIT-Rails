@@ -11,7 +11,7 @@ vagrant up
 vagrant ssh
 
 # Install dependencies
-sudo apt-get install libmysqlclient-dev
+sudo apt-get install libcurl3 libcurl3-gnutls libcurl4-openssl-dev libmysqlclient-dev mysql-server redis-server
 
 cd /vagrant
 bundle install
