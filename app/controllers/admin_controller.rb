@@ -30,8 +30,8 @@ class AdminController < ApplicationController
 					@lock_type = params[:lock_type] + " until: " + @exp_date.to_s
 				else
 					lock_state.group = "digit"
-					lock_state.expiration_date = DateTime.now + 1.hour
-					@lock_type = params[:lock_type] + " until: " + (DateTime.now + 1.hour).to_s
+					lock_state.expiration_date = 1.hour.from_now
+					@lock_type = params[:lock_type] + " until: " + 1.hour.from_now.to_s
 
 				end
 				lock_state.user = current_user.cid
