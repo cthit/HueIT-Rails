@@ -1,0 +1,2 @@
+module SseUpdateHelper
+end
