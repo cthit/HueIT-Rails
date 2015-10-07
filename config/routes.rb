@@ -16,6 +16,11 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :sse_update do
+    collection do
+    end
+  end
+
   root 'lights#index'
   get "lights/:id/turnOff" => "lights#turnOff"
   get "lights/:id/turnOn" => "lights#turnOn"
