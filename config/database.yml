@@ -8,6 +8,7 @@ default: &default
   adapter: mysql2
   database: hueIT
   username: hueit
+  pool: 16
   password: nZsEjQtpZNvU4tUq
   host: naboo.chalmers.it
   socket: /tmp/mysql.sock
