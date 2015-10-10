@@ -23,6 +23,8 @@ module HueITRails
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
     config.is_party_on = false
+    # Int for knowing if we are to send an sse 
+    config.sse_int = 0
     config.time_zone = "Stockholm"
   end
 end

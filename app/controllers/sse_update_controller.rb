@@ -4,7 +4,10 @@ class SseUpdateController < ApplicationController
 
   def index
     response.headers['Content-Type'] = 'text/event-stream'
+    change_int = Rails.application.config.sse_int
     while true do
+      # If the int has changed we are told to update
+      if change_int != Rails.application.config.sse_int
         lights = Huey::Bulb.all
 
         hue_array = Array.new
@@ -18,8 +21,7 @@ class SseUpdateController < ApplicationController
         data = {hue: hue_array, sat: sat_array}
 
         response.stream.write 'data: ' + data.to_json + "\n\n"
-
-      sleep 1
+      end
     end
 
     rescue IOError
