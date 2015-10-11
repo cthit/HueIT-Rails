@@ -6,10 +6,14 @@
 				<% @lights.each do |light| %>
 					drawLamp(<%=light.id%>, <%=light.hue%>, <%=light.sat%>, <%=light.bri%>);
 				<% end %>
-				<% if Rails.application.config.is_party_on %>
-					togglePartyMode();
-				<% end %>
   			}
+				function party_ready() {
+					<% if Rails.application.config.is_party_on %>
+						runParty();
+					<% else %>
+						ruinParty();
+					<% end %>
+				}
 			</script>
 		<% end %>
 		<div class = "container">

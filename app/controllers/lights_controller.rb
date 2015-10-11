@@ -81,7 +81,7 @@ class LightsController < ApplicationController
 		#@user = User.find_by_token cookies[:chalmersItAuth]
 		#change_logger.info "#{@user.cid}: Lamps ##{@changedLights}values changed to hue:#{(params[:hue_range]).to_s} sat: #{(params[:sate_range]).to_s} bri: #{(bri_range]).to_s}"
 		log "Lamps ##{@changedLights}color changed to hue:#{(params[:hue_range]).to_s} sat: #{(params[:sate_range]).to_s} bri: #{(params[:bri_range]).to_s}"
-
+		sse_update
 		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
@@ -105,7 +105,7 @@ class LightsController < ApplicationController
 		#@user = User.find_by_token cookies[:chalmersItAuth]
 		#change_logger.info "#{@user.cid}: All lamps reset"
 		log("All lamps reset")
-		
+		sse_update
 		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
@@ -133,7 +133,7 @@ class LightsController < ApplicationController
 		lights_group.update(on: false, bri: 200, transitiontime: 0)
 
 		log("All lights OFF")
-
+		sse_update
 		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
@@ -147,7 +147,7 @@ class LightsController < ApplicationController
 		lights_group.update(on: true, bri: 200, transitiontime: 0)
 
 		log("All lights ON")
-
+		sse_update
 		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
@@ -195,8 +195,8 @@ class LightsController < ApplicationController
 				sat_array[i] = light.sat
 				bri_array[i] = light.bri
 			end
-
-			while Rails.application.config.is_party_on 
+			sse_update
+			while Rails.application.config.is_party_on
 				# Loop that runs indefinitely until something else is logged
 				# Changes color of lights from a sample
 				lights.each do |light| 
@@ -206,7 +206,7 @@ class LightsController < ApplicationController
 					sleep(0.2)
 				end
 			end
-
+			sse_update
 			lights.each_with_index do |light, i|
 				light.update(sat: sat_array[1], hue: hue_array[i], bri: bri_array[i]) 
 				light.save 
@@ -224,5 +224,10 @@ class LightsController < ApplicationController
 		if Rails.application.config.is_party_on 
 			party_off
 		end
+	end
+
+	def sse_update
+		# Change the value so sse_update_controller knows to send an event
+		Rails.application.config.sse_int += 1
 	end
 end

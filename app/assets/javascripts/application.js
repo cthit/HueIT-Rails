@@ -126,12 +126,26 @@ function togglePartyMode(){
 	}
 }
 
+function sse_waiter() {
+	source = new EventSource('/sse_update')
+
+	source.onmessage = function(event) {
+    data = JSON.parse(event.data);
+		for (var i = 1; i <= 6; i++) {
+			drawLamp(i, data.hue[i-1], data.sat[i-1], 255);
+		}
+	};
+	party_ready();
+}
+
 var ready = function() {
 	ruinParty();
 	ruby_ready();
+	party_ready();
 	draw_hue_canvas();
 	draw_sat_canvas();
 	draw_bri_canvas();
+	sse_waiter();
 }
 
 $(document).on('page:load', ready);
