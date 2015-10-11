@@ -39,9 +39,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Hue gem
 gem 'huey'
 
-# Puma gem
-gem 'puma'
-
 #Handles pagination on the admin page
 gem 'will_paginate', '~> 3.0.6'
 
@@ -59,4 +56,3 @@ group :development, :test do
   gem 'spring'
 
 end
-
