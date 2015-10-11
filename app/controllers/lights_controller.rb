@@ -65,27 +65,30 @@ class LightsController < ApplicationController
 	end
 #Changes lights
 	def multi_update
-		lights = params[:lights].keys
+		if params[:lights]
+			lights = params[:lights].keys
 
-		@changedLights = ""
+			@changedLights = ""
 
-		lights.each do |light|
-			bulb = Huey::Bulb.find light.to_i
-			if bulb.on 
-				bulb.update(sat: (params[:sat_range]).to_i, hue: (params[:hue_range].to_i), bri: (params[:bri_range].to_i)) 
-				bulb.save
-				@changedLights += light.to_s+" " 
+			lights.each do |light|
+				bulb = Huey::Bulb.find light.to_i
+				if bulb.on
+					bulb.update(sat: (params[:sat_range]).to_i, hue: (params[:hue_range].to_i), bri: (params[:bri_range].to_i))
+					bulb.save
+					@changedLights += light.to_s+" "
+				end
 			end
+
+			#@user = User.find_by_token cookies[:chalmersItAuth]
+			#change_logger.info "#{@user.cid}: Lamps ##{@changedLights}values changed to hue:#{(params[:hue_range]).to_s} sat: #{(params[:sate_range]).to_s} bri: #{(bri_range]).to_s}"
+			log "Lamps ##{@changedLights}color changed to hue:#{(params[:hue_range]).to_s} sat: #{(params[:sate_range]).to_s} bri: #{(params[:bri_range]).to_s}"
+			sse_update
 		end
-	
-		#@user = User.find_by_token cookies[:chalmersItAuth]
-		#change_logger.info "#{@user.cid}: Lamps ##{@changedLights}values changed to hue:#{(params[:hue_range]).to_s} sat: #{(params[:sate_range]).to_s} bri: #{(bri_range]).to_s}"
-		log "Lamps ##{@changedLights}color changed to hue:#{(params[:hue_range]).to_s} sat: #{(params[:sate_range]).to_s} bri: #{(params[:bri_range]).to_s}"
-		sse_update
 		@lights = Huey::Bulb.all
 		respond_to do |format|
 			format.js
 		end
+
 	end
 #shows a specific lamp (lights/1)
 	def show
