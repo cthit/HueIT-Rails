@@ -8,6 +8,7 @@ class SseUpdateController < ApplicationController
     while true do
       # If the int has changed we are told to update
       if change_int != Rails.application.config.sse_int
+        change_int = Rails.application.config.sse_int 
         lights = Huey::Bulb.all
 
         hue_array = Array.new
