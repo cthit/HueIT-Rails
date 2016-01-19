@@ -145,7 +145,7 @@ var ready = function() {
 	draw_hue_canvas();
 	draw_sat_canvas();
 	draw_bri_canvas();
-	sse_waiter();
+	// sse_waiter();
 }
 
 $(document).on('page:load', ready);
