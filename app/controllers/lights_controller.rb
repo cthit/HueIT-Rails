@@ -133,7 +133,7 @@ class LightsController < ApplicationController
 		lights_group = Huey::Group.new(Huey::Bulb.find(1),Huey::Bulb.find(2),Huey::Bulb.find(3),
 			Huey::Bulb.find(4), Huey::Bulb.find(5), Huey::Bulb.find(6))
 
-		lights_group.update(on: false, bri: 200, transitiontime: 0)
+		lights_group.update(on: false, transitiontime: 0)
 
 		log("All lights OFF")
 		sse_update
@@ -147,7 +147,7 @@ class LightsController < ApplicationController
 		lights_group = Huey::Group.new(Huey::Bulb.find(1),Huey::Bulb.find(2),Huey::Bulb.find(3),
 			Huey::Bulb.find(4), Huey::Bulb.find(5), Huey::Bulb.find(6))
 
-		lights_group.update(on: true, bri: 200, transitiontime: 0)
+		lights_group.update(on: true, transitiontime: 0)
 
 		log("All lights ON")
 		sse_update
