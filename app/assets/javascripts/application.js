@@ -75,7 +75,7 @@ function setSliders(id) {
 	briText.value = Math.round(HSB.bri);
 }
 function runParty(){
-	if (!!!document.getCSSCanvasContext) {
+	if (!document.getCSSCanvasContext) {
 		console.log("Your browser does not support document.getCSSCanvasContext");
    } else {
 		delta = 1000 / 60;
@@ -107,7 +107,7 @@ function runParty(){
 	}
 }
 function ruinParty(){
-	if (!!!document.getCSSCanvasContext) {
+	if (!document.getCSSCanvasContext) {
 		console.log("Your browser does not support document.getCSSCanvasContext")
 	} else {
 		ctx = document.getCSSCanvasContext("2d", "party_btn", 400, 400);
