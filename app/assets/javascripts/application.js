@@ -117,17 +117,22 @@ function ruinParty(){
 }
 function togglePartyMode(){
 	if (typeof partyOn !== 'undefined') {
-    	if(partyOn){
+    	if (partyOn) {
     		partyOn = false;
     		console.log("partyOFF");
-    		clearInterval(loopInterval);
+    		try {
+    			clearInterval(loopInterval);
+    		} catch (err) {
+
+    		}
+
     		ruinParty();
-    	}else{
+    	} else {
     		partyOn = true;
 			console.log("PARTYON");
     		runParty();
     	}
-	}else{
+	} else {
 		partyOn = true;
 		console.log("PARTYON");
 		runParty();
