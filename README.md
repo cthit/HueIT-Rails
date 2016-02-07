@@ -34,7 +34,7 @@ rbenv rehash
 rails server
 
 # The instance is now accessible at localhost:3000
-´´´
+```
 
 # Using vagrant 
 One of the plugins to vagrant are deprecated so this method is not recomended.
