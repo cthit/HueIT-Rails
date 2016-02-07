@@ -103,35 +103,16 @@ body{
     position:relative;
  }
 
-#hue_range {
+#hue_range, #sat_range, #bri_range {
 	position: absolute;
 	top: 30px;
-	width: 95%;
+	left: 0;
+	width: 93%;
+	height: 5px;
+	margin-left:10px;
 }
 
-#hue_canvas {
-	width: 100%;
-	height: 30px;
-}
-
-#sat_range {
-	position: absolute;
-	top: 30px;
-	width: 95%;
-}
-
-#sat_canvas {
-	width: 100%;
-	height: 30px;
-}
-
-#bri_range {
-	position: absolute;
-	top: 30px;
-	width: 95%;
-}
-
-#bri_canvas {
+#hue_canvas, #sat_canvas, #bri_canvas {
 	width: 100%;
 	height: 30px;
 }
