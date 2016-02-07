@@ -71,7 +71,7 @@ rake rails:update:bin
 rbenv rehash
 
 # Then serve:
-rails server
+rails server -b 0.0.0.0
 
 # The instance is now accessible at localhost:3000
 ```
