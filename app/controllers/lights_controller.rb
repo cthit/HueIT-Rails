@@ -210,7 +210,7 @@ class LightsController < ApplicationController
 	         light.update(hue: [0, 5000, 15000, 20000, 42000, 55000, 62000].sample, 
 	            sat: [255].sample, bri: 255, transitiontime: 0) 
 	         light.save  
-	         sleep(0.1)
+	         sleep(0.2)
 	      end
 	   elsif i == 2 then
 	      # Pattern that shifts one color down the lights. 
@@ -297,7 +297,7 @@ class LightsController < ApplicationController
 	         light.update(hue: [0, 5000, 15000, 20000, 42000, 55000, 62000].sample, 
 	            sat: [255].sample, bri: 255, transitiontime: 0) 
 	         light.save  
-	         sleep(0.1)
+	         sleep(0.2)
 	      end
 	   end
 			end
@@ -305,6 +305,7 @@ class LightsController < ApplicationController
 			lights.each_with_index do |light, i|
 				light.update(sat: sat_array[1], hue: hue_array[i], bri: bri_array[i]) 
 				light.save 
+				sleep(0.2)
 			end
 
 		end
