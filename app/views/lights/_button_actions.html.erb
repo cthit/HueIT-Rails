@@ -2,12 +2,12 @@
   <div id='button-actions' class="col s12 m12 l12 actions">
     <%= label_tag "Select all", "Select all", class: "btn bar-button light-blue accent-3", id: "select_all_btn" %>
     <%= label_tag "Deselect all", "Deselect all", class: "btn bar-button light-blue accent-3", id: "deselect_all_btn" %>
-    <%=link_to "On all", turn_all_on_lights_path, remote: true, class: "btn bar-button light-blue accent-3"%>
-    <%=link_to "Off all", turn_all_off_lights_path, remote: true, class: "btn bar-button light-blue accent-3"%>
-    <%=link_to "Party", party_on_off_lights_path, remote: true, id: "party_btn", onclick: "togglePartyMode();", class: "btn bar-button light-blue accent-3", :style=>'background: -webkit-canvas(party_btn);' %>
-    <%=link_to "Reset", reset_lights_lights_path, remote: true, class: "btn amber accent-3 bar-button"%>
-    <%if current_user.in_group?(@group.to_s) || current_user.admin? %>
-      <%=link_to "Administration", '/admin', remote: false, class: "btn"%>
-    <%end%>
+    <%= link_to "On all", turn_all_on_lights_path, remote: true, class: "btn bar-button light-blue accent-3" %>
+    <%= link_to "Off all", turn_all_off_lights_path, remote: true, class: "btn bar-button light-blue accent-3" %>
+    <%= link_to "Party", party_on_off_lights_path, remote: true, id: "party_btn", onclick: "togglePartyMode();", class: "btn bar-button light-blue accent-3", :style=>'background: -webkit-canvas(party_btn);' %>
+    <%= link_to "Reset", reset_lights_lights_path, remote: true, class: "btn amber accent-3 bar-button" %>
+    <% if current_user.in_group?(@group.to_s) || current_user.admin? %>
+      <%= link_to "Administration", '/admin', remote: false, class: "btn" %>
+    <% end %>
   </div>
 </div>
