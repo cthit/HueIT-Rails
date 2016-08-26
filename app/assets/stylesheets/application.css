@@ -16,6 +16,12 @@
 .party-theme{
 	/*background: -webkit-canvas(squares);*/
 	background-color: red;
+}
+
+body {
+  background: #F7F7F7;
+}
+
 .header-holder {
   padding: 5px;
   box-shadow: 0 1px 4px rgba(0,0,0,.2);
