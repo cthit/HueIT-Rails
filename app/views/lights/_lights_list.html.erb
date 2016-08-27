@@ -1,5 +1,8 @@
 <!-- _lights_list.erb-->
-
+<div class="row flex-container" style="padding-left: 10px; padding-right: 10px;">
+  <%= label_tag "Select all", "Select all", class: "btn bar-button light-blue accent-3", id: "select_all_btn" %>
+  <%= label_tag "Deselect all", "Deselect all", class: "btn bar-button light-blue accent-3", id: "deselect_all_btn" %>
+</div>
 <%= render partial: 'bulb_controls', locals: {i: 4} %>
 
 <%= render partial: 'bulb_controls', locals: {i: 1} %>

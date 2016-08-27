@@ -1,6 +1,4 @@
-<div id='button-actions' class="col s12 actions">
-  <%= label_tag "Select all", "Select all", class: "btn bar-button light-blue accent-3", id: "select_all_btn" %>
-  <%= label_tag "Deselect all", "Deselect all", class: "btn bar-button light-blue accent-3", id: "deselect_all_btn" %>
+<div id='button-actions' class="col s12 actions flex-container">
   <%= link_to "On all", turn_all_on_lights_path, remote: true, class: "btn bar-button light-blue accent-3" %>
   <%= link_to "Off all", turn_all_off_lights_path, remote: true, class: "btn bar-button light-blue accent-3" %>
   <%= link_to "Party", party_on_off_lights_path, remote: true, id: "party_btn", onclick: "togglePartyMode();", class: "btn bar-button light-blue accent-3", :style=>'background: -webkit-canvas(party_btn);' %>
