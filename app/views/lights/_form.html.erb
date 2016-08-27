@@ -2,22 +2,18 @@
 
 <%= render partial: 'button_actions' %>
 
-<div class="row">
-	<div id="light-actions" class="col s12 m12 l12 actions">
-		<table class="lights">
-			<div >
-				<%=
-					begin
-						render partial: 'lights_list'
 
-					rescue
+<div id="light-actions" class="col s12 actions">
+			<%=
+				begin
+					render partial: 'lights_list'
 
-					end
-				%>
-			</div>
-		</table>
-	</div>
+				rescue
+
+				end
+			%>
 </div>
+
 
 <%= render partial: 'slider_actions' %>
 

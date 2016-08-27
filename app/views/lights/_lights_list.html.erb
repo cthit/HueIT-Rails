@@ -1,114 +1,15 @@
 <!-- _lights_list.erb-->
 
+<%= render partial: 'bulb_controls', locals: {i: 4} %>
 
-<div class="col s12 m6 valign-wrapper">
-	<div class="col s4 valign">
-		<div class="switch">
-			<label>
-		    	<%=check_box_tag "switch_4", 'on/off', @lights[3].on,
-		      		onclick:"switchOnOff(4,#{@lights[3].hue},#{@lights[3].sat},#{@lights[3].bri});"%>
-		    	  <span class="lever"></span>
-		   </label>
-	   </div>
-	</div>
-	<div class="col s3 valign">
-		<canvas onclick="setSliders(4)" id="color_shower_4" width="30" height="30">
-	</div>
-	<div class="col s4 valign">
-		<%= check_box_tag "lights[4]", 'yes', false, class: 'filled-in'%>
-		<%= label_tag "select_4", "Select", for: "lights_4"%>
-	</div>
-</div>
-<div class="col s12 m6 valign-wrapper">
-	<div class="col s4 valign">
-		<div class="switch">
-			<label>
-		    	<%=check_box_tag "switch_1", 'on/off', @lights[0].on,
-		      		onclick:"switchOnOff(1,#{@lights[0].hue},#{@lights[0].sat},#{@lights[0].bri});"%>
-		    	  <span class="lever"></span>
-		   </label>
-	   </div>
-	</div>
-	<div class="col s3 valign">
-		<canvas onclick="setSliders(1)" id="color_shower_1" width="30" height="30">
-	</div>
-	<div class="col s4 valign">
-		<%= check_box_tag "lights[1]", 'yes', false, class: 'filled-in'%>
-		<%= label_tag "select_1", "Select", for: "lights_1"%>
-	</div>
-</div>
+<%= render partial: 'bulb_controls', locals: {i: 1} %>
 
-<div class="col s12 m6 valign-wrapper">
-	<div class="col s4 valign">
-		<div class="switch">
-			<label>
-		    	<%=check_box_tag "switch_5", 'on/off', @lights[4].on,
-		      		onclick:"switchOnOff(5,#{@lights[4].hue},#{@lights[4].sat},#{@lights[4].bri});"%>
-		    	  <span class="lever"></span>
-		   </label>
-	   </div>
-	</div>
-	<div class="col s3 valign">
-		<canvas onclick="setSliders(5)" id="color_shower_5" width="30" height="30">
-	</div>
-	<div class="col s4 valign">
-		<%= check_box_tag "lights[5]", 'yes', false, class: 'filled-in'%>
-		<%= label_tag "select_5", "Select", for: "lights_5"%>
-	</div>
-</div>
-<div class="col s12 m6 valign-wrapper">
-	<div class="col s4 valign">
-		<div class="switch">
-			<label>
-		    	<%=check_box_tag "switch_2", 'on/off', @lights[1].on,
-		      		onclick:"switchOnOff(2,#{@lights[1].hue},#{@lights[1].sat},#{@lights[1].bri});"%>
-		    	  <span class="lever"></span>
-		   </label>
-	   </div>
-	</div>
-	<div class="col s3 valign">
-		<canvas onclick="setSliders(2)" id="color_shower_2" width="30" height="30">
-	</div>
-	<div class="col s4 valign">
-		<%= check_box_tag "lights[2]", 'yes', false, class: 'filled-in'%>
-		<%= label_tag "select_2", "Select", for: "lights_2"%>
-	</div>
-</div>
+<%= render partial: 'bulb_controls', locals: {i: 5} %>
 
-<div class="col s12 m6 valign-wrapper">
-	<div class="col s4 valign">
-		<div class="switch">
-			<label>
-		    	<%=check_box_tag "switch_6", 'on/off', @lights[5].on,
-		      		onclick:"switchOnOff(6,#{@lights[5].hue},#{@lights[5].sat},#{@lights[5].bri});"%>
-		    	  <span class="lever"></span>
-		   </label>
-	   </div>
-	</div>
-	<div class="col s3 valign">
-		<canvas onclick="setSliders(6)" id="color_shower_6" width="30" height="30">
-	</div>
-	<div class="col s4 valign">
-		<%= check_box_tag "lights[6]", 'yes', false, class: 'filled-in'%>
-		<%= label_tag "select_6", "Select", for: "lights_6"%>
-	</div>
-</div>
-<div class="col s12 m6 valign-wrapper">
-	<div class="col s4 valign">
-		<div class="switch">
-			<label>
-		    	<%=check_box_tag "switch_3", 'on/off', @lights[2].on,
-		      		onclick:"switchOnOff(3,#{@lights[2].hue},#{@lights[2].sat},#{@lights[2].bri});"%>
-		    	  <span class="lever"></span>
-		   </label>
-	   </div>
-	</div>
-	<div class="col s3 valign">
-		<canvas onclick="setSliders(3)" id="color_shower_3" width="30" height="30">
-	</div>
-	<div class="col s4 valign">
-		<%= check_box_tag "lights[3]", 'yes', false, class: 'filled-in'%>
-		<%= label_tag "select_3", "Select", for: "lights_3"%>
-	</div>
-</div>
+<%= render partial: 'bulb_controls', locals: {i: 2} %>
+
+<%= render partial: 'bulb_controls', locals: {i: 6} %>
+
+<%= render partial: 'bulb_controls', locals: {i: 3} %>
+
 
