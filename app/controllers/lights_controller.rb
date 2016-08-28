@@ -201,22 +201,14 @@ class LightsController < ApplicationController
          end
          sse_update
          while Rails.application.config.is_party_on
-            # Loop that runs indefinitely until something else is logged
-            i = [1,2,3,4,5].sample
+            party_patterns = [method(:random_bulb_and_color),
+                              method(:one_at_a_time_in_order),
+                              method(:one_color_down_both_lanes),
+                              method(:all_bulbs_same_color),
+                              method(:random_color_in_order)]
 
-            if i == 1 then
-               random_bulb_and_color lights
-            elsif i == 2 then
-               one_at_a_time_in_order lights
-            elsif i == 3 then
-               one_color_down_both_lanes lights
-            elsif i == 4 then
-               all_bulbs_same_color lights
-            elsif i == 5 then
-               random_color_in_order lights
-            else
-               random_bulb_and_color lights
-            end
+            pattern = party_patterns.sample
+            pattern.call lights
          end
          sse_update
          lights.each_with_index do |light, i|
