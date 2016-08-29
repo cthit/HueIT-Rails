@@ -4,7 +4,7 @@ module PartyHelper
     light = lights.sample
     if light.on then
        light.update(hue: colors.sample,
-          sat: [255].sample, bri: 255, transitiontime: 0)
+          sat: 255, bri: 255)
        light.save
        sleep(delay)
     end
@@ -45,7 +45,6 @@ module PartyHelper
         if lights[i+2] then
           lights[i+2].update(hue: prev_color_2)
         end
-        # might have to save them separetely
         lights_group_prev.save
       end
 
@@ -56,7 +55,7 @@ module PartyHelper
       if lights[i+3] then
         prev_color_2 = lights[i+3].hue
       end
-      lights_group_now.update(hue: colors.sample, sat: 255, bri: 255, transitiontime: 0)
+      lights_group_now.update(hue: colors.sample, sat: 255, bri: 255)
       sleep(delay)
     end
     if lights[2].on && lights[5].on then
@@ -80,7 +79,7 @@ module PartyHelper
     lights.each do |light|
       if light.on then
         light.update(hue: colors.sample,
-          sat: [200, 255].sample, bri: 255, transitiontime: 0)
+          sat: 255, bri: 255)
         light.save
         sleep(delay)
       end
