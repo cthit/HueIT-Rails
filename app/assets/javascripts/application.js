@@ -78,7 +78,6 @@ function runParty(){
 	var delta = 1000 / 60;
 	var stepSize = 2;
   var colors = ["red", "orange", "yellow", "green", "cyan", "blue"]
-	//ctx = document.getCSSCanvasContext("2d", "party_canvas", 400, 400);
 	canvas = document.getElementById("party_canvas")
 	ctx = canvas.getContext("2d")
 	var x = -canvas.width;
