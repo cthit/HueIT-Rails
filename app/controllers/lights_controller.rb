@@ -200,6 +200,9 @@ class LightsController < ApplicationController
             bri_array[i] = light.bri
          end
          sse_update
+
+         colors = [0, 5000, 15000, 20000, 42000, 55000, 62000]
+         delay = 0.2
          while Rails.application.config.is_party_on
             party_patterns = [method(:random_bulb_and_color),
                               method(:one_at_a_time_in_order),
@@ -208,13 +211,13 @@ class LightsController < ApplicationController
                               method(:random_color_in_order)]
 
             pattern = party_patterns.sample
-            pattern.call lights
+            pattern.call lights, colors, delay
          end
          sse_update
          lights.each_with_index do |light, i|
             light.update(sat: sat_array[1], hue: hue_array[i], bri: bri_array[i])
             light.save
-            sleep(0.2)
+            sleep(delay)
          end
 
       end
