@@ -27,6 +27,6 @@ class ApplicationController < ActionController::Base
     end
 
     def not_signed_in
-      #redirect_to "https://account.chalmers.it/?redirect_to=https://hue.chalmers.it"
+      redirect_to "https://account.chalmers.it/?redirect_to=https://hue.chalmers.it"
     end
 end
