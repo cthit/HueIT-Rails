@@ -1,66 +1,20 @@
 <%= form_tag(multi_update_lights_path, remote:true) do %>
 
-<div class="row">
-	<div class="col s11 m11 l11 offset-s1 offset-m1 offset-l1">
-		<table class="lights">
-			<div id="lights_list">
-				<%= 
-					begin
-						render partial: 'lights_list' 
+<%= render partial: 'button_actions' %>
 
-					rescue
 
-					end
-				%>
-			</div>	
-		</table>
+<div id="light-actions" class="col s12 actions">
+			<%=
+				begin
+					render partial: 'lights_list'
 
-	</div>
-</div>
-<div class="row">
-	<div class="col s12 m12 l12">
-		<div class="col s12 m6 l6 ">
-			<div class="section col s11" id='wrapper'>	 
-				<p><%= label_tag "Saturation (of color)"%></p>
-				<canvas class="pink" id="sat_canvas"></canvas>
-				<%= range_field_tag :sat_range, 254, in: 0..254, class: 'update col s9', oninput:"draw_hue_canvas();"%>
-			</div><br>
-			<div class="section col s11" id="wrapper">	
-				<p><%= label_tag "Hue value (of color)" %></p>
-				<canvas id="hue_canvas"></canvas> 
-				<%= range_field_tag :hue_range, 65535,in: 0..65535, class: 'update col s9', oninput:"draw_sat_canvas();"%>
-				
-			</div><br><br>
-			<div class="section col s11" id='wrapper'>	
-				<p><%= label_tag "Brightness (of bulbs)"%></p>
-				<canvas class='pink' id='bri_canvas'></canvas>
-				<%= range_field_tag :bri_range, 254,in: 0..254, class: 'update col s9'%>
-				<div class="row section">
-				<%= submit_tag "Change", class: "btn cyan darken-1", id: "change_btn" %>
-		</div>
-			</div><br>
-		</div> 
-			<div class='col s12 m6 l6'>
-				<div class='row'>
-					<%= label_tag "Select all", "Select all", class: "btn", id: "select_all_btn" %>
-					<%= label_tag "Deselect all", "Deselect all", class: "btn", id: "deselect_all_btn" %>
-				</div>
-				<div class='row'>
-					<%=link_to "On all", turn_all_on_lights_path, remote: true, class: "btn"%>
-					<%=link_to "Off all", turn_all_off_lights_path, remote: true, class: "btn"%>
-				</div>
-				<div class='row'>
-					<%=link_to "Reset", reset_lights_lights_path, remote: true, class: "btn yellow darken-4"%>
-					<%=link_to "Party", party_on_off_lights_path, remote: true, id: "party_btn", onclick: "togglePartyMode();", class: "btn", :style=>'background: -webkit-canvas(party_btn);' %>		
-				</div>
-				<div class='row'>
-					<%if current_user.in_group?(@group.to_s) || current_user.admin? %>
-						<%=link_to "Administration", '/admin', remote: false, class: "btn"%>
-					<%end%>
-				</div>
-		</div>
-	</div>
+				rescue
+
+				end
+			%>
 </div>
 
-</div>
-<% end %>			
+
+<%= render partial: 'slider_actions' %>
+
+<% end %>

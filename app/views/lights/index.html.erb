@@ -17,17 +17,19 @@
 			</script>
 		<% end %>
 		<div class = "container">
-			<h1 class="center-align">HueIT</h1>
 			<div class="row">
-				
-				<div class ="row">
-					<%= render 'form' %>
+				<% if @is_locked %>
+					<div class='card-panel orange accent-4 center' id='lockbar'>
+						<h3>hueIT is locked</h2>
+					</div>
+				<% end %>
+				<div class="row">
+					<div class="col s12 m10 l8 offset-l2 offset-m1">
+						<div class="row">
+							<%= render 'form' %>
+							</div>
+					</div>
 				</div>
-			<% if @is_locked %>
-				<div class='card-panel red lighten-1 center' id='lockbar'>
-					Hue is locked
-				</div>
-			<% end %>	
 			</div>
 		</div>
 	<% end %>
