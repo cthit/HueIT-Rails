@@ -4,7 +4,7 @@
 
 $ ->
 	$('.update').on 'input', (event) ->
-		console.log event 
+		console.log event
 		$(this).parent().find('.update').val(this.value)
 
 $ ->
@@ -13,4 +13,8 @@ $ ->
 $ ->
 	$('#deselect_all_btn').on 'click', (e) ->
 		document.getElementById("lights_"+i).checked = false for i in [1..6]
-	
+
+$ ->
+  $('#party_canvas').on 'click', (e) ->
+    $.ajax(url: 'lights/party_on_off')
+    togglePartyMode()

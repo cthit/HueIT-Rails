@@ -1,7 +1,7 @@
 <div id='button-actions' class="col s12 actions flex-container">
   <%= link_to "On all", turn_all_on_lights_path, remote: true, class: "btn bar-button light-blue accent-3" %>
   <%= link_to "Off all", turn_all_off_lights_path, remote: true, class: "btn bar-button light-blue accent-3" %>
-  <%= link_to "Party", party_on_off_lights_path, remote: true, id: "party_btn", onclick: "togglePartyMode();", class: "btn bar-button light-blue accent-3", :style=>'background: -webkit-canvas(party_btn);' %>
+  <canvas id='party_canvas' class='btn bar-button light-blue accent-3' width="400" style='padding: 0px;'></canvas>
   <%= link_to "Reset all", reset_lights_lights_path, remote: true, class: "btn deep-orange accent-2 bar-button" %>
   <% if current_user.in_group?(@group.to_s) || current_user.admin? %>
     <%= link_to "Administration", '/admin', remote: false, class: "btn bar-button light-blue accent-3" %>

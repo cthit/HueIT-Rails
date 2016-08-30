@@ -75,45 +75,33 @@ function setSliders(id) {
 	briText.value = Math.round(HSB.bri);
 }
 function runParty(){
-	if (!document.getCSSCanvasContext) {
-		console.log("Your browser does not support document.getCSSCanvasContext");
-   } else {
-		delta = 1000 / 60;
-		ctx = document.getCSSCanvasContext("2d", "party_btn", 400, 400);
-		var x=-100;
-	   var partyLoop = function() {
-	 		var rainbow_gradient=ctx.createLinearGradient(x,0,200+x,70);
-			rainbow_gradient.addColorStop(0,"red");
-			rainbow_gradient.addColorStop(0.09,"orange");
-			rainbow_gradient.addColorStop(0.18,"yellow");
-			rainbow_gradient.addColorStop(0.27,"green");
-			rainbow_gradient.addColorStop(0.36,"cyan");
-			rainbow_gradient.addColorStop(0.45,"blue");
+	var delta = 1000 / 60;
+	var stepSize = 2;
+  var colors = ["red", "orange", "yellow", "green", "cyan", "blue"]
+	canvas = document.getElementById("party_canvas")
+	ctx = canvas.getContext("2d")
+	var x = -canvas.width;
+  var partyLoop = function() {
+ 		var rainbow_gradient = ctx.createLinearGradient(x, 0, (canvas.width * 2) + x, 0);
+ 		for (var i = 0; i < colors.length * 2; i++) {
+ 			rainbow_gradient.addColorStop(i * 1.0 / (colors.length * 2.0 - 1.0), colors[i % colors.length]);
+ 		}
+ 		ctx.fillStyle = rainbow_gradient;
+ 		ctx.fillRect(0, 0, canvas.width, canvas.height);
+ 		x += stepSize;
+ 		if(x >= canvas.width / (colors.length * 2)) {
+ 			x = -canvas.width;
+ 		}
 
-			rainbow_gradient.addColorStop(0.54,"red");
-			rainbow_gradient.addColorStop(0.63,"orange");
-			rainbow_gradient.addColorStop(0.72,"yellow");
-			rainbow_gradient.addColorStop(0.81,"green");
-			rainbow_gradient.addColorStop(0.9,"cyan");
-			rainbow_gradient.addColorStop(1,"blue");
-	 		ctx.fillStyle = rainbow_gradient;
-	 		ctx.fillRect (0, 0, 300, 300);
-	 		x+=2;
-	 		if(x>=20){
-	 			x=-100;
-	 		}
-	 	};
-   	loopInterval = setInterval(partyLoop, delta);
-	}
+ 		drawPartyText(ctx);
+ 	};
+ 	loopInterval = setInterval(partyLoop, delta);
 }
 function ruinParty(){
-	if (!document.getCSSCanvasContext) {
-		console.log("Your browser does not support document.getCSSCanvasContext")
-	} else {
-		ctx = document.getCSSCanvasContext("2d", "party_btn", 400, 400);
-		ctx.fillStyle = "brown";
-		ctx.fillRect(0,0,300,300);
-	}
+	canvas = document.getElementById("party_canvas")
+	ctx = canvas.getContext("2d")
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	drawPartyText(ctx);
 }
 function togglePartyMode(){
 	if (typeof partyOn !== 'undefined') {
@@ -137,6 +125,13 @@ function togglePartyMode(){
 		console.log("PARTYON");
 		runParty();
 	}
+}
+
+function drawPartyText(ctx) {
+	ctx.font = "normal normal 100 60px Arial";
+	ctx.fillStyle = "black";
+	ctx.textAlign = "center";
+	ctx.fillText("PARTY", canvas.width / 2, canvas.height / 2 + 22.5);
 }
 
 function sse_waiter() {
