@@ -56,7 +56,7 @@ function draw(id, hue, sat, brightness){
 // Used when disregarding the value of the selectors, only wanting to draw the color of the bulb or if it is off
 function drawLamp(id, hue, sat, bri) {
 	if (!document.getElementById("switch_" + id).checked) {
-		draw("color_shower_" + id, 0, 0, 1);
+		draw("color_shower_" + id, 0, 0, 0.5);
 	} else {
 		draw("color_shower_" + id, hue / 65535, sat / 254, bri / 254);
 	}
