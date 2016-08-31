@@ -15,6 +15,10 @@ $ ->
 		document.getElementById("lights_"+i).checked = false for i in [1..6]
 
 $ ->
+  $('#toggle_all_btn').on 'click', (e) ->
+    document.getElementById("lights_" + i).checked = !$("#lights_" + i + ":checked").val() for i in [1..6]
+
+$ ->
   $('#party_canvas').on 'click', (e) ->
     $.ajax(url: 'lights/party_on_off')
     togglePartyMode()
