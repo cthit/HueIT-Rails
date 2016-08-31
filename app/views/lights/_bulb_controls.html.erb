@@ -12,7 +12,7 @@
      </div>
   </div>
   <div class="col s3 valign">
-    <canvas onclick="setSliders(<% i %>)" id= <%= "color_shower_#{i}" %>  width="30" height="30">
+    <canvas onclick="setSliders(<%= i %>)" id= <%= "color_shower_#{i}" %>  width="30" height="30" class="bulb">
   </div>
   <div class="col s4 valign">
     <%= check_box_tag "lights[#{i}]", 'yes', false, class: 'filled-in' %>

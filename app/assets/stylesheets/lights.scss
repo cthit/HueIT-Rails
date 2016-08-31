@@ -89,3 +89,11 @@ input[type=range]::-moz-range-thumb {
 input[type=range]::-ms-thumb {
   background: #5f5f5f !important;
 }
+
+.bulb {
+  cursor: pointer;
+}
+
+.bulb:hover {
+  opacity: 0.8;
+}
