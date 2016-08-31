@@ -63,17 +63,20 @@ function drawLamp(id, hue, sat, bri) {
 }
 //Returns the value of the hue slider normalized.
 function get_hue() {
-	var range = document.getElementById("hue_range")
-	return range.value / range.max
+	return get_normalized_range_value("hue_range");
 }
 //Returns the value of the saturation slider normalized.
 function get_sat() {
-	var range = document.getElementById("sat_range")
-	return range.value / range.max;
+	return get_normalized_range_value("sat_range");
 }
 
+//Returns the value of the brightness slider normalized.
 function get_bri() {
-	var range = document.getElementById("bri_range")
+	return get_normalized_range_value("bri_range");
+}
+
+function get_normalized_range_value(elementId) {
+	var range = document.getElementById(elementId)
 	return range.value / range.max;
 }
 
