@@ -62,18 +62,13 @@ function setSliders(id) {
 	var b = imgd.data[2];
 	var HSB = rgb2hsb(r,g,b);
 	var hueSlider = document.getElementById("hue_range");
-	var hueText = document.getElementById("hue_text");
 	hueSlider.value = Math.round(HSB.hue);
-	hueText.value = Math.round(HSB.hue);
 	var satSlider = document.getElementById("sat_range");
-	var satText = document.getElementById("sat_text");
 	satSlider.value = Math.round(HSB.sat);
-	satText.value = Math.round(HSB.sat);
 	var briSlider = document.getElementById("bri_range");
-	var briText = document.getElementById("bri_text");
 	briSlider.value = Math.round(HSB.bri);
-	briText.value = Math.round(HSB.bri);
 }
+
 function runParty(){
 	var delta = 1000 / 60;
 	var stepSize = 2;
