@@ -3,8 +3,7 @@ module PartyHelper
   def random_bulb_and_color(lights, colors, delay)
     light = lights.sample
     if light.on then
-       light.update(hue: colors.sample,
-          sat: 255, bri: 255)
+       light.update(hue: colors.sample, sat: 255)
        light.save
        sleep(delay)
     end
@@ -20,7 +19,7 @@ module PartyHelper
       end
       if light.on then
         prev_color = light.hue
-        light.update(hue: colors.sample, sat: 255, bri: 255)
+        light.update(hue: colors.sample, sat: 255)
         light.save
         sleep(delay)
       end
@@ -55,7 +54,7 @@ module PartyHelper
       if lights[i+3] then
         prev_color_2 = lights[i+3].hue
       end
-      lights_group_now.update(hue: colors.sample, sat: 255, bri: 255)
+      lights_group_now.update(hue: colors.sample, sat: 255)
       sleep(delay)
     end
     if lights[2].on && lights[5].on then
@@ -70,7 +69,7 @@ module PartyHelper
   #Set all bulbs to a random color.
   def all_bulbs_same_color(lights, colors, delay)
     lights_group = Huey::Bulb.all
-    lights_group.update(hue: colors.sample, bri: 255, sat: 255)
+    lights_group.update(hue: colors.sample, sat: 255)
     lights_group.save
     sleep(delay)
   end
@@ -78,8 +77,7 @@ module PartyHelper
   def random_color_in_order(lights, colors, delay)
     lights.each do |light|
       if light.on then
-        light.update(hue: colors.sample,
-          sat: 255, bri: 255)
+        light.update(hue: colors.sample, sat: 255)
         light.save
         sleep(delay)
       end
