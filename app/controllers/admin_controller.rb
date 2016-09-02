@@ -1,8 +1,9 @@
 class AdminController < ApplicationController
 	include AdminHelper
-  	helper_method :current_user
-  	before_action :active_booking
-  	rescue_from SecurityError, with: :not_signed_in
+    helper_method :current_user
+    before_action :active_booking, :check_admin
+    rescue_from SecurityError, with: :not_signed_in
+
 	def index
 		@log_entries = LogEntry.paginate(:page => params[:page], per_page: 15).order(id: :desc)
 		@is_locked = locked?
@@ -24,7 +25,7 @@ class AdminController < ApplicationController
 				#Create new lockstate using params
 				lock_state = LockState.new
 				lock_state.state = params[:lock_type]
-				if @group 
+				if @group
 					lock_state.group = @group
 					lock_state.expiration_date = @exp_date
 					@lock_type = params[:lock_type] + " until: " + @exp_date.to_s
@@ -46,7 +47,14 @@ class AdminController < ApplicationController
 				redirect_to :action => 'index'
 			else
 				@lock_type = "INVALID STATE"
-			end  
+			end
 		end
 	end
+
+	private
+		def check_admin
+			if !current_user.in_group?(@group.to_s) || current_user.admin?
+				redirect_to root_url
+			end
+		end
 end
