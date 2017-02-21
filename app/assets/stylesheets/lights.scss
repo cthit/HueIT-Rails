@@ -110,3 +110,14 @@ input[type=range]::-ms-thumb {
   margin-top: 15px;
 }
 
+[type="checkbox"].filled-in:not(:checked)+label:after {
+  margin-top: 2.5px;
+}
+
+[type="checkbox"].filled-in:checked+label:after {
+  margin-top: 2.5px;
+}
+
+[type="checkbox"].filled-in+label:before, [type="checkbox"].filled-in+label:after {
+  margin-top: 4px;
+}
