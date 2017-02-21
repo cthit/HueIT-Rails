@@ -1,8 +1,8 @@
 <!-- Requires an local value of i passed when rendering the partial like:-->
 <!-- render partial: 'bulb_controls', locals: {i: a number} -->
 
-<div class="col s12 m6 valign-wrapper">
-  <div class="col s4 valign">
+<div class="col s12 m6 valign-wrapper light-row">
+  <div class="col s4 align-container">
     <div class="switch">
       <label>
           <%= check_box_tag "switch_#{i}", 'on/off', @lights[i-1].on,
@@ -11,10 +11,10 @@
        </label>
      </div>
   </div>
-  <div class="col s3 valign">
+  <div class="col s3 align-container">
     <canvas onclick="setSliders(<%= i %>)" id= <%= "color_shower_#{i}" %>  width="30" height="30" class="bulb">
   </div>
-  <div class="col s4 valign">
+  <div class="col s4 align-container">
     <%= check_box_tag "lights[#{i}]", 'yes', false, class: 'filled-in' %>
     <%= label_tag "select_#{i}", "Select", for: "lights_#{i}" %>
   </div>
