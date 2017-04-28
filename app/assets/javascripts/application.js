@@ -69,15 +69,15 @@ function setSliders (id) {
 }
 
 function runParty(){
-	$(".party-button").addClass('party-on')
+	$(document.body).addClass('party-on')
 }
 
 function ruinParty(){
-	$(".party-button").removeClass('party-on')
+	$(document.body).removeClass('party-on')
 }
 
 function togglePartyMode(){
-	$(".party-button").toggleClass('party-on')
+	$(document.body).toggleClass('party-on')
 }
 
 function sse_waiter() {
@@ -93,7 +93,6 @@ function sse_waiter() {
 }
 
 var ready = function () {
-  ruinParty()
   renderLamps()
   draw_hue_canvas()
   draw_sat_canvas()

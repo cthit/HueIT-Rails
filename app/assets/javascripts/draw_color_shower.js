@@ -48,6 +48,11 @@ function renderLamps () {
     drawLamp(light)
     $('#switch_' + light.id).prop('checked', light.on)
   })
+  if (isPartyOn) {
+    runParty()
+  } else {
+    ruinParty()
+  }
 }
 /**
 * draw() is called first when the body loads, and then on each change of value (hue,bri,sat).
