@@ -46,21 +46,13 @@ class LightsController < ApplicationController
 
    #Set standard light
    def reset_lights
-      lights = Huey::Bulb.all
-
-      lights.each do |light|
-         if light.on
-            light.update(rgb: '#cff974', bri: 200)
-            light.save
-         end
-      end
+      lights = Huey::Group.new Huey::Bulb.all.select(&:on)
+      lights.update rgb: '#cff974', bri: 200
 
       log "All lamps reset"
       sse_update
       @lights = Huey::Bulb.all
-      respond_to do |format|
-         format.js
-      end
+      render json: @lights
    end
 
    def turn_off
