@@ -96,14 +96,14 @@ class LightsController < ApplicationController
    end
    #Set standard light
    def reset_lights
-   lights = Huey::Bulb.all
+      lights = Huey::Bulb.all
 
-   lights.each do |light|
-      if light.on
-         light.update(rgb: '#cff974', bri: 200)
-         light.save
+      lights.each do |light|
+         if light.on
+            light.update(rgb: '#cff974', bri: 200)
+            light.save
+         end
       end
-   end
 
       #@user = User.find_by_token cookies[:chalmersItAuth]
       #change_logger.info "#{@user.cid}: All lamps reset"
@@ -196,6 +196,7 @@ class LightsController < ApplicationController
             sat_array[i] = light.sat
             bri_array[i] = light.bri
          end
+
          sse_update
 
          colors = [0, 5000, 15000, 20000, 42000, 55000, 62000]
