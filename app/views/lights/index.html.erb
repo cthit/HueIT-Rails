@@ -2,19 +2,9 @@
 	<% if current_user.present? %>
 		<% content_for :headJavascript do %>
   			<script>
-  			function ruby_ready() {
-				<% @lights.each do |light| %>
-					drawLamp(<%=light.id%>, <%=light.hue%>, <%=light.sat%>, <%=light.bri%>);
-				<% end %>
-  			}
-				function party_ready() {
-					<% if Rails.application.config.is_party_on %>
-						runParty();
-					<% else %>
-						ruinParty();
-					<% end %>
-				}
-			</script>
+  				var lights = <%= @lights.to_json.html_safe %>
+  				var isPartyOn = <%= ($is_party_on || false).to_s.html_safe %>
+				</script>
 		<% end %>
 		<div class = "container">
 			<div class="row">

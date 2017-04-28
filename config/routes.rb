@@ -3,10 +3,10 @@ Rails.application.routes.draw do
   resources :lights do
     collection do
       post :multi_update
-      get :reset_lights
-      get :turn_all_on
-      get :turn_all_off
-      get :party_on_off
+      post :reset_lights
+      post :turn_all_on
+      post :turn_all_off
+      post :party_on_off
     end
   end
 
@@ -22,9 +22,9 @@ Rails.application.routes.draw do
   end
 
   root 'lights#index'
-  get "lights/:id/turnOff" => "lights#turnOff"
-  get "lights/:id/turnOn" => "lights#turnOn"
-  get "lights/:id/switchOnOff" => "lights#switchOnOff"
+  post "lights/:id/turn_off" => "lights#turn_off"
+  post "lights/:id/turn_on" => "lights#turn_on"
+  post "lights/:id/switch_on_off" => "lights#switch_on_off"
 
   get 'admin/index'
   get 'admin' => 'admin#index'

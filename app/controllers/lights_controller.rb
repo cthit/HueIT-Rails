@@ -2,8 +2,10 @@ class LightsController < ApplicationController
    include AdminHelper
    include PartyHelper
 
+   before_action :set_lights, except: [:turn_on, :turn_off, :party_on_off]
+   before_action :set_bulb_from_id, only: [:turn_off, :turn_on, :switch_on_off]
    before_action :check_lock_state, except: [:index]
-   before_action :check_party, except: [:index, :party_on_off, :party_off, :party_on]
+   before_action :ruin_party, except: [:index, :party_on_off, :party_off, :party_on]
 
    def change_logger
       @@change_logger ||= Logger.new("#{Rails.root}/log/change.log")
@@ -13,7 +15,6 @@ class LightsController < ApplicationController
    #Creates sites
    def index
       begin
-         @lights = Huey::Bulb.all
          @is_locked = check_lock_state
 
       rescue Huey::Errors::CouldNotFindHue
@@ -21,162 +22,83 @@ class LightsController < ApplicationController
       end
    end
 
-   def edit
-      @light = Huey::Bulb.find(params[:id])
-      for light in @lights
-         light.set_state({
-            :hue => [0,12750,36210,46920,56100].sample,
-            :saturation => 254
-            }, 0)
-      end
+   def lights
    end
 
-
-   def new
-      #@lights.sample.set_state({
-      #  :hue => [0,12750,36210,46920,56100].sample,
-      #  :saturation => 255}, 0)
-      redirect_to(:action => 'index')
-   end
-
-
-   def create
-      @lights = Huey::Bulb.all
-
-      if (params[:newhue0].to_i != 0) then
-         if (params[:newsat0].to_i != 0) then
-            @lights[params[:id].to_i-1].update(hue: params[:newhue0].to_i,
-               sat: params[:newsat0].to_i)
-         # {
-            #:hue => params[:newhue0].to_i,
-            #:sat => params[:newsat0].to_i})
-         else
-            @lights[params[:id].to_i-1].set_state({
-               :hue => params[:newhue0].to_i}, 0)
-         end
-      else
-         if (params[:newsat0].to_i != 0) then
-            @lights[params[:id].to_i-1].set_state({
-               :saturation => params[:newsat0].to_i}, 0)
-
-         end
-      end
-
-      redirect_to(:action => 'index')
-   end
    #Changes lights
    def multi_update
       if params[:lights]
-         lights = params[:lights].keys
+         lights = params[:lights].keys.map(&:to_i).map { |id| Huey::Bulb.find(id) }.select(&:on)
 
-         @changedLights = ""
+         sat = params[:sat_range].to_i
+         hue = params[:hue_range].to_i
+         bri = params[:bri_range].to_i
 
-         lights.each do |light|
-            bulb = Huey::Bulb.find light.to_i
-            if bulb.on
-               bulb.update(sat: (params[:sat_range]).to_i, hue: (params[:hue_range].to_i), bri: (params[:bri_range].to_i))
-               bulb.save
-               @changedLights += light.to_s+" "
-            end
-         end
+         group = Huey::Group.new lights
+         group.update(sat: sat, hue: hue, bri: bri)
+         changedLights = lights.join(" ")
 
-            #@user = User.find_by_token cookies[:chalmersItAuth]
-            #change_logger.info "#{@user.cid}: Lamps ##{@changedLights}values changed to hue:#{(params[:hue_range]).to_s} sat: #{(params[:sate_range]).to_s} bri: #{(bri_range]).to_s}"
-            log "Lamps ##{@changedLights}color changed to hue:#{(params[:hue_range]).to_s} sat: #{(params[:sate_range]).to_s} bri: #{(params[:bri_range]).to_s}"
-            sse_update
+         log "Lamps ##{changedLights}color changed to hue: #{hue} sat: #{sat} bri: #{bri}"
+         sse_update
       end
-      @lights = Huey::Bulb.all
-      respond_to do |format|
-         format.js
-      end
+      render :lights
+   end
 
-   end
-   #shows a specific lamp (lights/1)
-   def show
-      render plain: params[:id]
-   end
    #Set standard light
    def reset_lights
-   lights = Huey::Bulb.all
+      @lights.update on: true, rgb: '#cff974', bri: 200
 
-   lights.each do |light|
-      if light.on
-         light.update(rgb: '#cff974', bri: 200)
-         light.save
-      end
-   end
-
-      #@user = User.find_by_token cookies[:chalmersItAuth]
-      #change_logger.info "#{@user.cid}: All lamps reset"
-      log("All lamps reset")
+      log "All lamps reset"
       sse_update
-      @lights = Huey::Bulb.all
-      respond_to do |format|
-         format.js
-      end
+      render :lights
    end
 
-   def turnOff
-      @light = Huey::Bulb.find(params[:id].to_i)
+   def turn_off
       @light.update(on: false)
-      @light.save
-      redirect_to(:action => 'index')
+      head :ok, content_type: "text/html"
    end
 
-   def turnOn
-      @light = Huey::Bulb.find(params[:id].to_i)
+   def turn_on
       @light.update(on: true)
-      @light.save
-      redirect_to(:action => 'index')
+      head :ok, content_type: "text/html"
    end
 
    def turn_all_off
-      lights_group = Huey::Group.new(Huey::Bulb.find(1),Huey::Bulb.find(2),Huey::Bulb.find(3),
-         Huey::Bulb.find(4), Huey::Bulb.find(5), Huey::Bulb.find(6))
+      @lights.update(on: false)
 
-      lights_group.update(on: false, transitiontime: 0)
-
-      log("All lights OFF")
+      log "All lights OFF"
       sse_update
-      @lights = Huey::Bulb.all
-      respond_to do |format|
-         format.js
-      end
+      render :lights
    end
 
    def turn_all_on
-      lights_group = Huey::Group.new(Huey::Bulb.find(1),Huey::Bulb.find(2),Huey::Bulb.find(3),
-         Huey::Bulb.find(4), Huey::Bulb.find(5), Huey::Bulb.find(6))
+      @lights.update(on: true)
 
-      lights_group.update(on: true, transitiontime: 0)
-
-      log("All lights ON")
+      log "All lights ON"
       sse_update
-      @lights = Huey::Bulb.all
-      respond_to do |format|
-         format.js
-      end
+      render :lights
    end
    #Toggles light state
-   def switchOnOff
-      @light = Huey::Bulb.find(params[:id].to_i)
+   def switch_on_off
       @light.on = !@light.on
       @light.save
-      log("Lamp ##{params[:id]} toggled")
+      log "Lamp ##{params[:id]} toggled"
+      render :lights
    end
 
    def party_on_off
-      if Rails.application.config.is_party_on
+      if $is_party_on
          party_off
       else
          party_on
       end
+      head :ok, content_type: "text/html"
    end
 
    private
-   def log(change)
+   def log change
       entry = LogEntry.new
-      @user = User.find_by_token cookies[:chalmersItAuth]
+      @user = current_user
       entry.cid = @user.cid + ": " + @user.to_s
       entry.change = change
       entry.save
@@ -184,8 +106,8 @@ class LightsController < ApplicationController
    end
 
    def party_on
-      entry = log("PARTY MODE ENGAGED :DDDDD")
-      Rails.application.config.is_party_on = true
+      entry = log "PARTY MODE ENGAGED :DDDDD"
+      $is_party_on = true
 
       Thread.new do
          lights = Huey::Bulb.all
@@ -199,11 +121,12 @@ class LightsController < ApplicationController
             sat_array[i] = light.sat
             bri_array[i] = light.bri
          end
+
          sse_update
 
          colors = [0, 5000, 15000, 20000, 42000, 55000, 62000]
-         delay = 0.2
-         while Rails.application.config.is_party_on
+         delay = 1
+         while $is_party_on
             party_patterns = [method(:random_bulb_and_color),
                               method(:one_at_a_time_in_order),
                               method(:one_color_down_both_lanes),
@@ -215,8 +138,7 @@ class LightsController < ApplicationController
          end
          sse_update
          lights.each_with_index do |light, i|
-            light.update(sat: sat_array[1], hue: hue_array[i], bri: bri_array[i])
-            light.save
+            light.update(sat: sat_array[i], hue: hue_array[i], bri: bri_array[i])
             sleep(delay)
          end
 
@@ -224,12 +146,13 @@ class LightsController < ApplicationController
    end
 
    def party_off
-      log("no more party :(")
-      Rails.application.config.is_party_on = false
+      log "no more party :("
+      $is_party_on = false
    end
 
-   def check_party
-      if Rails.application.config.is_party_on
+   def ruin_party
+      # other actions should disable party mode
+      if $is_party_on
          party_off
       end
    end
@@ -237,5 +160,13 @@ class LightsController < ApplicationController
    def sse_update
       # Change the value so sse_update_controller knows to send an event
       Rails.application.config.sse_int += 1
+   end
+
+   def set_bulb_from_id
+      @light = Huey::Bulb.find(params[:id].to_i)
+   end
+
+   def set_lights
+      @lights = Huey::Bulb.all
    end
 end

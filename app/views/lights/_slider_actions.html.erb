@@ -1,18 +1,21 @@
 <div id='slider-actions' class="col s12 actions">
-  <div class="section col s12" id='wrapper'>
-    <p><%= label_tag "Saturation (of color)"%></p>
-    <canvas class="pink" id="sat_canvas"></canvas>
-    <%= range_field_tag :sat_range, 254, in: 0..254, class: 'update col s9', oninput:"draw_hue_canvas();"%>
+  <div class="section col s12" id="wrapper">
+    <%= label_tag "Saturation (of color)"%>
+    <div class="sat-show slider-bg">
+      <%= range_field_tag :sat_range, 254, in: 0..254, class: 'update'%>
+    </div>
   </div><br>
   <div class="section col s12" id="wrapper">
-    <p><%= label_tag "Hue value (of color)" %></p>
-    <canvas id="hue_canvas"></canvas>
-    <%= range_field_tag :hue_range, 65535,in: 0..65535, class: 'update col s9', oninput:"draw_sat_canvas();"%>
+    <%= label_tag "Hue value (of color)" %>
+    <div class="hue-show slider-bg">
+      <%= range_field_tag :hue_range, 65535,in: 0..65535, class: 'update'%>
+    </div>
   </div><br><br>
-  <div class="section col s12" id='wrapper'>
-    <p><%= label_tag "Brightness (of bulbs)"%></p>
-    <canvas class='pink' id='bri_canvas'></canvas>
-    <%= range_field_tag :bri_range, 254,in: 0..254, class: 'update col s9', oninput:"draw_sat_canvas();draw_hue_canvas();"%>
+  <div class="section col s12" id="wrapper">
+    <%= label_tag "Brightness (of bulbs)"%>
+    <div class="bri-show slider-bg">
+      <%= range_field_tag :bri_range, 254,in: 0..254, class: 'update'%>
+    </div>
   </div><br><br>
   <div class="col s12 section right-align" style="margin-top:10px">
     <%= submit_tag "Change", class: "btn green accent-4", id: "change_btn" %>

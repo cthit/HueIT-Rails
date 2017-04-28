@@ -30,98 +30,100 @@ function HSVtoRGB(h, s, v) {
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
 
+function RGBtoCSS(rgb) {
+  return "rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ")"
+}
+
+function createLinearGradient(stops) {
+  return 'linear-gradient(to right, ' + stops.join(',') + ')';
+}
+
+function updateLights (state) {
+  lights = state.lights
+  isPartyOn = state.isPartyOn
+}
+
+function renderLamps () {
+  lights.forEach(function (light) {
+    drawLamp(light)
+    $('#switch_' + light.id).prop('checked', light.on)
+  })
+  if (isPartyOn) {
+    runParty()
+  } else {
+    ruinParty()
+  }
+}
 /**
 * draw() is called first when the body loads, and then on each change of value (hue,bri,sat).
 * Correct is a boolean for if the given value should be corrected to the triangle
 * the h,s,l value is taken from each light.
 */
-function draw(id, hue, sat, brightness){
-	var canvas = document.getElementById(id);
-	var ctx = canvas.getContext("2d");
-	var rgb = null;
-	rgb = HSVtoRGB(hue, sat, brightness)
+function draw (id, hue, sat, brightness) {
+  var div = document.getElementById('color_shower_' + id)
 
-	/**
-	* So here we create a half circle and we set the fillStyle to the current color of Hue, Saturation and Brightness level
-	*/
-	ctx.beginPath();
-	ctx.arc(15, 15, 14, 0, 2 * Math.PI, false);
-	ctx.fillStyle = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
-	ctx.fill();
-	ctx.lineWidth = 2;
-	ctx.strokeStyle = '#EDEDED';
-	ctx.stroke();
+  var rgb = HSVtoRGB(hue, sat, brightness)
+  div.style.backgroundColor = RGBtoCSS(rgb)
 }
 
 // Used when disregarding the value of the selectors, only wanting to draw the color of the bulb or if it is off
-function drawLamp(id, hue, sat, bri) {
-	if (!document.getElementById("switch_" + id).checked) {
-		draw("color_shower_" + id, 0, 0, 0.5);
-	} else {
-		draw("color_shower_" + id, hue / 65535, sat / 254, bri / 254);
-	}
+function drawLamp (light) {
+  if (!light.on) {
+    draw(light.id, 0, 0, 0.5)
+  } else {
+    draw(light.id, light.hue / 65535, light.sat / 254, light.bri / 254)
+  }
 }
 //Returns the value of the hue slider normalized.
-function get_hue() {
-	return get_normalized_range_value("hue_range");
+function getHue() {
+	return getNormalizedRangeValue("hue_range");
 }
 //Returns the value of the saturation slider normalized.
-function get_sat() {
-	return get_normalized_range_value("sat_range");
+function getSat() {
+	return getNormalizedRangeValue("sat_range");
 }
 
 //Returns the value of the brightness slider normalized.
-function get_bri() {
-	return get_normalized_range_value("bri_range");
+function getBri() {
+	return getNormalizedRangeValue("bri_range");
 }
 
-function get_normalized_range_value(elementId) {
+function getNormalizedRangeValue(elementId) {
 	var range = document.getElementById(elementId)
 	return range.value / range.max;
 }
 
 //Draws the canvas behind the brightness slider to visualize how the brightness changes
 function draw_bri_canvas() {
-	var canvas = document.getElementById("bri_canvas");
-	var context = canvas.getContext("2d");
-
-	var gradient = context.createLinearGradient(0, 0, canvas.width, 0);
-	gradient.addColorStop(0, "black");
-	gradient.addColorStop(1, "white");
-
-	context.fillStyle = gradient;
-	context.fillRect(0, 0, canvas.width, canvas.height);
+  var slider = $(".bri-show");
+  slider.css('background', 'linear-gradient(to right, black, white)');
 }
 
 //Draws the canvas behind the saturation slider with an approximation of what colour the lights will have at that position.
 function draw_sat_canvas() {
-	var canvas = document.getElementById("sat_canvas");
-	var context = canvas.getContext("2d");
-
-	for (var x = 0; x < canvas.width; x += 1) {
-		var sat = x / canvas.width;
-		var rgb = HSVtoRGB(get_hue(), sat, get_bri())
-		draw_vertical_line_on_x(context, x, canvas.height, rgb)
-	};
+	var slider = $(".sat-show");
+  var hue = getHue()
+  var bri = getBri()
+  var stops = [HSVtoRGB(hue, 0, bri), HSVtoRGB(hue, 1, bri)].map(RGBtoCSS)
+  slider.css('background', createLinearGradient(stops));
 }
 
 //Draws the canvas behind the hue slider with an approximation of what colour the lights will have at that position.
 function draw_hue_canvas(){
-	var canvas = document.getElementById("hue_canvas");
-	var context = canvas.getContext("2d");
+  var slider = $(".hue-show");
+	// var context = canvas.getContext("2d");
+  var numberStops = 20
+  var stops = []
+  var sat = getSat()
+  var bri = getBri()
 
-	for (var x = 0; x < canvas.width; x += 1) {
-		var hue = x / canvas.width;
-		var rgb = HSVtoRGB(hue, get_sat(), get_bri())
-		draw_vertical_line_on_x(context, x, canvas.height, rgb)
-	};
-}
+  for (var i = 0; i < numberStops; i++) {
+    stops.push(i / numberStops);
+  }
 
-function draw_vertical_line_on_x(context, x, y, color) {
-	context.strokeStyle = "rgb(" + color[0] + "," + color[1] + "," + color[2] + ")";
-	context.beginPath();
-	context.moveTo(x, 0);
-	context.lineTo(x, y);
-	context.closePath();
-	context.stroke();
+  stops = stops.map(function(hue) {
+    return RGBtoCSS(HSVtoRGB(hue, sat, bri));
+  });
+
+  slider.css('background', createLinearGradient(stops))
 }

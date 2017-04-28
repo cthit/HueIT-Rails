@@ -1,17 +1,11 @@
-<%= form_tag(multi_update_lights_path, remote:true) do %>
-
 <%= render partial: 'button_actions' %>
 
-<div id="light-actions" class="col s12 actions">
-<%=
-	begin
-		render partial: 'lights_list'
+<%= form_tag(multi_update_lights_path, remote:true, id: 'hue-form') do %>
 
-	rescue
-		end
-	%>
-</div>
+    <div id="light-actions" class="col s12 actions">
+        <%= render partial: 'lights_list' %>
+    </div>
 
-<%= render partial: 'slider_actions' %>
+    <%= render partial: 'slider_actions' %>
 
 <% end %>
