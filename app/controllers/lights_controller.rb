@@ -125,7 +125,7 @@ class LightsController < ApplicationController
          sse_update
 
          colors = [0, 5000, 15000, 20000, 42000, 55000, 62000]
-         delay = 0.2
+         delay = 1
          while $is_party_on
             party_patterns = [method(:random_bulb_and_color),
                               method(:one_at_a_time_in_order),
