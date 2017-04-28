@@ -2,6 +2,8 @@ class LightsController < ApplicationController
    include AdminHelper
    include PartyHelper
 
+   before_action :set_lights, except: [:turn_on, :turn_off, :party_on_off]
+   before_action :set_bulb_from_id, only: [:turn_off, :turn_on, :switch_on_off]
    before_action :check_lock_state, except: [:index]
    before_action :check_party, except: [:index, :party_on_off, :party_off, :party_on]
 
@@ -13,7 +15,6 @@ class LightsController < ApplicationController
    #Creates sites
    def index
       begin
-         @lights = Huey::Bulb.all
          @is_locked = check_lock_state
 
       rescue Huey::Errors::CouldNotFindHue
@@ -37,13 +38,11 @@ class LightsController < ApplicationController
          log "Lamps ##{changedLights}color changed to hue: #{hue} sat: #{sat} bri: #{bri}"
          sse_update
       end
-      @lights = Huey::Bulb.all
       render json: @lights
    end
 
    #Set standard light
    def reset_lights
-      @lights = Huey::Bulb.all
       @lights.update on: true, rgb: '#cff974', bri: 200
 
       log "All lamps reset"
@@ -52,22 +51,18 @@ class LightsController < ApplicationController
    end
 
    def turn_off
-      @light = Huey::Bulb.find(params[:id].to_i)
       @light.update(on: false)
       @light.save
       redirect_to(:action => 'index')
    end
 
    def turn_on
-      @light = Huey::Bulb.find(params[:id].to_i)
       @light.update(on: true)
       @light.save
       redirect_to(:action => 'index')
    end
 
    def turn_all_off
-      @lights = Huey::Bulb.all
-
       @lights.update(on: false)
 
       log "All lights OFF"
@@ -76,22 +71,17 @@ class LightsController < ApplicationController
    end
 
    def turn_all_on
-      @lights = Huey::Bulb.all
-
       @lights.update(on: true)
 
       log "All lights ON"
       sse_update
-      @lights = Huey::Bulb.all
       render json: @lights
    end
    #Toggles light state
    def switch_on_off
-      @light = Huey::Bulb.find(params[:id].to_i)
       @light.on = !@light.on
       @light.save
       log "Lamp ##{params[:id]} toggled"
-      @lights = Huey::Bulb.all
       render json: @lights
    end
 
@@ -168,5 +158,13 @@ class LightsController < ApplicationController
    def sse_update
       # Change the value so sse_update_controller knows to send an event
       Rails.application.config.sse_int += 1
+   end
+
+   def set_bulb_from_id
+      @light = Huey::Bulb.find(params[:id].to_i)
+   end
+
+   def set_lights
+      @lights = Huey::Bulb.all
    end
 end
