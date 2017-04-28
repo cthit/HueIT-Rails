@@ -1,11 +1,5 @@
 module LightsHelper
   def find_light id_to_find
-    find_light = nil
-    @lights.each do |light|
-      if light.id == id_to_find
-        find_light = light
-      end
-    end
-    find_light
+    @lights.find { |light| light.id == id_to_find }
   end
 end

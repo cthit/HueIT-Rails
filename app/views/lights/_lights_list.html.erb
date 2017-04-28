@@ -4,16 +4,6 @@
   <%= label_tag "Toggle selection", "Toggle selection", class: "btn bar-button light-blue accent-3", id: "toggle_all_btn" %>
   <%= label_tag "Deselect all", "Deselect all", class: "btn bar-button light-blue accent-3", id: "deselect_all_btn" %>
 </div>
-<%= render partial: 'bulb_controls', locals: {i: 4} %>
-
-<%= render partial: 'bulb_controls', locals: {i: 7} %>
-
-<%= render partial: 'bulb_controls', locals: {i: 5} %>
-
-<%= render partial: 'bulb_controls', locals: {i: 2} %>
-
-<%= render partial: 'bulb_controls', locals: {i: 6} %>
-
-<%= render partial: 'bulb_controls', locals: {i: 3} %>
-
-
+<% [4, 7, 5, 2, 6, 3].each do |i| %>
+    <%= render partial: 'bulb_controls', locals: {light: find_light(i)} %>
+<% end %>
