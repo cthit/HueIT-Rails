@@ -21,44 +21,6 @@ class LightsController < ApplicationController
       end
    end
 
-   def edit
-      @light = Huey::Bulb.find(params[:id])
-      for light in @lights
-         light.set_state({
-            :hue => [0,12750,36210,46920,56100].sample,
-            :saturation => 254
-            }, 0)
-      end
-   end
-
-
-   def new
-      redirect_to(:action => 'index')
-   end
-
-
-   def create
-      @lights = Huey::Bulb.all
-
-      if (params[:newhue0].to_i != 0) then
-         if (params[:newsat0].to_i != 0) then
-            @lights[params[:id].to_i-1].update(hue: params[:newhue0].to_i,
-               sat: params[:newsat0].to_i)
-         else
-            @lights[params[:id].to_i-1].set_state({
-               :hue => params[:newhue0].to_i}, 0)
-         end
-      else
-         if (params[:newsat0].to_i != 0) then
-            @lights[params[:id].to_i-1].set_state({
-               :saturation => params[:newsat0].to_i}, 0)
-
-         end
-      end
-
-      redirect_to(:action => 'index')
-   end
-
    #Changes lights
    def multi_update
       if params[:lights]
@@ -81,10 +43,7 @@ class LightsController < ApplicationController
       @lights = Huey::Bulb.all
       render json: @lights
    end
-   #shows a specific lamp (lights/1)
-   def show
-      render plain: params[:id]
-   end
+
    #Set standard light
    def reset_lights
       lights = Huey::Bulb.all
