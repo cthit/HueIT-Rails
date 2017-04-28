@@ -55,10 +55,8 @@ function sse_waiter() {
 	source = new EventSource('/sse_update')
 
 	source.onmessage = function(event) {
-    data = JSON.parse(event.data);
-		for (var i = 1; i <= 6; i++) {
-			drawLamp(i, data.hue[i-1], data.sat[i-1], 255);
-		}
+    lights = JSON.parse(event.data);
+		renderLamps()
 	};
 	party_ready();
 }
