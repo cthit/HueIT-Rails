@@ -5,7 +5,6 @@ light_indices = [2..7]
 
 $ ->
 	$('.update').on 'input', (event) ->
-		console.log event
 		$(this).parent().find('.update').val(this.value)
 
 $ ->
