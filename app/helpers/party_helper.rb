@@ -4,7 +4,6 @@ module PartyHelper
     light = lights.sample
     if light.on then
        light.update(hue: colors.sample, sat: 255)
-       light.save
        sleep(delay)
     end
   end
@@ -15,17 +14,14 @@ module PartyHelper
     lights.each_with_index do |light, i|
       if (i-1) >= 0 && lights[i-1].on then
         lights[i-1].update(hue: prev_color)
-        lights[i-1].save
       end
       if light.on then
         prev_color = light.hue
         light.update(hue: colors.sample, sat: 255)
-        light.save
         sleep(delay)
       end
       if lights[5].on then
         lights[5].update(hue: prev_color)
-        lights[5].save
         sleep(delay)
       end
     end
@@ -44,7 +40,6 @@ module PartyHelper
         if lights[i+2] then
           lights[i+2].update(hue: prev_color_2)
         end
-        lights_group_prev.save
       end
 
       lights_group_now = Huey::Group.new(lights[i], lights[i+3])
@@ -61,7 +56,6 @@ module PartyHelper
       lights_group = Huey::Group.new(lights[2], lights[5])
       lights[2].update(hue: prev_color_1)
       lights[5].update(hue: prev_color_2)
-      lights_group.save
       sleep(delay)
     end
   end
@@ -70,7 +64,6 @@ module PartyHelper
   def all_bulbs_same_color(lights, colors, delay)
     lights_group = Huey::Bulb.all
     lights_group.update(hue: colors.sample, sat: 255)
-    lights_group.save
     sleep(delay)
   end
 
@@ -78,7 +71,6 @@ module PartyHelper
     lights.each do |light|
       if light.on then
         light.update(hue: colors.sample, sat: 255)
-        light.save
         sleep(delay)
       end
     end
