@@ -5,8 +5,8 @@
   <div class="col s4 align-container">
     <div class="switch">
       <label>
-          <%= check_box_tag "switch_#{i}", 'on/off', @lights[i-1].on,
-              onclick:"switchOnOff(#{i},#{@lights[i-1].hue},#{@lights[i-1].sat},#{@lights[i-1].bri});" %>
+          <%= check_box_tag "switch_#{i}", 'on/off', find_light(i).on,
+              onclick:"switchOnOff(#{i},#{find_light(i).hue},#{find_light(i).sat},#{find_light(i).bri});" %>
             <span class="lever"></span>
        </label>
      </div>
