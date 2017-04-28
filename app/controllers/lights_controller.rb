@@ -44,9 +44,6 @@ class LightsController < ApplicationController
          if (params[:newsat0].to_i != 0) then
             @lights[params[:id].to_i-1].update(hue: params[:newhue0].to_i,
                sat: params[:newsat0].to_i)
-         # {
-            #:hue => params[:newhue0].to_i,
-            #:sat => params[:newsat0].to_i})
          else
             @lights[params[:id].to_i-1].set_state({
                :hue => params[:newhue0].to_i}, 0)
@@ -61,6 +58,7 @@ class LightsController < ApplicationController
 
       redirect_to(:action => 'index')
    end
+
    #Changes lights
    def multi_update
       if params[:lights]
@@ -77,8 +75,6 @@ class LightsController < ApplicationController
             end
          end
 
-            #@user = User.find_by_token cookies[:chalmersItAuth]
-            #change_logger.info "#{@user.cid}: Lamps ##{@changedLights}values changed to hue:#{(params[:hue_range]).to_s} sat: #{(params[:sate_range]).to_s} bri: #{(bri_range]).to_s}"
             log "Lamps ##{@changedLights}color changed to hue:#{(params[:hue_range]).to_s} sat: #{(params[:sate_range]).to_s} bri: #{(params[:bri_range]).to_s}"
             sse_update
       end
@@ -100,9 +96,7 @@ class LightsController < ApplicationController
          end
       end
 
-      #@user = User.find_by_token cookies[:chalmersItAuth]
-      #change_logger.info "#{@user.cid}: All lamps reset"
-      log("All lamps reset")
+      log "All lamps reset"
       sse_update
       @lights = Huey::Bulb.all
       respond_to do |format|
@@ -130,7 +124,7 @@ class LightsController < ApplicationController
 
       lights_group.update(on: false, transitiontime: 0)
 
-      log("All lights OFF")
+      log "All lights OFF"
       sse_update
       @lights = Huey::Bulb.all
       render json: @lights
@@ -142,7 +136,7 @@ class LightsController < ApplicationController
 
       lights_group.update(on: true, transitiontime: 0)
 
-      log("All lights ON")
+      log "All lights ON"
       sse_update
       @lights = Huey::Bulb.all
       render json: @lights
@@ -152,7 +146,7 @@ class LightsController < ApplicationController
       @light = Huey::Bulb.find(params[:id].to_i)
       @light.on = !@light.on
       @light.save
-      log("Lamp ##{params[:id]} toggled")
+      log "Lamp ##{params[:id]} toggled"
       @lights = Huey::Bulb.all
       render json: @lights
    end
@@ -166,7 +160,7 @@ class LightsController < ApplicationController
    end
 
    private
-   def log(change)
+   def log change
       entry = LogEntry.new
       @user = User.find_by_token cookies[:chalmersItAuth]
       entry.cid = @user.cid + ": " + @user.to_s
@@ -176,7 +170,7 @@ class LightsController < ApplicationController
    end
 
    def party_on
-      entry = log("PARTY MODE ENGAGED :DDDDD")
+      entry = log "PARTY MODE ENGAGED :DDDDD"
       Rails.application.config.is_party_on = true
 
       Thread.new do
@@ -217,7 +211,7 @@ class LightsController < ApplicationController
    end
 
    def party_off
-      log("no more party :(")
+      log "no more party :("
       Rails.application.config.is_party_on = false
    end
 
