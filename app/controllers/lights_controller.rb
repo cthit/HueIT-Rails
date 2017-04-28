@@ -66,22 +66,19 @@ class LightsController < ApplicationController
    end
 
    def turn_all_off
-      lights_group = Huey::Group.new(Huey::Bulb.find(1),Huey::Bulb.find(2),Huey::Bulb.find(3),
-         Huey::Bulb.find(4), Huey::Bulb.find(5), Huey::Bulb.find(6))
+      @lights = Huey::Bulb.all
 
-      lights_group.update(on: false, transitiontime: 0)
+      @lights.update(on: false)
 
       log "All lights OFF"
       sse_update
-      @lights = Huey::Bulb.all
       render json: @lights
    end
 
    def turn_all_on
-      lights_group = Huey::Group.new(Huey::Bulb.find(1),Huey::Bulb.find(2),Huey::Bulb.find(3),
-         Huey::Bulb.find(4), Huey::Bulb.find(5), Huey::Bulb.find(6))
+      @lights = Huey::Bulb.all
 
-      lights_group.update(on: true, transitiontime: 0)
+      @lights.update(on: true)
 
       log "All lights ON"
       sse_update
