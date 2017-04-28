@@ -33,9 +33,6 @@ class LightsController < ApplicationController
 
 
    def new
-      #@lights.sample.set_state({
-      #  :hue => [0,12750,36210,46920,56100].sample,
-      #  :saturation => 255}, 0)
       redirect_to(:action => 'index')
    end
 
