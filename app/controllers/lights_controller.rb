@@ -138,8 +138,7 @@ class LightsController < ApplicationController
          end
          sse_update
          lights.each_with_index do |light, i|
-            light.update(sat: sat_array[1], hue: hue_array[i], bri: bri_array[i])
-            light.save
+            light.update(sat: sat_array[i], hue: hue_array[i], bri: bri_array[i])
             sleep(delay)
          end
 
