@@ -22,6 +22,9 @@ class LightsController < ApplicationController
       end
    end
 
+   def lights
+   end
+
    #Changes lights
    def multi_update
       if params[:lights]
@@ -38,7 +41,7 @@ class LightsController < ApplicationController
          log "Lamps ##{changedLights}color changed to hue: #{hue} sat: #{sat} bri: #{bri}"
          sse_update
       end
-      render json: @lights
+      render :lights
    end
 
    #Set standard light
@@ -47,19 +50,17 @@ class LightsController < ApplicationController
 
       log "All lamps reset"
       sse_update
-      render json: @lights
+      render :lights
    end
 
    def turn_off
       @light.update(on: false)
-      @light.save
-      redirect_to(:action => 'index')
+      head :ok, content_type: "text/html"
    end
 
    def turn_on
       @light.update(on: true)
-      @light.save
-      redirect_to(:action => 'index')
+      head :ok, content_type: "text/html"
    end
 
    def turn_all_off
@@ -67,7 +68,7 @@ class LightsController < ApplicationController
 
       log "All lights OFF"
       sse_update
-      render json: @lights
+      render :lights
    end
 
    def turn_all_on
@@ -75,14 +76,14 @@ class LightsController < ApplicationController
 
       log "All lights ON"
       sse_update
-      render json: @lights
+      render :lights
    end
    #Toggles light state
    def switch_on_off
       @light.on = !@light.on
       @light.save
       log "Lamp ##{params[:id]} toggled"
-      render json: @lights
+      render :lights
    end
 
    def party_on_off
@@ -91,6 +92,7 @@ class LightsController < ApplicationController
       else
          party_on
       end
+      head :ok, content_type: "text/html"
    end
 
    private

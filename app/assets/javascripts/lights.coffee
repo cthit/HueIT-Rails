@@ -16,8 +16,7 @@ $ ->
             $this = $(this)
             $this.prop 'checked', !$this.prop('checked')
 
-    $('#party_canvas').on 'click', (e) ->
-        $.post('lights/party_on_off')
+    $('.party-button').on 'click', (e) ->
         togglePartyMode()
 
     $('.bulb').on 'click', (e) ->
@@ -31,5 +30,6 @@ $ ->
 
     $('.link-btn').on 'click', (e) ->
         $.post e.target.dataset.url, (data) ->
-            updateLights(data)
-            renderLamps()
+            if data != " "
+                updateLights(data)
+                renderLamps()

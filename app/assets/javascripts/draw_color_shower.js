@@ -38,8 +38,9 @@ function createLinearGradient(stops) {
   return 'linear-gradient(to right, ' + stops.join(',') + ')';
 }
 
-function updateLights (newLights) {
-  lights = newLights
+function updateLights (state) {
+  lights = state.lights
+  isPartyOn = state.isPartyOn
 }
 
 function renderLamps () {

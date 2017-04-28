@@ -69,63 +69,15 @@ function setSliders (id) {
 }
 
 function runParty(){
-	var delta = 1000 / 60;
-	var stepSize = 2;
-  var colors = ["red", "orange", "yellow", "green", "cyan", "blue"]
-	canvas = document.getElementById("party_canvas")
-	ctx = canvas.getContext("2d")
-	var x = -canvas.width;
-  var partyLoop = function() {
- 		var rainbow_gradient = ctx.createLinearGradient(x, 0, (canvas.width * 2) + x, 0);
- 		for (var i = 0; i < colors.length * 2; i++) {
- 			rainbow_gradient.addColorStop(i * 1.0 / (colors.length * 2.0 - 1.0), colors[i % colors.length]);
- 		}
- 		ctx.fillStyle = rainbow_gradient;
- 		ctx.fillRect(0, 0, canvas.width, canvas.height);
- 		x += stepSize;
- 		if(x >= canvas.width / (colors.length * 2)) {
- 			x = -canvas.width;
- 		}
-
- 		drawPartyText(ctx);
- 	};
- 	loopInterval = setInterval(partyLoop, delta);
+	$(".party-button").addClass('party-on')
 }
+
 function ruinParty(){
-	canvas = document.getElementById("party_canvas")
-	ctx = canvas.getContext("2d")
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	drawPartyText(ctx);
+	$(".party-button").removeClass('party-on')
 }
+
 function togglePartyMode(){
-	if (typeof partyOn !== 'undefined') {
-    	if (partyOn) {
-    		partyOn = false;
-    		console.log("partyOFF");
-    		try {
-    			clearInterval(loopInterval);
-    		} catch (err) {
-
-    		}
-
-    		ruinParty();
-    	} else {
-    		partyOn = true;
-			console.log("PARTYON");
-    		runParty();
-    	}
-	} else {
-		partyOn = true;
-		console.log("PARTYON");
-		runParty();
-	}
-}
-
-function drawPartyText(ctx) {
-	ctx.font = "normal normal 100 60px Arial";
-	ctx.fillStyle = "black";
-	ctx.textAlign = "center";
-	ctx.fillText("PARTY", canvas.width / 2, canvas.height / 2 + 22.5);
+	$(".party-button").toggleClass('party-on')
 }
 
 function sse_waiter() {
@@ -143,7 +95,6 @@ function sse_waiter() {
 var ready = function () {
   ruinParty()
   renderLamps()
-  party_ready()
   draw_hue_canvas()
   draw_sat_canvas()
   draw_bri_canvas()
