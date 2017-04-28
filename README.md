@@ -75,3 +75,5 @@ rails server -b 0.0.0.0
 
 # The instance is now accessible at localhost:3000
 ```
+# In case there are new lights:
+You will need to update the lists indicating the id's of the lights in `app/views/lights/_lights_list.html.erb` and `app/assets/javascripts/lights.coffee`.
