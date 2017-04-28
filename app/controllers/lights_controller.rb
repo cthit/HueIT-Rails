@@ -98,7 +98,7 @@ class LightsController < ApplicationController
    private
    def log change
       entry = LogEntry.new
-      @user = User.find_by_token cookies[:chalmersItAuth]
+      @user = current_user
       entry.cid = @user.cid + ": " + @user.to_s
       entry.change = change
       entry.save
