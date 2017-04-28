@@ -21,7 +21,7 @@ function switchOnOff (i) {
   })
   changeUrl = '/lights/' + i + '/switch_on_off'
   $.post(changeUrl, function (data) {
-    lights = data
+    updateLights(data)
     renderLamps()
   })
 }
