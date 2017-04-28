@@ -69,20 +69,20 @@ function drawLamp (light) {
   }
 }
 //Returns the value of the hue slider normalized.
-function get_hue() {
-	return get_normalized_range_value("hue_range");
+function getHue() {
+	return getNormalizedRangeValue("hue_range");
 }
 //Returns the value of the saturation slider normalized.
-function get_sat() {
-	return get_normalized_range_value("sat_range");
+function getSat() {
+	return getNormalizedRangeValue("sat_range");
 }
 
 //Returns the value of the brightness slider normalized.
-function get_bri() {
-	return get_normalized_range_value("bri_range");
+function getBri() {
+	return getNormalizedRangeValue("bri_range");
 }
 
-function get_normalized_range_value(elementId) {
+function getNormalizedRangeValue(elementId) {
 	var range = document.getElementById(elementId)
 	return range.value / range.max;
 }
@@ -96,8 +96,8 @@ function draw_bri_canvas() {
 //Draws the canvas behind the saturation slider with an approximation of what colour the lights will have at that position.
 function draw_sat_canvas() {
 	var slider = $(".sat-show");
-  var hue = get_hue()
-  var bri = get_bri()
+  var hue = getHue()
+  var bri = getBri()
   var stops = [HSVtoRGB(hue, 0, bri), HSVtoRGB(hue, 1, bri)].map(RGBtoCSS)
   slider.css('background', createLinearGradient(stops));
 }
@@ -108,8 +108,8 @@ function draw_hue_canvas(){
 	// var context = canvas.getContext("2d");
   var numberStops = 20
   var stops = []
-  var sat = get_sat()
-  var bri = get_bri()
+  var sat = getSat()
+  var bri = getBri()
 
   for (var i = 0; i < numberStops; i++) {
     stops.push(i / numberStops);
