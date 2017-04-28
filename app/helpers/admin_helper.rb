@@ -15,17 +15,6 @@ module AdminHelper
 		booking["group"]
 	end
 
-  	def current_user
-  		if session[:cookie] == cookies[:chalmersItAuth] && session[:user].present?
-  			@user ||= User.find(session[:user])
-		else
-			reset_session
-			@user = User.find_by_token cookies[:chalmersItAuth]
-			session[:cookie] = cookies[:chalmersItAuth]
-			session[:user] = @user.cid
-  	  	end
-  		@user
-  	end
 	def check_lock_state
 		#Gets all lockstates orders by creation and gets the latest one
 		latest_lock = LockState.order(:created_at).last
