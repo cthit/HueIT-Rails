@@ -139,9 +139,7 @@ class LightsController < ApplicationController
       log("All lights OFF")
       sse_update
       @lights = Huey::Bulb.all
-      respond_to do |format|
-         format.js
-      end
+      render json: @lights
    end
 
    def turn_all_on
@@ -153,9 +151,7 @@ class LightsController < ApplicationController
       log("All lights ON")
       sse_update
       @lights = Huey::Bulb.all
-      respond_to do |format|
-         format.js
-      end
+      render json: @lights
    end
    #Toggles light state
    def switchOnOff
@@ -163,6 +159,8 @@ class LightsController < ApplicationController
       @light.on = !@light.on
       @light.save
       log("Lamp ##{params[:id]} toggled")
+      @lights = Huey::Bulb.all
+      render json: @lights
    end
 
    def party_on_off

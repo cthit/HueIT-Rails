@@ -15,13 +15,15 @@
 //= require turbolinks
 //= require_tree .
 
-function switchOnOff(i,hue,sat,bri) {
-	drawLamp(i,hue,sat,bri);
-	changeUrl = "/lights/" + parseInt(i) + "/switchOnOff"
-	$.ajax({
-		url: changeUrl,
-		type: 'GET'
-	});
+function switchOnOff (i) {
+  var light = lights.find(function (el) {
+    return el.id === i
+  })
+  changeUrl = '/lights/' + i + '/switchOnOff'
+  $.post(changeUrl, function (data) {
+    lights = data
+    renderLamps()
+  })
 }
 //Converts to color HSB object (code from here http://www.csgnetwork.com/csgcolorsel4.html with some improvements)
 function rgb2hsb(r, g, b){
@@ -53,20 +55,17 @@ function rgb2hsb(r, g, b){
 	return HSB;
 }
 
-function setSliders(id) {
-	var canvas = document.getElementById("color_shower_" + id);
-	var ctx = canvas.getContext("2d");
-	var imgd = ctx.getImageData(7,7,1,1);
-	var r = imgd.data[0];
-	var g = imgd.data[1];
-	var b = imgd.data[2];
-	var HSB = rgb2hsb(r,g,b);
-	var hueSlider = document.getElementById("hue_range");
-	hueSlider.value = Math.round(HSB.hue);
-	var satSlider = document.getElementById("sat_range");
-	satSlider.value = Math.round(HSB.sat);
-	var briSlider = document.getElementById("bri_range");
-	briSlider.value = Math.round(HSB.bri);
+function setSliders (id) {
+  var light = lights.find(function (el) {
+    return el.id === id
+  })
+
+  var hueSlider = document.getElementById('hue_range')
+  hueSlider.value = Math.round(light.hue)
+  var satSlider = document.getElementById('sat_range')
+  satSlider.value = Math.round(light.sat)
+  var briSlider = document.getElementById('bri_range')
+  briSlider.value = Math.round(light.bri)
 }
 
 function runParty(){
@@ -141,18 +140,18 @@ function sse_waiter() {
 	party_ready();
 }
 
-var ready = function() {
-	ruinParty();
-	ruby_ready();
-	party_ready();
-	draw_hue_canvas();
-	draw_sat_canvas();
-	draw_bri_canvas();
-	var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-	if(userAgent.match(/Android/i)) {
-		changeThemeColor();
-	}
-	// sse_waiter();
+var ready = function () {
+  ruinParty()
+  renderLamps()
+  party_ready()
+  draw_hue_canvas()
+  draw_sat_canvas()
+  draw_bri_canvas()
+  var userAgent = navigator.userAgent || navigator.vendor || window.opera
+  if (userAgent.match(/Android/i)) {
+    changeThemeColor()
+  }
+  // sse_waiter();
 }
 
 var changeThemeColor = function() {

@@ -6,13 +6,13 @@
     <div class="switch">
       <label>
           <%= check_box_tag "switch_#{light.id}", 'on/off', light.on,
-              onclick:"switchOnOff(#{light.id},#{light.hue},#{light.sat},#{light.bri});" %>
+              onclick:"switchOnOff(#{light.id});", name: nil %>
             <span class="lever"></span>
        </label>
      </div>
   </div>
   <div class="col s3 align-container">
-    <canvas onclick="setSliders(<%= light.id %>)" id="color_shower_<%= light.id %>"  width="30" height="30" class="bulb">
+    <%= content_tag :div, nil, id: "color_shower_#{light.id}", class: "bulb", data: {light_id: light.id} %>
   </div>
   <div class="col s4 align-container">
     <%= check_box_tag "lights[#{light.id}]", 'yes', false, class: 'filled-in toggl-switch' %>

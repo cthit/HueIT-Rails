@@ -19,3 +19,18 @@ $ ->
     $('#party_canvas').on 'click', (e) ->
         $.ajax(url: 'lights/party_on_off')
         togglePartyMode()
+
+    $('.bulb').on 'click', (e) ->
+      setSliders(parseInt(e.target.dataset.lightId))
+
+    $('#change_btn').on 'click', (e) ->
+        e.preventDefault()
+        $.post '/lights/multi_update', $("#hue-form").serialize(), (data) ->
+            updateLights(data)
+            renderLamps()
+
+    $('.turn-all-btn').on 'click', (e) ->
+        e.preventDefault()
+        $.post e.target.dataset.url, (data) ->
+            updateLights(data)
+            renderLamps()

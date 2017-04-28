@@ -1,6 +1,6 @@
 <div id='button-actions' class="col s12 actions flex-container">
-  <%= link_to "On all", turn_all_on_lights_path, remote: true, class: "btn bar-button light-blue accent-3" %>
-  <%= link_to "Off all", turn_all_off_lights_path, remote: true, class: "btn bar-button light-blue accent-3" %>
+  <%= button_tag "On all", data: {url: turn_all_on_lights_path}, class: "turn-all-btn btn bar-button light-blue accent-3" %>
+  <%= button_tag "Off all", data: {url: turn_all_off_lights_path}, class: "turn-all-btn btn bar-button light-blue accent-3" %>
   <canvas id='party_canvas' class='btn bar-button light-blue accent-3' width="400" style='padding: 0px;'></canvas>
   <%= link_to "Reset all", reset_lights_lights_path, remote: true, class: "btn deep-orange accent-2 bar-button" %>
   <% if current_user.in_group?(@group.to_s) || current_user.admin? %>

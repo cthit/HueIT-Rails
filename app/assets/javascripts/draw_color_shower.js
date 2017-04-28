@@ -38,36 +38,35 @@ function createLinearGradient(stops) {
   return 'linear-gradient(to right, ' + stops.join(',') + ')';
 }
 
+function updateLights (newLights) {
+  lights = newLights
+}
+
+function renderLamps () {
+  lights.forEach(function (light) {
+    drawLamp(light)
+    $('#switch_' + light.id).prop('checked', light.on)
+  })
+}
 /**
 * draw() is called first when the body loads, and then on each change of value (hue,bri,sat).
 * Correct is a boolean for if the given value should be corrected to the triangle
 * the h,s,l value is taken from each light.
 */
-function draw(id, hue, sat, brightness){
-	var canvas = document.getElementById(id);
-	var ctx = canvas.getContext("2d");
-	var rgb = null;
-	rgb = HSVtoRGB(hue, sat, brightness)
+function draw (id, hue, sat, brightness) {
+  var div = document.getElementById('color_shower_' + id)
 
-	/**
-	* So here we create a half circle and we set the fillStyle to the current color of Hue, Saturation and Brightness level
-	*/
-	ctx.beginPath();
-	ctx.arc(15, 15, 14, 0, 2 * Math.PI, false);
-	ctx.fillStyle = "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
-	ctx.fill();
-	ctx.lineWidth = 2;
-	ctx.strokeStyle = '#EDEDED';
-	ctx.stroke();
+  var rgb = HSVtoRGB(hue, sat, brightness)
+  div.style.background = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')'
 }
 
 // Used when disregarding the value of the selectors, only wanting to draw the color of the bulb or if it is off
-function drawLamp(id, hue, sat, bri) {
-	if (!document.getElementById("switch_" + id).checked) {
-		draw("color_shower_" + id, 0, 0, 0.5);
-	} else {
-		draw("color_shower_" + id, hue / 65535, sat / 254, bri / 254);
-	}
+function drawLamp (light) {
+  if (!light.on) {
+    draw(light.id, 0, 0, 0.5)
+  } else {
+    draw(light.id, light.hue / 65535, light.sat / 254, light.bri / 254)
+  }
 }
 //Returns the value of the hue slider normalized.
 function get_hue() {
