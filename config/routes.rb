@@ -22,9 +22,9 @@ Rails.application.routes.draw do
   end
 
   root 'lights#index'
-  post "lights/:id/turnOff" => "lights#turnOff"
-  post "lights/:id/turnOn" => "lights#turnOn"
-  post "lights/:id/switchOnOff" => "lights#switchOnOff"
+  post "lights/:id/turn_off" => "lights#turn_off"
+  post "lights/:id/turn_on" => "lights#turn_on"
+  post "lights/:id/switch_on_off" => "lights#switch_on_off"
 
   get 'admin/index'
   get 'admin' => 'admin#index'

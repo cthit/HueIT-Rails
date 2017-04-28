@@ -63,14 +63,14 @@ class LightsController < ApplicationController
       end
    end
 
-   def turnOff
+   def turn_off
       @light = Huey::Bulb.find(params[:id].to_i)
       @light.update(on: false)
       @light.save
       redirect_to(:action => 'index')
    end
 
-   def turnOn
+   def turn_on
       @light = Huey::Bulb.find(params[:id].to_i)
       @light.update(on: true)
       @light.save
@@ -101,7 +101,7 @@ class LightsController < ApplicationController
       render json: @lights
    end
    #Toggles light state
-   def switchOnOff
+   def switch_on_off
       @light = Huey::Bulb.find(params[:id].to_i)
       @light.on = !@light.on
       @light.save
