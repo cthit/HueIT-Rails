@@ -90,6 +90,8 @@ class LightsController < ApplicationController
          format.js
       end
 
+      @lights = Huey::Bulb.all
+      render json: @lights
    end
    #shows a specific lamp (lights/1)
    def show
