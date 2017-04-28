@@ -17,7 +17,7 @@ $ ->
             $this.prop 'checked', !$this.prop('checked')
 
     $('#party_canvas').on 'click', (e) ->
-        $.ajax(url: 'lights/party_on_off')
+        $.post('lights/party_on_off')
         togglePartyMode()
 
     $('.bulb').on 'click', (e) ->
