@@ -33,3 +33,7 @@ $ ->
             if data != " "
                 updateLights(data)
                 renderLamps()
+
+    $('.update').on 'input', (e) ->
+        draw_hue_canvas()
+        draw_sat_canvas()
