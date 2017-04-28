@@ -30,6 +30,14 @@ function HSVtoRGB(h, s, v) {
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 }
 
+function RGBtoCSS(rgb) {
+  return "rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ")"
+}
+
+function createLinearGradient(stops) {
+  return 'linear-gradient(to right, ' + stops.join(',') + ')';
+}
+
 /**
 * draw() is called first when the body loads, and then on each change of value (hue,bri,sat).
 * Correct is a boolean for if the given value should be corrected to the triangle
@@ -82,46 +90,31 @@ function get_normalized_range_value(elementId) {
 
 //Draws the canvas behind the brightness slider to visualize how the brightness changes
 function draw_bri_canvas() {
-	var canvas = document.getElementById("bri_canvas");
-	var context = canvas.getContext("2d");
-
-	var gradient = context.createLinearGradient(0, 0, canvas.width, 0);
-	gradient.addColorStop(0, "black");
-	gradient.addColorStop(1, "white");
-
-	context.fillStyle = gradient;
-	context.fillRect(0, 0, canvas.width, canvas.height);
+  var slider = $(".bri-show");
+  slider.css('background', 'linear-gradient(to right, black, white)');
 }
 
 //Draws the canvas behind the saturation slider with an approximation of what colour the lights will have at that position.
 function draw_sat_canvas() {
-	var canvas = document.getElementById("sat_canvas");
-	var context = canvas.getContext("2d");
-
-	for (var x = 0; x < canvas.width; x += 1) {
-		var sat = x / canvas.width;
-		var rgb = HSVtoRGB(get_hue(), sat, get_bri())
-		draw_vertical_line_on_x(context, x, canvas.height, rgb)
-	};
+	var slider = $(".sat-show");
+  var stops = [HSVtoRGB(get_hue(), 0, get_bri()), HSVtoRGB(get_hue(), 1, get_bri())].map(RGBtoCSS)
+  slider.css('background', createLinearGradient(stops));
 }
 
 //Draws the canvas behind the hue slider with an approximation of what colour the lights will have at that position.
 function draw_hue_canvas(){
-	var canvas = document.getElementById("hue_canvas");
-	var context = canvas.getContext("2d");
+  var slider = $(".hue-show");
+	// var context = canvas.getContext("2d");
+  var numberStops = 20
+  var stops = []
 
-	for (var x = 0; x < canvas.width; x += 1) {
-		var hue = x / canvas.width;
-		var rgb = HSVtoRGB(hue, get_sat(), get_bri())
-		draw_vertical_line_on_x(context, x, canvas.height, rgb)
-	};
-}
+  for (var i = 0; i < numberStops; i++) {
+    stops.push(i / numberStops);
+  }
 
-function draw_vertical_line_on_x(context, x, y, color) {
-	context.strokeStyle = "rgb(" + color[0] + "," + color[1] + "," + color[2] + ")";
-	context.beginPath();
-	context.moveTo(x, 0);
-	context.lineTo(x, y);
-	context.closePath();
-	context.stroke();
+  stops = stops.map(function(hue) {
+    return RGBtoCSS(HSVtoRGB(hue, get_sat(), get_bri()));
+  });
+
+  slider.css('background', createLinearGradient(stops))
 }
