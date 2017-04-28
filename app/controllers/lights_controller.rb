@@ -86,7 +86,7 @@ class LightsController < ApplicationController
    end
 
    def party_on_off
-      if Rails.application.config.is_party_on
+      if $is_party_on
          party_off
       else
          party_on
@@ -105,7 +105,7 @@ class LightsController < ApplicationController
 
    def party_on
       entry = log "PARTY MODE ENGAGED :DDDDD"
-      Rails.application.config.is_party_on = true
+      $is_party_on = true
 
       Thread.new do
          lights = Huey::Bulb.all
@@ -124,7 +124,7 @@ class LightsController < ApplicationController
 
          colors = [0, 5000, 15000, 20000, 42000, 55000, 62000]
          delay = 0.2
-         while Rails.application.config.is_party_on
+         while $is_party_on
             party_patterns = [method(:random_bulb_and_color),
                               method(:one_at_a_time_in_order),
                               method(:one_color_down_both_lanes),
@@ -146,11 +146,11 @@ class LightsController < ApplicationController
 
    def party_off
       log "no more party :("
-      Rails.application.config.is_party_on = false
+      $is_party_on = false
    end
 
    def check_party
-      if Rails.application.config.is_party_on
+      if $is_party_on
          party_off
       end
    end
