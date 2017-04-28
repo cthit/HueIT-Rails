@@ -97,7 +97,9 @@ function draw_bri_canvas() {
 //Draws the canvas behind the saturation slider with an approximation of what colour the lights will have at that position.
 function draw_sat_canvas() {
 	var slider = $(".sat-show");
-  var stops = [HSVtoRGB(get_hue(), 0, get_bri()), HSVtoRGB(get_hue(), 1, get_bri())].map(RGBtoCSS)
+  var hue = get_hue()
+  var bri = get_bri()
+  var stops = [HSVtoRGB(hue, 0, bri), HSVtoRGB(hue, 1, bri)].map(RGBtoCSS)
   slider.css('background', createLinearGradient(stops));
 }
 
@@ -107,13 +109,15 @@ function draw_hue_canvas(){
 	// var context = canvas.getContext("2d");
   var numberStops = 20
   var stops = []
+  var sat = get_sat()
+  var bri = get_bri()
 
   for (var i = 0; i < numberStops; i++) {
     stops.push(i / numberStops);
   }
 
   stops = stops.map(function(hue) {
-    return RGBtoCSS(HSVtoRGB(hue, get_sat(), get_bri()));
+    return RGBtoCSS(HSVtoRGB(hue, sat, bri));
   });
 
   slider.css('background', createLinearGradient(stops))
