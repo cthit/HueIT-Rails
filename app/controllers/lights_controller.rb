@@ -83,11 +83,6 @@ class LightsController < ApplicationController
             sse_update
       end
       @lights = Huey::Bulb.all
-      respond_to do |format|
-         format.js
-      end
-
-      @lights = Huey::Bulb.all
       render json: @lights
    end
    #shows a specific lamp (lights/1)
