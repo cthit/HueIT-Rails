@@ -24,21 +24,18 @@ class LightsController < ApplicationController
    #Changes lights
    def multi_update
       if params[:lights]
-         lights = params[:lights].keys
+         lights = params[:lights].keys.map(&:to_i).map { |id| Huey::Bulb.find(id) }.select(&:on)
 
-         @changedLights = ""
+         sat = params[:sat_range].to_i
+         hue = params[:hue_range].to_i
+         bri = params[:bri_range].to_i
 
-         lights.each do |light|
-            bulb = Huey::Bulb.find light.to_i
-            if bulb.on
-               bulb.update(sat: (params[:sat_range]).to_i, hue: (params[:hue_range].to_i), bri: (params[:bri_range].to_i))
-               bulb.save
-               @changedLights += light.to_s+" "
-            end
-         end
+         group = Huey::Group.new lights
+         group.update(sat: sat, hue: hue, bri: bri)
+         changedLights = lights.join(" ")
 
-            log "Lamps ##{@changedLights}color changed to hue:#{(params[:hue_range]).to_s} sat: #{(params[:sate_range]).to_s} bri: #{(params[:bri_range]).to_s}"
-            sse_update
+         log "Lamps ##{changedLights}color changed to hue: #{hue} sat: #{sat} bri: #{bri}"
+         sse_update
       end
       @lights = Huey::Bulb.all
       render json: @lights
