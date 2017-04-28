@@ -2,6 +2,17 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.it-logo {
+  background-image: asset-url("it-logo.png");
+  width: 90px;
+  height: 90px;
+  background-size: 100%;
+}
+
+.party-on .it-logo {
+  background-image: asset-url("parrot.gif");
+}
+
 *{
 	padding : 0;
 	margin : 0;
