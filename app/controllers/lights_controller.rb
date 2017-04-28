@@ -5,7 +5,7 @@ class LightsController < ApplicationController
    before_action :set_lights, except: [:turn_on, :turn_off, :party_on_off]
    before_action :set_bulb_from_id, only: [:turn_off, :turn_on, :switch_on_off]
    before_action :check_lock_state, except: [:index]
-   before_action :check_party, except: [:index, :party_on_off, :party_off, :party_on]
+   before_action :ruin_party, except: [:index, :party_on_off, :party_off, :party_on]
 
    def change_logger
       @@change_logger ||= Logger.new("#{Rails.root}/log/change.log")
@@ -150,7 +150,8 @@ class LightsController < ApplicationController
       $is_party_on = false
    end
 
-   def check_party
+   def ruin_party
+      # other actions should disable party mode
       if $is_party_on
          party_off
       end
