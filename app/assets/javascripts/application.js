@@ -19,7 +19,7 @@ function switchOnOff (i) {
   var light = lights.find(function (el) {
     return el.id === i
   })
-  changeUrl = '/lights/' + i + '/switchOnOff'
+  changeUrl = '/lights/' + i + '/switch_on_off'
   $.post(changeUrl, function (data) {
     lights = data
     renderLamps()
