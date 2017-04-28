@@ -29,8 +29,7 @@ $ ->
             updateLights(data)
             renderLamps()
 
-    $('.turn-all-btn').on 'click', (e) ->
-        e.preventDefault()
+    $('.link-btn').on 'click', (e) ->
         $.post e.target.dataset.url, (data) ->
             updateLights(data)
             renderLamps()
