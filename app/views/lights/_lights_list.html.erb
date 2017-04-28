@@ -5,5 +5,5 @@
   <%= label_tag "Deselect all", "Deselect all", class: "btn bar-button light-blue accent-3", id: "deselect_all_btn" %>
 </div>
 <% [4, 7, 5, 2, 6, 3].each do |i| %>
-    <%= render partial: 'bulb_controls', locals: {i: i} %>
+    <%= render partial: 'bulb_controls', locals: {light: find_light(i)} %>
 <% end %>
