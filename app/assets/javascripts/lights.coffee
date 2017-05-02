@@ -7,12 +7,12 @@ $ ->
         $(this).parent().find('.update').val(this.value)
 
     $('#select_all_btn').on 'click', (e) ->
-        $('.toggl-switch').prop 'checked', true
+        $('.checkbox').prop 'checked', true
     $('#deselect_all_btn').on 'click', (e) ->
-        $('.toggl-switch').prop 'checked', false
+        $('.checkbox').prop 'checked', false
 
     $('#toggle_all_btn').on 'click', (e) ->
-        $('.toggl-switch').each () ->
+        $('.checkbox').each () ->
             $this = $(this)
             $this.prop 'checked', !$this.prop('checked')
 
