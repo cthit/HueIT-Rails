@@ -6,8 +6,7 @@
     <div class="switch">
       <%= check_box_tag "switch_#{light.id}", 'on/off', light.on,
               onclick:"switchOnOff(#{light.id});", name: nil, class: "switch-input" %>
-      <%= label_tag "switch_#{light.id}", "", for: "switch_#{light.id}" %>
-      <label for=<%="checkbox_#{light.id}"%> >
+      <label for=<%="switch_#{light.id}"%> class="switch-paddle" >
         <span class="switch-active" aria-hidden="true">On</span>
         <span class="switch-inactive" aria-hidden="true">Off</span>
       </label> 
