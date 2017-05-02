@@ -16,7 +16,9 @@
     <%= content_tag :div, nil, id: "color_shower_#{light.id}", class: "bulb", data: {light_id: light.id} %>
   </div>
   <div class="column small-4 align-container">
-    <%= check_box_tag "lights[#{light.id}]", 'yes', false, class: 'filled-in toggl-switch' %>
-    <%= label_tag "select_#{light.id}", "Select", for: "lights_#{light.id}" %>
+    <label class="label--checkbox">
+      <%= check_box_tag "lights[#{light.id}]", '', false, class: 'checkbox' %>
+      Select
+    </label>
   </div>
 </div>
