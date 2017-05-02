@@ -117,14 +117,14 @@ body{
   margin-top: 10px;
 }
 
-#button-actions, #slider-actions, #light-actions {
+.top-level-container {
   margin-left: 10px;
   padding: 10px;
   margin-top: 10px;
   padding-left: 10px;
 }
 
-.flex-container {
+.button-actions-container {
   display: flex;
   flex-flow: row wrap;
   margin-bottom: 0px !important;
@@ -195,4 +195,12 @@ input[type=range]::-ms-thumb {
 
 [type="checkbox"].filled-in+label:before, [type="checkbox"].filled-in+label:after {
   margin-top: 4px;
+}
+
+.right {
+  float: right;
+}
+
+.submit {
+  margin-bottom: 0px;
 }

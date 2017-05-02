@@ -1,27 +1,23 @@
 <main>
 	<% if current_user.present? %>
 		<% content_for :headJavascript do %>
-  			<script>
-  				var lights = <%= @lights.to_json.html_safe %>
-  				var isPartyOn = <%= ($is_party_on || false).to_s.html_safe %>
-				</script>
+			<script>
+				var lights = <%= @lights.to_json.html_safe %>
+				var isPartyOn = <%= ($is_party_on || false).to_s.html_safe %>
+			</script>
 		<% end %>
-		<div class = "container">
 			<div class="row">
 				<% if @is_locked %>
 					<div class='card-panel orange accent-4 center' id='lockbar'>
 						<h3>hueIT is locked</h2>
 					</div>
 				<% end %>
-				<div class="row">
-					<div class="column small-12 medium-10 large-8 large-offset-2 medium-offset-1">
-						<div class="row">
-							<%= render 'form' %>
-							</div>
+				<div class="column small-12 medium-10 large-8 medium-offset-1 large-offset-2">
+					<div class="row">
+						<%= render 'form' %>
 					</div>
 				</div>
 			</div>
-		</div>
 	<% end %>
 </main>
 

@@ -9,13 +9,13 @@
       <label for=<%="switch_#{light.id}"%> class="switch-paddle" >
         <span class="switch-active" aria-hidden="true">On</span>
         <span class="switch-inactive" aria-hidden="true">Off</span>
-      </label> 
+      </label>
      </div>
   </div>
-  <div class="column small-3 align-container">
+  <div class="column small-3">
     <%= content_tag :div, nil, id: "color_shower_#{light.id}", class: "bulb", data: {light_id: light.id} %>
   </div>
-  <div class="column small-4 align-container">
+  <div class="column small-4">
     <label class="label--checkbox">
       <%= check_box_tag "lights[#{light.id}]", '', false, class: 'checkbox' %>
       Select
