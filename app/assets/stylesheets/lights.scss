@@ -166,3 +166,23 @@ body{
   justify-content: center;
   align-items: center;
 }
+
+.switch-paddle {
+  border-radius: 3px;
+  background: white;
+  color: #606060;
+
+  &::after {
+    background: #26a69a;
+    border-radius: 3px;
+  }
+}
+
+.switch-input:checked + .switch-paddle {
+    background: #26a69a;
+    color: white;
+
+    &::after {
+      background: #D0D0D0;
+    }
+  }
