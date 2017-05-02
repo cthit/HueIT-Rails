@@ -1,8 +1,8 @@
-<div id='button-actions' class="col s12 actions flex-container">
-  <%= button_tag "On all", data: {url: turn_all_on_lights_path}, class: "link-btn btn bar-button light-blue accent-3" %>
-  <%= button_tag "Off all", data: {url: turn_all_off_lights_path}, class: "link-btn btn bar-button light-blue accent-3" %>
-  <%= button_tag "PARTY", data: {url: party_on_off_lights_path}, class: "party-button link-btn btn bar-button light-blue accent-3" %>
-  <%= button_tag "Reset all", data: {url: reset_lights_lights_path}, class: "link-btn btn deep-orange accent-2 bar-button"%>
+<div id='button-actions' class="column small-12 actions flex-container">
+  <%= button_tag "On all", data: {url: turn_all_on_lights_path}, class: "link-btn button bar-button light-blue accent-3" %>
+  <%= button_tag "Off all", data: {url: turn_all_off_lights_path}, class: "link-btn button bar-button light-blue accent-3" %>
+  <%= button_tag "PARTY", data: {url: party_on_off_lights_path}, class: "party-button link-btn button bar-button light-blue accent-3" %>
+  <%= button_tag "Reset all", data: {url: reset_lights_lights_path}, class: "link-btn button deep-orange accent-2 bar-button"%>
   <% if current_user.in_group?(@group.to_s) || current_user.admin? %>
     <%= link_to "Administration", '/admin', remote: false, class: "btn bar-button light-blue accent-3" %>
   <% end %>

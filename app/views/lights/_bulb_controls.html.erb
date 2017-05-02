@@ -1,20 +1,22 @@
 <!-- Requires an local value of i passed when rendering the partial like:-->
 <!-- render partial: 'bulb_controls', locals: {i: a number} -->
 
-<div class="col s12 m6 valign-wrapper light-row">
-  <div class="col s4 align-container">
+<div class="column small-12 medium-6 valign-wrapper light-row">
+  <div class="column small-4 align-container">
     <div class="switch">
-      <label>
-          <%= check_box_tag "switch_#{light.id}", 'on/off', light.on,
-              onclick:"switchOnOff(#{light.id});", name: nil %>
-            <span class="lever"></span>
-       </label>
+      <%= check_box_tag "switch_#{light.id}", 'on/off', light.on,
+              onclick:"switchOnOff(#{light.id});", name: nil, class: "switch-input" %>
+      <%= label_tag "switch_#{light.id}", "", for: "switch_#{light.id}" %>
+      <label for=<%="checkbox_#{light.id}"%> >
+        <span class="switch-active" aria-hidden="true">On</span>
+        <span class="switch-inactive" aria-hidden="true">Off</span>
+      </label> 
      </div>
   </div>
-  <div class="col s3 align-container">
+  <div class="column small-3 align-container">
     <%= content_tag :div, nil, id: "color_shower_#{light.id}", class: "bulb", data: {light_id: light.id} %>
   </div>
-  <div class="col s4 align-container">
+  <div class="column small-4 align-container">
     <%= check_box_tag "lights[#{light.id}]", 'yes', false, class: 'filled-in toggl-switch' %>
     <%= label_tag "select_#{light.id}", "Select", for: "lights_#{light.id}" %>
   </div>

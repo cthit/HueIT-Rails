@@ -1,36 +1,34 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>HueIT</title>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
-	<!-- Compiled and minified CSS -->
-	<%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css" %>
-	<!-- Compiled and minified JavaScript -->
-	<%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"%>
-	<!-- Materialize icons -->
-	<%= stylesheet_link_tag "https://fonts.googleapis.com/icon?family=Material+Icons" %>
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <meta name="theme-color" content="#09cdda">
 
-	<%= yield :headJavascript %>
-  <%= csrf_meta_tags %>
-  <meta name="theme-color" content="#09cdda">
+    <%= yield :headJavascript %>
+  </head>
 
-</head>
-<body>
-  <div class="header-holder">
-    <header class="row">
-      <div class="col l8 m10 s12 offset-l2 offset-m1 valign-wrapper">
-        <div class="s12 m12 l10 col valign">
-          <h1>hueIT <small>Digital light picker</small></h1>
-        </div>
-        <div class="l2 col hide-on-med-and-down valign">
-          <div class="right it-logo"></div>
-        </div>
-        </div>
-    </header>
-  </div>
-	<%= yield %>
+  <body>
+    <div class="header-holder">
+      <header class="row">
+        <div class="column large-8 medium-10 small-12 large-offset-2 medium-offset-1 valign-wrapper">
+          <div class="small-12 medium-12 large-10 column valign">
+            <h1>hueIT <small>Digital light picker</small></h1>
+          </div>
+          <div class="large-2 column hide-on-med-and-down valign">
+            <div class="right it-logo"></div>
+          </div>
+          </div>
+      </header>
+    </div>
+    <%= yield %>
 
-</body>
+
+  </body>
 </html>

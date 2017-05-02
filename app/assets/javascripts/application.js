@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require foundation
 //= require turbolinks
 //= require_tree .
 
@@ -106,3 +107,5 @@ var changeThemeColor = function() {
 
 $(document).on('page:load', ready);
 $(document).ready(ready);
+
+$(function(){ $(document).foundation(); });
