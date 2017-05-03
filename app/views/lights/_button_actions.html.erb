@@ -1,9 +1,9 @@
 <div id='button-actions' class="column small-12 actions button-actions-container">
-  <%= button_tag "On all", data: {url: turn_all_on_lights_path}, class: "link-btn button radius bar-button" %>
-  <%= button_tag "Off all", data: {url: turn_all_off_lights_path}, class: "link-btn button radius bar-button" %>
-  <%= button_tag "PARTY", data: {url: party_on_off_lights_path}, class: "party-button link-btn button radius bar-button" %>
-  <%= button_tag "Reset all", data: {url: reset_lights_lights_path}, class: "link-btn button secondary radius bar-button"%>
+  <%= button_tag "On all", data: {url: turn_all_on_lights_path}, class: "link-btn button bar-button" %>
+  <%= button_tag "Off all", data: {url: turn_all_off_lights_path}, class: "link-btn button bar-button" %>
+  <%= button_tag "PARTY", data: {url: party_on_off_lights_path}, class: "party-button link-btn button bar-button" %>
+  <%= button_tag "Reset all", data: {url: reset_lights_lights_path}, class: "link-btn button secondary bar-button"%>
   <% if current_user.in_group?(@group.to_s) || current_user.admin? %>
-    <%= link_to "Administration", '/admin', remote: false, class: "button radius bar-button" %>
+    <%= link_to "Administration", '/admin', remote: false, class: "button bar-button" %>
   <% end %>
 </div>
