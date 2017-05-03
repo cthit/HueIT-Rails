@@ -1,8 +1,8 @@
 <!-- Requires an local value of i passed when rendering the partial like:-->
 <!-- render partial: 'bulb_controls', locals: {i: a number} -->
 
-<div class="column small-12 medium-6 valign-wrapper light-row">
-  <div class="column small-4 align-container">
+<div class="column small-12 medium-6 light-row center-content">
+  <div class="column small-4">
     <div class="switch">
       <%= check_box_tag "switch_#{light.id}", 'on/off', light.on,
               onclick:"switchOnOff(#{light.id});", name: nil, class: "switch-input" %>
