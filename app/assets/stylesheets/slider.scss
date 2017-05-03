@@ -20,6 +20,7 @@ input[type=range] {
   width: 95%;
   height: 30px;
   background: rgba(0, 0, 0, 0);
+  cursor: pointer;
 }
 
 input[type=range]::-webkit-slider-runnable-track {
