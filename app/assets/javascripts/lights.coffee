@@ -21,6 +21,8 @@ $ ->
 
     $('.bulb').on 'click', (e) ->
       setSliders(parseInt(e.target.dataset.lightId))
+      draw_hue_canvas()
+      draw_sat_canvas()
 
     $('#change_btn').on 'click', (e) ->
         e.preventDefault()
