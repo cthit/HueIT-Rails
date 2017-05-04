@@ -46,7 +46,7 @@ class LightsController < ApplicationController
 
    #Set standard light
    def reset_lights
-      @lights.update on: true, rgb: '#cff974', bri: 200
+      @lights.update on: true, rgb: '#cff974', bri: 254
 
       log "All lamps reset"
       sse_update
