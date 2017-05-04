@@ -15,7 +15,7 @@
   <div class="column small-3">
     <%= content_tag :div, nil, id: "color_shower_#{light.id}", class: "bulb", data: {light_id: light.id} %>
   </div>
-  <div class="column small-4 custom-checkbox">
+  <div class="column small-4 custom-checkbox checkbox">
     <%= check_box_tag "lights[#{light.id}]", '', false, class: '' %>
     <%= label_tag "lights[#{light.id}]", "Select" %>
   </div>
