@@ -170,19 +170,19 @@ body{
 .switch-paddle {
   border-radius: 2px;
   background: white;
-  color: #606060;
+  color: #5f5f5f;
 
   &::after {
-    background: #26a69a;
+    background: #2199e8;
     border-radius: 2px;
   }
 }
 
 .switch-input:checked + .switch-paddle {
-    background: #26a69a;
+    background: #2199e8;
     color: white;
 
     &::after {
-      background: #D0D0D0;
+      background: #5f5f5f;
     }
   }
