@@ -89,6 +89,8 @@
   &:last-child {
     margin-right: 0px;
   }
+  user-select: none;
+  -moz-user-select: none;
 }
 
 #it-logo {
@@ -152,6 +154,8 @@
   border-radius: 2px;
   background: white;
   color: #5f5f5f;
+  user-select: none;
+  -moz-user-select: none;
 
   &::after {
     background: #2199e8;
