@@ -1,4 +1,4 @@
-<main>
+<main class="row">
 	<% if current_user.present? %>
 		<% content_for :headJavascript do %>
 			<script>
@@ -6,18 +6,15 @@
 				var isPartyOn = <%= ($is_party_on || false).to_s.html_safe %>
 			</script>
 		<% end %>
-			<div class="row">
-				<% if @is_locked %>
-					<div class='card-panel orange accent-4 center' id='lockbar'>
-						<h3>hueIT is locked</h2>
-					</div>
-				<% end %>
-				<div class="column small-12 medium-10 large-8 medium-offset-1 large-offset-2">
-					<div class="row">
-						<%= render 'form' %>
-					</div>
+			<% if @is_locked %>
+				<div class='card-panel orange accent-4 center' id='lockbar'>
+					<h3>hueIT is locked</h2>
+				</div>
+			<% end %>
+			<div class="column small-12 medium-10 large-8 medium-offset-1 large-offset-2">
+				<div class="row">
+					<%= render 'form' %>
 				</div>
 			</div>
 	<% end %>
 </main>
-
