@@ -23,22 +23,3 @@
   box-sizing: inherit;
   font-family: "Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
 }
-
-.party-theme{
-	/*background: -webkit-canvas(squares);*/
-	background-color: red;
-}
-
-body {
-  background: #F7F7F7;
-}
-
-h1 small {
-  color: #6D6D6D;
-  font-weight: 200;
-}
-
-h1 {
-  padding: 10px;
-  font-size: 3rem;
-}

@@ -14,12 +14,49 @@ input[type="submit"] {
   font-weight: bold;
 }
 
+body {
+  height: auto;
+  background: #F7F7F7;
+}
+
 header {
-  padding: 20px;
   box-shadow: 0 1px 4px rgba(0,0,0,.2);
   background-color: #fff;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    margin: 0;
+
+    small {
+      color: #6D6D6D;
+      font-weight: 200;
+      padding-left: 0.4em;
+    }
+  }
+
+  .max-width {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 66.666667%;
+  }
 }
 
 main {
   padding-bottom: 4vw;
+}
+
+.it-logo {
+  background-image: asset-url("it-logo.png");
+  width: 90px;
+  height: 90px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.party-on .it-logo {
+  background-image: asset-url("parrot.gif");
 }
