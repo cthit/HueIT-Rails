@@ -1,4 +1,4 @@
-<main class="row">
+<main>
 	<% if current_user.present? %>
 		<% content_for :headJavascript do %>
 			<script>
@@ -11,8 +11,8 @@
 					<h3>hueIT is locked</h2>
 				</div>
 			<% end %>
-			<div class="column small-12 medium-10 large-8 medium-offset-1 large-offset-2">
-				<div class="row">
+			<div class='container'>
+				<div class='content'>
 					<%= render 'form' %>
 				</div>
 			</div>

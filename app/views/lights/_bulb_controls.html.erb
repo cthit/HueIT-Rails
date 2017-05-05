@@ -1,22 +1,18 @@
 <!-- Requires an local value of i passed when rendering the partial like:-->
 <!-- render partial: 'bulb_controls', locals: {i: a number} -->
 
-<div class="column small-12 medium-6 light-row center-content">
-  <div class="column small-4">
-    <div class="switch">
-      <%= check_box_tag "switch_#{light.id}", 'on/off', light.on,
-              onclick:"switchOnOff(#{light.id});", name: nil, class: "switch-input" %>
-      <label for=<%="switch_#{light.id}"%> class="switch-paddle" >
-        <span class="switch-active" aria-hidden="true">On</span>
-        <span class="switch-inactive" aria-hidden="true">Off</span>
-      </label>
-     </div>
+<div class="light-row center-content">
+  <div class="switch">
+    <%= check_box_tag "switch_#{light.id}", 'on/off', light.on,
+            onclick:"switchOnOff(#{light.id});", name: nil, class: "switch-input" %>
+    <label for=<%="switch_#{light.id}"%> class="switch-paddle" >
+      <span class="switch-active" aria-hidden="true">On</span>
+      <span class="switch-inactive" aria-hidden="true">Off</span>
+    </label>
   </div>
-  <div class="column small-3">
-    <%= content_tag :div, nil, id: "color_shower_#{light.id}", class: "bulb", data: {light_id: light.id} %>
-  </div>
-  <div class="column small-4 custom-checkbox checkbox">
-    <%= check_box_tag "lights[#{light.id}]", '', false, class: '' %>
+  <%= content_tag :div, nil, id: "color_shower_#{light.id}", class: "bulb", data: {light_id: light.id} %>
+  <div class="custom-checkbox">
+    <%= check_box_tag "lights[#{light.id}]", '', false, class: 'checkbox' %>
     <%= label_tag "lights[#{light.id}]", "Select" %>
   </div>
 </div>
