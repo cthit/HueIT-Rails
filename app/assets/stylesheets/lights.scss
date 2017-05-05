@@ -2,47 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.it-logo {
-  background-image: asset-url("it-logo.png");
-  width: 90px;
-  height: 90px;
-  background-size: 100%;
-}
-
-.party-on .it-logo {
-  background-image: asset-url("parrot.gif");
-}
-
-*{
-	padding : 0;
-	margin : 0;
-	border : 0;
-}
-
-body{
-	background-size : 100% auto;
-}
-
-#wrapper {
-    position:relative;
- }
-
-.slider-bg {
-  display: flex;
-
-  justify-content: center;
-  align-items: center;
-  height: 30px;
-  border: 1px solid #5a5a5a;
-  border-radius: 5px;
-  margin: 1em 0;
-
-  input[type="range"] {
-    width: 95%;
-    height: 5px;
-  }
-}
-
 .party-on .party-button {
   background: linear-gradient(to right,
     rgb(255, 0, 0),
@@ -108,57 +67,35 @@ body{
 	font-weight: bold;
 }
 
-.slider, .actions, #lights_list {
+.slider, .actions {
   box-shadow: 0 1px 4px rgba(0,0,0,.2);
   border-radius: 3px;
   background-color: #fff;
-  margin: 10px;
   padding: 10px;
   margin-top: 10px;
 }
 
-#button-actions, #slider-actions, #light-actions {
-  margin-left: 10px;
-  padding: 10px;
-  margin-top: 10px;
-  padding-left: 10px;
-}
-
-.flex-container {
+.button-actions-container {
   display: flex;
   flex-flow: row wrap;
-  margin-bottom: 0px !important;
 }
 
 .bar-button {
-  flex-grow: 1;
-  flex-basis: 20%;
-  margin: 3px;
+  flex: 1;
+  margin: 0;
+  margin-right: 3px;
   white-space: nowrap;
+
+  &:last-child {
+    margin-right: 0px;
+  }
+  user-select: none;
+  -moz-user-select: none;
 }
 
 #it-logo {
   width: 6.25rem;
   float: right;
-}
-
-.btn {
-	color: #1c1c1c !important;
-}
-
-input[type=range] {
-  border: none !important;
-}
-
-input[type=range]::-webkit-slider-thumb {
-  background: #5f5f5f !important;
-}
-
-input[type=range]::-moz-range-thumb {
-  background: #5f5f5f !important;
-}
-input[type=range]::-ms-thumb {
-  background: #5f5f5f !important;
 }
 
 .bulb {
@@ -183,6 +120,7 @@ input[type=range]::-ms-thumb {
 
 .light-row {
   margin-top: 15px;
+  min-width: 50%;
 }
 
 [type="checkbox"].filled-in:not(:checked)+label:after {
@@ -195,4 +133,67 @@ input[type=range]::-ms-thumb {
 
 [type="checkbox"].filled-in+label:before, [type="checkbox"].filled-in+label:after {
   margin-top: 4px;
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit {
+  margin-bottom: 0px;
+}
+
+.center-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.switch-paddle {
+  border-radius: 2px;
+  background: white;
+  color: #5f5f5f;
+  user-select: none;
+  -moz-user-select: none;
+
+  &::after {
+    background: #2199e8;
+    border-radius: 2px;
+  }
+}
+
+.switch-input:checked + .switch-paddle {
+  background: #2199e8;
+  color: white;
+
+  &::after {
+    background: #5f5f5f;
+  }
+}
+
+.switch-active {
+  margin-left: 2px;
+}
+
+.light-actions {
+  display: flex;
+  flex-direction: column;
+}
+
+ @media (min-width: 420px) {
+  .light-rows {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  max-width: 960px;
 }
