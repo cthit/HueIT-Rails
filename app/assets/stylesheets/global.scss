@@ -60,3 +60,8 @@ main {
 .party-on .it-logo {
   background-image: asset-url("parrot.gif");
 }
+
+.flash-heading {
+  display: flex;
+  justify-content: center;
+}
