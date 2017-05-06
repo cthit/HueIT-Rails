@@ -8,7 +8,12 @@
 		<% end %>
 			<% if @is_locked %>
 				<div class='card-panel orange accent-4 center' id='lockbar'>
-					<h3>hueIT is locked</h2>
+					<h3>hueIT is locked</h3>
+				</div>
+			<% elsif ($hue_not_found || false) %>
+				<div class='callout warning'>
+					<h3>Could not find Hue lights</h3><br>
+					All data below is mocked for development purposes
 				</div>
 			<% end %>
 			<div class='container'>

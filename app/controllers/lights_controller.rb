@@ -14,12 +14,9 @@ class LightsController < ApplicationController
 
    #Creates sites
    def index
-      begin
-         @is_locked = check_lock_state
-
-      rescue Huey::Errors::CouldNotFindHue
-
-      end
+      @is_locked = check_lock_state
+      p @lights
+      p $hue_not_found
    end
 
    def lights
@@ -167,6 +164,27 @@ class LightsController < ApplicationController
    end
 
    def set_lights
-      @lights = Huey::Bulb.all
+      begin
+         $hue_not_found ||= false
+         unless $hue_not_found
+            @lights = Huey::Bulb.all
+         else
+            @lights = mock_lights
+         end
+      rescue Huey::Errors::CouldNotFindHue
+         $hue_not_found = true
+         @lights = mock_lights
+      end
+   end
+
+   def mock_lights
+      [
+         BulbMock.new(7, 65535, 254, 254, true),
+         BulbMock.new(2, 65535, 254, 254, true),
+         BulbMock.new(3, 65535, 254, 254, true),
+         BulbMock.new(4, 65535, 254, 254, true),
+         BulbMock.new(5, 65535, 254, 254, true),
+         BulbMock.new(6, 65535, 254, 254, true)
+      ]
    end
 end
