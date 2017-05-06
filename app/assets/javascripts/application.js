@@ -16,6 +16,9 @@
 //= require turbolinks
 //= require_tree .
 
+var lights = lights || []
+var isPartyOn = isPartyOn || false
+
 function switchOnOff (i) {
   var light = lights.find(function (el) {
     return el.id === i
@@ -102,8 +105,5 @@ var changeThemeColor = function() {
 			}
 		});
 }
-
-$(document).on('page:load', ready);
-$(document).ready(ready);
 
 $(function(){ $(document).foundation(); });
