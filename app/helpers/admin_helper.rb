@@ -16,9 +16,9 @@ module AdminHelper
 	end
 
 	def is_locked
-		if $is_locked == nil
-			$is_locked = Time.now
+		if $locked_until == nil
+			$locked_until = Time.now
 		end
-		$is_locked > Time.now
+		$locked_until > Time.now
   end
 end

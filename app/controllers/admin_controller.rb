@@ -12,12 +12,12 @@ class AdminController < ApplicationController
 		shouldLock = params[:lock] == "true"
 		if shouldLock
 			if @group
-				$is_locked = @exp_date
+				$locked_until = @exp_date
 			else
-				$is_locked = 1.hour.from_now
+				$locked_until = 1.hour.from_now
 			end
 		else
-			$is_locked = Time.now
+			$locked_until = Time.now
 		end
 
 		flash[:success] = "Hue is " + (shouldLock ? "locked" : "unlocked")
