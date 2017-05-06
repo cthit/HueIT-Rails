@@ -15,7 +15,6 @@ class LightsController < ApplicationController
    #Creates sites
    def index
       begin
-         @is_locked = check_lock_state
 
       rescue Huey::Errors::CouldNotFindHue
 
