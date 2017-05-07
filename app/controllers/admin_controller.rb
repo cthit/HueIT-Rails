@@ -9,8 +9,8 @@ class AdminController < ApplicationController
 	end
 
 	def lock
-		shouldLock = params[:lock] == "true"
-		if shouldLock
+		should_lock = params[:lock] == "true"
+		if should_lock
 			if @group
 				$locked_until = @exp_date
 			else
@@ -20,7 +20,7 @@ class AdminController < ApplicationController
 			$locked_until = Time.now
 		end
 
-		flash[:success] = "Hue is " + (shouldLock ? "locked" : "unlocked")
+		flash[:success] = "Hue is " + (should_lock ? "locked" : "unlocked")
 		redirect_to admin_index_path
 	end
 

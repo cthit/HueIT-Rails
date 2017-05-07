@@ -16,8 +16,6 @@
 //= require turbolinks
 //= require_tree .
 
-var lights = lights || []
-var isPartyOn = isPartyOn || false
 
 function switchOnOff (i) {
   var light = lights.find(function (el) {
