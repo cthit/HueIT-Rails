@@ -1,22 +1,18 @@
-<main>
-	<div class="container">
-		<div>
-			<table class='striped'>
-				<thead>
-					<tr>
-						<th data-field="time"> Time </th>
-						<th data-field="cid"> CID </th>
-						<th data-field="entry"> Entry </th>
-					</tr>
-				</thead>
-				<tbody>
-					<%= render partial: 'log_list' %>
-				</tbody>
-			</table>
-				<div class='section'>
-					<%= will_paginate @log_entries, renderer: FoundationPagination::Rails %>
-				</div>
-		</div>
+<main class="container">
+	<div>
+		<table class="log-table stack">
+			<thead>
+				<tr>
+					<th data-field="time"> Time </th>
+					<th data-field="cid"> CID </th>
+					<th data-field="entry"> Entry </th>
+				</tr>
+			</thead>
+			<tbody>
+				<%= render partial: 'log_list' %>
+			</tbody>
+		</table>
+		<%= will_paginate @log_entries, renderer: FoundationPagination::Rails %>
 	</div>
 </main>
 
