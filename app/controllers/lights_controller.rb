@@ -23,7 +23,7 @@ class LightsController < ApplicationController
    #Changes lights
    def multi_update
       if params[:lights]
-         lights = params[:lights].keys.map(&:to_i).map { |id| Huey::Bulb.find(id) }.select(&:on)
+         lights = params[:lights].keys.map(&:to_i).map { |id| get_lights.find(id) }.select(&:on)
 
          sat = params[:sat_range].to_i
          hue = params[:hue_range].to_i
@@ -105,7 +105,7 @@ class LightsController < ApplicationController
       $is_party_on = true
 
       Thread.new do
-         lights = Huey::Bulb.all
+         lights = get_lights
 
          hue_array = Array.new
          sat_array = Array.new
@@ -158,20 +158,24 @@ class LightsController < ApplicationController
    end
 
    def set_bulb_from_id
-      @light = Huey::Bulb.find(params[:id].to_i)
+      @light = get_lights.find(params[:id].to_i)
    end
 
    def set_lights
+      @lights = get_lights
+   end
+
+   def get_lights
       begin
          $hue_not_found ||= false
          unless $hue_not_found
-            @lights = Huey::Bulb.all
+            Huey::Bulb.all
          else
-            @lights = mock_lights
+            mock_lights
          end
       rescue Huey::Errors::CouldNotFindHue
          $hue_not_found = true
-         @lights = mock_lights
+         mock_lights
       end
    end
 
