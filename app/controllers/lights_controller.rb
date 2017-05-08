@@ -33,7 +33,6 @@ class LightsController < ApplicationController
          changedLights = lights.map(&:id).join(" ")
 
          log "Lamps ##{changedLights} color changed to hue: #{hue} sat: #{sat} bri: #{bri}"
-         sse_update
       end
       render :lights
    end
@@ -43,7 +42,6 @@ class LightsController < ApplicationController
       @lights.update on: true, rgb: '#cff974', bri: 254
 
       log "All lamps reset"
-      sse_update
       render :lights
    end
 
@@ -61,7 +59,6 @@ class LightsController < ApplicationController
       @lights.update(on: false)
 
       log "All lights OFF"
-      sse_update
       render :lights
    end
 
@@ -69,7 +66,6 @@ class LightsController < ApplicationController
       @lights.update(on: true)
 
       log "All lights ON"
-      sse_update
       render :lights
    end
    #Toggles light state
@@ -116,7 +112,6 @@ class LightsController < ApplicationController
             bri_array[i] = light.bri
          end
 
-         sse_update
 
          colors = [0, 5000, 15000, 20000, 42000, 55000, 62000]
          delay = 1
@@ -130,7 +125,6 @@ class LightsController < ApplicationController
             pattern = party_patterns.sample
             pattern.call lights, colors, delay
          end
-         sse_update
          lights.each_with_index do |light, i|
             light.update(sat: sat_array[i], hue: hue_array[i], bri: bri_array[i])
             sleep(delay)
