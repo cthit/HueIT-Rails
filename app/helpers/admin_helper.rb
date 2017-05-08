@@ -25,8 +25,6 @@ module AdminHelper
   end
 
   def check_lock_state
-    if is_locked? && !is_admin?
-      redirect_to root_url
-   end
+    redirect_to root_url if is_locked? && !is_admin?
   end
 end
