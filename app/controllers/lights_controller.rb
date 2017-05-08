@@ -176,13 +176,22 @@ class LightsController < ApplicationController
    end
 
    def mock_lights
-      [
-         BulbMock.new(7, 65535, 254, 254, true),
-         BulbMock.new(2, 65535, 254, 254, true),
-         BulbMock.new(3, 65535, 254, 254, true),
-         BulbMock.new(4, 65535, 254, 254, true),
-         BulbMock.new(5, 65535, 254, 254, true),
-         BulbMock.new(6, 65535, 254, 254, true)
-      ]
+      Huey::Group.new(
+         mock_bulb(7),
+         mock_bulb(2),
+         mock_bulb(3),
+         mock_bulb(4),
+         mock_bulb(5),
+         mock_bulb(6)
+      )
+   end
+
+   def light_response(id = "1", name = "Living Room")
+     {id => {"state"=>{"on"=>true, "bri"=>127, "hue"=>54418, "sat"=>158, "xy"=>[0.509, 0.4149], "ct"=>459, "alert"=>"none", "effect"=>"none", "colormode"=>"hue", "reachable"=>true}, "type"=>"Extended color light", "name"=>name, "modelid"=>"LCT001", "swversion"=>"65003148", "pointsymbol"=>{"1"=>"none", "2"=>"none", "3"=>"none", "4"=>"none", "5"=>"none", "6"=>"none", "7"=>"none", "8"=>"none"}}}
+   end
+
+   def mock_bulb(id = "1", name = "Living Room")
+     light = light_response(id, name)
+     Huey::Bulb.new(light.keys.first, light.values.first)
    end
 end
