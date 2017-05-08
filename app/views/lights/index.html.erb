@@ -9,10 +9,15 @@
 			</script>
 		<% end %>
 			<% if is_locked? && !is_admin? %>
-				<div class='callout large primary' id='lockbar'>
+				<div class='callout large primary'>
 					<h2 class="flash-heading">hueIT is locked</h2>
 				</div>
 			<% else %>
+				<% if is_locked? %>
+					<div class='callout large primary'>
+						<h2 class="flash-heading">hueIT is locked <%= "by #{$locked_by}" if !$locked_by.blank? %>, be mindful of what you change</h2>
+					</div>
+				<% end %>
 				<div class='container'>
 					<div class='content'>
 						<%= render 'form' %>
