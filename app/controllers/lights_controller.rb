@@ -30,9 +30,9 @@ class LightsController < ApplicationController
 
          group = Huey::Group.new lights
          group.update(sat: sat, hue: hue, bri: bri)
-         changedLights = lights.join(" ")
+         changedLights = lights.map(&:id).join(" ")
 
-         log "Lamps ##{changedLights}color changed to hue: #{hue} sat: #{sat} bri: #{bri}"
+         log "Lamps ##{changedLights} color changed to hue: #{hue} sat: #{sat} bri: #{bri}"
          sse_update
       end
       render :lights
