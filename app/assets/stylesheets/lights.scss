@@ -147,13 +147,12 @@
   -moz-user-select: none;
 
   &::after {
-    background: #2199e8;
+    background: #1779ba;
     border-radius: 2px;
   }
 }
 
 .switch-input:checked + .switch-paddle {
-  background: #2199e8;
   color: white;
 
   &::after {

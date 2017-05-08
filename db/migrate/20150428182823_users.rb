@@ -1,4 +1,4 @@
-class Users < ActiveRecord::Migration
+class Users < ActiveRecord::Migration[4.2]
   def change
     create_table :users, id: false, primary_key: :cid do |t|
       t.string :cid

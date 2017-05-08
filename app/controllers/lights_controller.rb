@@ -14,11 +14,6 @@ class LightsController < ApplicationController
 
    #Creates sites
    def index
-      begin
-
-      rescue Huey::Errors::CouldNotFindHue
-
-      end
    end
 
    def lights
@@ -27,7 +22,7 @@ class LightsController < ApplicationController
    #Changes lights
    def multi_update
       if params[:lights]
-         lights = params[:lights].keys.map(&:to_i).map { |id| Huey::Bulb.find(id) }.select(&:on)
+         lights = params[:lights].keys.map(&:to_i).map { |id| get_lights.find { |l| l.id == id } }.select(&:on)
 
          sat = params[:sat_range].to_i
          hue = params[:hue_range].to_i
@@ -35,9 +30,9 @@ class LightsController < ApplicationController
 
          group = Huey::Group.new lights
          group.update(sat: sat, hue: hue, bri: bri)
-         changedLights = lights.join(" ")
+         changedLights = lights.map(&:id).join(" ")
 
-         log "Lamps ##{changedLights}color changed to hue: #{hue} sat: #{sat} bri: #{bri}"
+         log "Lamps ##{changedLights} color changed to hue: #{hue} sat: #{sat} bri: #{bri}"
          sse_update
       end
       render :lights
@@ -109,7 +104,7 @@ class LightsController < ApplicationController
       $is_party_on = true
 
       Thread.new do
-         lights = Huey::Bulb.all
+         lights = get_lights
 
          hue_array = Array.new
          sat_array = Array.new
@@ -162,10 +157,44 @@ class LightsController < ApplicationController
    end
 
    def set_bulb_from_id
-      @light = Huey::Bulb.find(params[:id].to_i)
+      @light = get_lights.find { |l| l.id == params[:id].to_i }
    end
 
    def set_lights
-      @lights = Huey::Bulb.all
+      @lights = get_lights
+   end
+
+   def get_lights
+      begin
+         $hue_not_found ||= false
+         unless $hue_not_found
+            Huey::Bulb.all
+         else
+            mock_lights
+         end
+      rescue Huey::Errors::CouldNotFindHue
+         $hue_not_found = true
+         mock_lights
+      end
+   end
+
+   def mock_lights
+      Huey::Group.new(
+         mock_bulb(7),
+         mock_bulb(2),
+         mock_bulb(3),
+         mock_bulb(4),
+         mock_bulb(5),
+         mock_bulb(6)
+      )
+   end
+
+   def light_response(id = "1", name = "Living Room")
+     {id => {"state"=>{"on"=>true, "bri"=>127, "hue"=>54418, "sat"=>158, "xy"=>[0.509, 0.4149], "ct"=>459, "alert"=>"none", "effect"=>"none", "colormode"=>"hue", "reachable"=>true}, "type"=>"Extended color light", "name"=>name, "modelid"=>"LCT001", "swversion"=>"65003148", "pointsymbol"=>{"1"=>"none", "2"=>"none", "3"=>"none", "4"=>"none", "5"=>"none", "6"=>"none", "7"=>"none", "8"=>"none"}}}
+   end
+
+   def mock_bulb(id = "1", name = "Living Room")
+     light = light_response(id, name)
+     Huey::Bulb.new(light.keys.first, light.values.first)
    end
 end
