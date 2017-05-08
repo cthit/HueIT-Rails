@@ -4,17 +4,25 @@
 			<script>
 				var lights = <%= @lights.to_json.html_safe %>
 				var isPartyOn = <%= ($is_party_on || false).to_s.html_safe %>
+				$(document).on('page:load', ready);
+				$(document).ready(ready);
 			</script>
 		<% end %>
-			<% if @is_locked %>
-				<div class='card-panel orange accent-4 center' id='lockbar'>
-					<h3>hueIT is locked</h2>
+			<% if is_locked? && !is_admin? %>
+				<div class='callout large primary'>
+					<h2 class="flash-heading">hueIT is locked</h2>
 				</div>
-			<% end %>
-			<div class='container'>
-				<div class='content'>
-					<%= render 'form' %>
-				</div>
+			<% else %>
+				<% if is_locked? %>
+					<div class='callout large primary'>
+						<h2 class="flash-heading">hueIT is locked <%= "by #{$locked_by}" if !$locked_by.blank? %>, be mindful of what you change</h2>
+					</div>
+				<% end %>
+				<div class='container'>
+					<div class='content'>
+						<%= render 'form' %>
+					</div>
 			</div>
+			<% end %>
 	<% end %>
 </main>

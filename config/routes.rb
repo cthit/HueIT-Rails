@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :admin do
     collection do
-      get :lock
+      post :lock
     end
   end
 
@@ -21,16 +21,13 @@ Rails.application.routes.draw do
     end
   end
 
-  root 'lights#index'
   post "lights/:id/turn_off" => "lights#turn_off"
   post "lights/:id/turn_on" => "lights#turn_on"
   post "lights/:id/switch_on_off" => "lights#switch_on_off"
-
-  get 'admin/index'
-  get 'admin' => 'admin#index'
-
-  get 'admin/lock'
-  get 'lock' => 'admin#lock'
+  
+  post 'lock' => 'admin#lock'
+ 
+  root 'lights#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
