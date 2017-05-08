@@ -59,7 +59,6 @@ function sse_waiter() {
     var data = JSON.parse(event.data)
     lights = data.lights
     isPartyOn = data.isPartyOn
-    console.log("HEJ")
 		renderLamps()
     if (isPartyOn) {
       runParty()

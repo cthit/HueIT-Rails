@@ -32,7 +32,6 @@ $ ->
 
     $('.link-btn').on 'click', (e) ->
         $.post e.target.dataset.url, (data) ->
-            console.log(data)
             if data != ""
                 updateLights(data)
                 renderLamps()
