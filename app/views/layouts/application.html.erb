@@ -21,13 +21,11 @@
       </div>
     </header>
     <% flash.each do |name, msg| %>
-      <% if msg.is_a?(String) %>
-        <%= content_tag :div, class: "#{name.to_s} callout", data: {:closable => ""} do %>
-          <%= content_tag :h5, msg, class: "flash-heading" %>
-          <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
-            <span aria-hidden="true">&times;</span>
-          </button>
-        <% end %>
+      <%= content_tag :div, class: "#{name.to_s} callout", data: {:closable => ""} do %>
+        <%= content_tag :h5, msg, class: "flash-heading" %>
+        <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+          <span aria-hidden="true">&times;</span>
+        </button>
       <% end %>
     <% end %>
     <%= yield %>
