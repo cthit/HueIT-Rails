@@ -4,7 +4,6 @@
 			<script>
 				var lights = <%= @lights.to_json.html_safe %>
 				var isPartyOn = <%= ($is_party_on || false).to_s.html_safe %>
-				$(document).on('page:load', ready);
 				$(document).ready(ready);
 			</script>
 		<% end %>
