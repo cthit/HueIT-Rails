@@ -1,6 +1,6 @@
 <footer class='container'>
 	<div>
 		<%= link_to("Home", "/", class: 'button') %>
-		<%= link_to((is_locked ? "Unĺock" : "Lock"), lock_path(lock: !is_locked), method: :post, class: 'button') %>
+		<%= link_to((is_locked? ? "Unĺock" : "Lock"), lock_path(lock: !is_locked?), method: :post, class: 'button') %>
   </div>
 </footer>

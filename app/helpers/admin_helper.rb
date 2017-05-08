@@ -15,7 +15,7 @@ module AdminHelper
 		booking["group"]
 	end
 
-	def is_locked
+	def is_locked?
 		$locked_until ||= Time.now
 		$locked_until > Time.now
   end
