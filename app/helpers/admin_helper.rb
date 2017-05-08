@@ -16,8 +16,7 @@ module AdminHelper
 	end
 
 	def is_locked?
-		$locked_until ||= Time.now
-		$locked_until > Time.now
+		$locked_until > Time.now if $locked_until
   end
 
   def is_admin?
