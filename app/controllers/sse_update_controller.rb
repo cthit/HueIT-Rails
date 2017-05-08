@@ -4,16 +4,10 @@ class SseUpdateController < ApplicationController
 
   def index
     response.headers['Content-Type'] = 'text/event-stream'
-    change_int = Rails.application.config.sse_int
-    while true do
-      # If the int has changed we are told to update
-      if change_int != Rails.application.config.sse_int
-        change_int = Rails.application.config.sse_int
-        lights = Huey::Bulb.all
 
-        response.stream.write 'data: ' + lights.to_json + "\n\n"
-      end
-    end
+    lights = Huey::Bulb.all
+
+    response.stream.write 'data: ' + {lights: lights, isPartyOn: $is_party_on}.to_json + "\n\n"
 
     rescue IOError
       # Client Disconnected

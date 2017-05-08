@@ -151,11 +151,6 @@ class LightsController < ApplicationController
       end
    end
 
-   def sse_update
-      # Change the value so sse_update_controller knows to send an event
-      Rails.application.config.sse_int += 1
-   end
-
    def set_bulb_from_id
       @light = get_lights.find { |l| l.id == params[:id].to_i }
    end

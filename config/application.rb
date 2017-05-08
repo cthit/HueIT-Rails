@@ -14,9 +14,6 @@ module HueITRails
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-    config.is_party_on = false
-    # Int for knowing if we are to send an sse
-    config.sse_int = 0
     config.time_zone = "Stockholm"
 
   end

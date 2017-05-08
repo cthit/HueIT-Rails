@@ -53,13 +53,20 @@ function togglePartyMode(){
 }
 
 function sse_waiter() {
-	source = new EventSource('/sse_update')
+	var source = new EventSource('/sse_update')
 
 	source.onmessage = function(event) {
-    lights = JSON.parse(event.data);
+    var data = JSON.parse(event.data)
+    lights = data.lights
+    isPartyOn = data.isPartyOn
+    console.log("HEJ")
 		renderLamps()
+    if (isPartyOn) {
+      runParty()
+    } else {
+      ruinParty()
+    }
 	};
-	party_ready();
 }
 
 var ready = function () {
