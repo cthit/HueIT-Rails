@@ -2,16 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.pagination a li.active {
-    color: #fff;
-}
-
-body {
-	display: flex;
-	min-height: 100vh;
-	flex-direction: column;
-}
-
-main {
-	flex: 1 0 auto;
+.log-table {
+  margin-top: 1em;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2)
 }

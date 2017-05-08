@@ -14,7 +14,6 @@ class LightsController < ApplicationController
 
    #Creates sites
    def index
-      @is_locked = check_lock_state
    end
 
    def lights
