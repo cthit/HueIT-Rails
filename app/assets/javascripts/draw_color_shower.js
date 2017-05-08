@@ -41,6 +41,7 @@ function createLinearGradient(stops) {
 function updateLights (state) {
   lights = state.lights
   isPartyOn = state.isPartyOn
+  isLocked = state.isLocked
 }
 
 function renderLamps () {
