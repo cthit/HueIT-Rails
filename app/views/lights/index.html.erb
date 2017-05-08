@@ -10,16 +10,16 @@
 		<% end %>
 			<% if is_locked? && !is_admin? %>
 				<div class='callout large primary'>
-					<h2 class="flash-heading">hueIT is locked</h2>
+					<h2 class='flash-heading'>hueIT is locked</h2>
 				</div>
 			<% else %>
 				<% if is_locked? %>
 					<div class='callout large primary'>
-						<h2 class="flash-heading">hueIT is locked <%= "by #{$locked_by}" if !$locked_by.blank? %>, be mindful of what you change</h2>
+						<h2 class='flash-heading'>hueIT is locked <%= "by #{$locked_by}" if !$locked_by.blank? %>, be mindful of what you change</h2>
 					</div>
 				<% end %>
 				<% if $hue_not_found %>
-					<div class='callout warning'>
+					<div class='callout warning flash-heading'>
 						<h3>Could not find Hue lights</h3><br>
 						All data below is mocked for development purposes. Obviously requests to change the lights won't work.
 					</div>
