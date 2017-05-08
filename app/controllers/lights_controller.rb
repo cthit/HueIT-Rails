@@ -23,7 +23,7 @@ class LightsController < ApplicationController
    #Changes lights
    def multi_update
       if params[:lights]
-         lights = params[:lights].keys.map(&:to_i).map { |id| get_lights.find(id).next }.select(&:on)
+         lights = params[:lights].keys.map(&:to_i).map { |id| get_lights.find(id).first }.select(&:on)
 
          sat = params[:sat_range].to_i
          hue = params[:hue_range].to_i
@@ -158,7 +158,7 @@ class LightsController < ApplicationController
    end
 
    def set_bulb_from_id
-      @light = get_lights.find(params[:id].to_i).next
+      @light = get_lights.find(params[:id].to_i).first
    end
 
    def set_lights
