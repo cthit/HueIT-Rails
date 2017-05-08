@@ -29,8 +29,6 @@ class AdminController < ApplicationController
 
 	private
 		def check_admin
-			if !is_admin?
-				redirect_to root_url
-			end
+			redirect_to root_url if !is_admin?
 		end
 end
