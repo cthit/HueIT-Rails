@@ -12,11 +12,14 @@ class AdminController < ApplicationController
 		should_lock = params[:lock] == "true"
 		if should_lock
 			if @group
+				$locked_by = @group
 				$locked_until = @exp_date
 			else
+				$locked_by = ""
 				$locked_until = 1.hour.from_now
 			end
 		else
+			$locked_by = ""
 			$locked_until = Time.now
 		end
 
@@ -26,7 +29,7 @@ class AdminController < ApplicationController
 
 	private
 		def check_admin
-			if !current_user.in_group?(@group.to_s) || current_user.admin?
+			if !is_admin?
 				redirect_to root_url
 			end
 		end

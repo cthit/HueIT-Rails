@@ -19,4 +19,8 @@ module AdminHelper
 		$locked_until ||= Time.now
 		$locked_until > Time.now
   end
+
+  def is_admin?
+		current_user.in_group?($locked_by) || current_user.admin?
+  end
 end
