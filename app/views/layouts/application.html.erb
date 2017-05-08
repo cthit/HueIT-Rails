@@ -17,7 +17,9 @@
     <header>
       <div class="max-width">
         <h1>hueIT <small>Digital light picker</small></h1>
-        <div class="it-logo"></div>
+        <%= link_to root_url do %>
+          <div class="it-logo"></div>
+        <% end %>
       </div>
     </header>
     <% flash.each do |name, msg| %>
