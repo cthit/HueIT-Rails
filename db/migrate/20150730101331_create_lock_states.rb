@@ -1,4 +1,4 @@
-class CreateLockStates < ActiveRecord::Migration
+class CreateLockStates < ActiveRecord::Migration[4.2]
   def change
     create_table :lock_states do |t|
       t.string :state
