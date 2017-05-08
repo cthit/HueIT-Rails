@@ -15,8 +15,6 @@ class LightsController < ApplicationController
    #Creates sites
    def index
       @is_locked = check_lock_state
-      p @lights
-      p $hue_not_found
    end
 
    def lights
