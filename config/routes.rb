@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :preset_colors
   resources :lights do
     collection do
       post :multi_update

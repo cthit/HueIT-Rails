@@ -1,0 +1,2 @@
+class PresetColor < ApplicationRecord
+end
