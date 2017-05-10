@@ -10,7 +10,7 @@
       <span class="switch-inactive" aria-hidden="true">Off</span>
     </label>
   </div>
-  <%= content_tag :div, nil, id: "color_shower_#{light.id}", class: "bulb", data: {light_id: light.id} %>
+  <%= content_tag :div, nil, id: "color_shower_#{light.id}", class: "bulb shadow", data: {light_id: light.id} %>
   <div class="custom-checkbox">
     <%= check_box_tag "lights[#{light.id}]", '', false, class: 'checkbox' %>
     <%= label_tag "lights[#{light.id}]", "Select" %>

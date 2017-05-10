@@ -1,19 +1,19 @@
 <div class="actions end">
   <div>
     <%= label_tag "Saturation (of color)"%>
-    <div class="sat-show slider-bg range-slider">
+    <div class="sat-show slider-bg range-slider shadow">
       <%= range_field_tag :sat_range, 134, in: 0..254, class: 'update clicked'%>
     </div>
   </div>
   <div>
     <%= label_tag "Hue value (of color)" %>
-    <div class="hue-show slider-bg range-slider">
+    <div class="hue-show slider-bg range-slider shadow">
       <%= range_field_tag :hue_range, 14184, in: 0..65535, class: 'update clicked'%>
     </div>
   </div>
   <div>
     <%= label_tag "Brightness (of bulbs)"%>
-    <div class="bri-show slider-bg range-slider">
+    <div class="bri-show slider-bg range-slider shadow">
       <%= range_field_tag :bri_range, 254,in: 0..254, class: 'update clicked'%>
     </div>
   </div>
