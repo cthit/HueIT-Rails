@@ -17,6 +17,10 @@
   border-width: 4px;
   border-color: #ededed;
   cursor: pointer;
+  flex: 1;
+  &:last-child {
+    margin-right: 0px;
+  }
 }
 
 .preset-color:hover {
