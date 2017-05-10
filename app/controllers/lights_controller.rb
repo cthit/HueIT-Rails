@@ -2,7 +2,7 @@ class LightsController < ApplicationController
    include AdminHelper
    include PartyHelper
 
-   before_action :set_lights, except: [:turn_on, :turn_off, :party_on_off]
+   before_action :set_lights_and_preset_colors, except: [:turn_on, :turn_off, :party_on_off]
    before_action :set_bulb_from_id, only: [:turn_off, :turn_on, :switch_on_off]
    before_action :check_lock_state, except: [:index]
    before_action :ruin_party, except: [:index, :party_on_off, :party_off, :party_on]
@@ -149,8 +149,9 @@ class LightsController < ApplicationController
       @light = get_lights.find { |l| l.id == params[:id].to_i }
    end
 
-   def set_lights
+   def set_lights_and_preset_colors
       @lights = get_lights
+      @preset_colors = PresetColor.all
    end
 
    def get_lights
