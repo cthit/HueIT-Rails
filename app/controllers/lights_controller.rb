@@ -102,35 +102,44 @@ class LightsController < ApplicationController
       Thread.new do
          lights = get_lights
 
-         hue_array = Array.new
-         sat_array = Array.new
-         bri_array = Array.new
-
-         lights.each_with_index do |light, i|
-            hue_array[i] = light.hue
-            sat_array[i] = light.sat
-            bri_array[i] = light.bri
-         end
-
+         hue_array, sat_array, bri_array = get_saved_light_arrays
 
          colors = [0, 5000, 15000, 20000, 42000, 55000, 62000]
          delay = 1
          while $is_party_on
-            party_patterns = [method(:random_bulb_and_color),
-                              method(:one_at_a_time_in_order),
-                              method(:one_color_down_both_lanes),
-                              method(:all_bulbs_same_color),
-                              method(:random_color_in_order)]
-
             pattern = party_patterns.sample
             pattern.call lights, colors, delay
          end
+
          lights.each_with_index do |light, i|
-            light.update(sat: sat_array[i], hue: hue_array[i], bri: bri_array[i])
-            sleep(delay)
+            light.update sat: sat_array[i], hue: hue_array[i], bri: bri_array[i]
+            sleep delay
          end
 
       end
+   end
+
+   def party_patterns
+      [
+         method(:random_bulb_and_color),
+         method(:one_at_a_time_in_order),
+         method(:one_color_down_both_lanes),
+         method(:all_bulbs_same_color),
+         method(:random_color_in_order)
+      ]
+   end
+
+   def get_saved_light_arrays
+      hue_array = Array.new
+      sat_array = Array.new
+      bri_array = Array.new
+
+      get_lights.each_with_index do |light, i|
+         hue_array[i] = light.hue
+         sat_array[i] = light.sat
+         bri_array[i] = light.bri
+      end
+      hue_array, sat_array, bri_array
    end
 
    def party_off
