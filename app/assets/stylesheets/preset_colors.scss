@@ -9,7 +9,16 @@
 }
 
 .preset-color {
-  height: 5em;
-  width: 5em;
-  border-radius: 2px;
+  height: 4em;
+  width: 4em;
+  border-radius: 6px;
+  margin-right: 5px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: #ededed;
+  cursor: pointer;
+}
+
+.preset-color:hover {
+  opacity: 0.6;
 }
