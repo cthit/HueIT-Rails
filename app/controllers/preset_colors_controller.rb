@@ -11,25 +11,18 @@ class PresetColorsController < ApplicationController
   def create
     @preset_color = PresetColor.new(preset_color_params)
 
-    respond_to do |format|
-      if @preset_color.save
-        format.html { redirect_to @preset_color, notice: 'Preset color was successfully created.' }
-        format.json { render :show, status: :created, location: @preset_color }
-      else
-        format.html { render :new }
-        format.json { render json: @preset_color.errors, status: :unprocessable_entity }
-      end
-    end
+    render :preset_color
   end
 
   # DELETE /preset_colors/1
   # DELETE /preset_colors/1.json
   def destroy
     @preset_color.destroy
-    respond_to do |format|
-      format.html { redirect_to preset_colors_url, notice: 'Preset color was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+
+    render :preset_color
+  end
+
+  def preset_color
   end
 
   private
