@@ -61,18 +61,16 @@ function renderLamps () {
 * the h,s,l value is taken from each light.
 */
 function draw (id, hue, sat, brightness) {
-  var div = document.getElementById('color_shower_' + id)
-
   var rgb = HSVtoRGB(hue, sat, brightness)
-  div.style.backgroundColor = RGBtoCSS(rgb)
+  $(id)[0].style.backgroundColor = RGBtoCSS(rgb)
 }
 
 // Used when disregarding the value of the selectors, only wanting to draw the color of the bulb or if it is off
 function drawLamp (light) {
   if (!light.on) {
-    draw(light.id, 0, 0, 0.5)
+    draw('#color_shower_' + light.id, 0, 0, 0.5)
   } else {
-    draw(light.id, light.hue / 65535, light.sat / 254, light.bri / 254)
+    draw('#color_shower_' + light.id, light.hue / 65535, light.sat / 254, light.bri / 254)
   }
 }
 //Returns the value of the hue slider normalized.
