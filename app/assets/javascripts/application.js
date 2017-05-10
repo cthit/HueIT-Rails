@@ -70,6 +70,7 @@ function sse_waiter() {
 
 var ready = function () {
   renderLamps()
+  renderPresetColors()
   draw_hue_canvas()
   draw_sat_canvas()
   draw_bri_canvas()
