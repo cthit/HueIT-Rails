@@ -11,7 +11,7 @@ class PresetColorsController < ApplicationController
   def create
     @preset_color = PresetColor.new(preset_color_params)
 
-    render :preset_color
+    render :preset_colors
   end
 
   # DELETE /preset_colors/1
@@ -19,10 +19,10 @@ class PresetColorsController < ApplicationController
   def destroy
     @preset_color.destroy
 
-    render :preset_color
+    render :preset_colors
   end
 
-  def preset_color
+  def preset_colors
   end
 
   private

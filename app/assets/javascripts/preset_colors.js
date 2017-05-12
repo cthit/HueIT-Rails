@@ -1,6 +1,6 @@
-
 function createPresetColor(id, colors) {
-  var div = '<div class="preset-color" ' +
+  let div = '<div class="preset-color" ' +
+            'id="preset-color-' + id +
             'style="background-color: ' + RGBtoCSS(colors) + '"">' +
             '</div>'
 
@@ -9,12 +9,12 @@ function createPresetColor(id, colors) {
 
 function renderPresetColors() {
   presetColors.forEach(function (preset_color) {
-    draw('#preset_color_' + preset_color.id, preset_color.hue / 65535, preset_color.saturation / 255, preset_color.brightness / 255)
+    draw('#preset-color-' + preset_color.id, preset_color.hue / 65535, preset_color.saturation / 255, preset_color.brightness / 255)
   })
 }
 
 function setSlidersFromPresetColor (id) {
-  var presetColor = presetColors.find(function (el) {
+  let presetColor = presetColors.find(function (el) {
     return el.id === id
   })
   setSliders(
@@ -22,4 +22,8 @@ function setSlidersFromPresetColor (id) {
     Math.round(presetColor.saturation),
     Math.round(presetColor.brightness)
   )
+}
+
+function removePresetColor(id) {
+  $("#preset-color-" + id).remove()
 }

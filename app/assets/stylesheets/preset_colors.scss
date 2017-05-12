@@ -22,13 +22,13 @@
     margin-right: 0px;
   }
 
-  > button {
+  > a {
     display: none;
     font-size: 1.5em;
-    margin-top: -3px;
-    margin-right: 1px;
-    cursor: pointer;
-    align-self: flex-start;
+    height: 13px;
+    margin-top: 4px;
+    margin-right: 2px;
+    line-height: 0.5;
 
     &:hover {
       color: white;
@@ -39,7 +39,7 @@
     opacity: 0.6;
     box-shadow: 0 0px 1px rgba(0, 0, 0, 0.6);
 
-    > button {
+    > a {
       display: inherit;
     }
   }

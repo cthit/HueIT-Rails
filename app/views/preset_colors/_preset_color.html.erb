@@ -1,10 +1,10 @@
 <%= content_tag :div,
                 nil,
-                id: "preset_color_#{preset_color.id}",
+                id: "preset-color-#{preset_color.id}",
                 class: "preset-color shadow",
                 data: {preset_color_id: preset_color.id} do %>
 
-  <button class="" aria-label="Remove color" type="button">
+  <%= link_to preset_color_path(preset_color.id), class: "remove-preset-color", method: :delete, remote: true do %>
     <span aria-hidden="true">&times;</span>
-  </button>
+  <% end %>
 <% end %>
