@@ -49,4 +49,5 @@ $ ->
         removePresetColor(parseInt(e.currentTarget.parentElement.dataset.presetColorId))
 
     $('#add-preset-color').on 'click', (e) ->
-        addPresetColor()
+        $.post '/preset_colors', $("#hue-form").serialize(), (data) ->
+            addPresetColor(data.preset_colors)
