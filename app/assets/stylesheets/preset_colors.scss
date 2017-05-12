@@ -15,12 +15,28 @@
   margin-right: 5px;
   cursor: pointer;
   flex: 1;
+
   &:last-child {
     margin-right: 0px;
   }
-}
 
-.preset-color:hover {
-  opacity: 0.6;
-  box-shadow: 0 0px 1px rgba(0, 0, 0, 0.6);
+  > button {
+    display: none;
+    font-size: 1.5em;
+    margin-top: -3px;
+    cursor: pointer;
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  &:hover {
+    opacity: 0.6;
+    box-shadow: 0 0px 1px rgba(0, 0, 0, 0.6);
+
+    > button {
+      display: inherit;
+    }
+  }
 }

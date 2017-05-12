@@ -2,4 +2,9 @@
                 nil,
                 id: "preset_color_#{preset_color.id}",
                 class: "preset-color shadow",
-                data: {preset_color_id: preset_color.id} %>
+                data: {preset_color_id: preset_color.id} do %>
+
+  <button class="" aria-label="Remove color" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+<% end %>
