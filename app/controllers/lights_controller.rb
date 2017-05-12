@@ -24,9 +24,9 @@ class LightsController < ApplicationController
       if params[:lights]
          lights = params[:lights].keys.map(&:to_i).map { |id| get_lights.find { |l| l.id == id } }.select(&:on)
 
-         sat = params[:sat_range].to_i
-         hue = params[:hue_range].to_i
-         bri = params[:bri_range].to_i
+         sat = params[:saturation].to_i
+         hue = params[:hue].to_i
+         bri = params[:brightness].to_i
 
          group = Huey::Group.new lights
          group.update(sat: sat, hue: hue, bri: bri)

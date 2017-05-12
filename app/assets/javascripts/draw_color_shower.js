@@ -75,16 +75,16 @@ function drawLamp (light) {
 }
 //Returns the value of the hue slider normalized.
 function getHue() {
-	return getNormalizedRangeValue("hue_range");
+	return getNormalizedRangeValue("hue");
 }
 //Returns the value of the saturation slider normalized.
 function getSat() {
-	return getNormalizedRangeValue("sat_range");
+	return getNormalizedRangeValue("saturation");
 }
 
 //Returns the value of the brightness slider normalized.
 function getBri() {
-	return getNormalizedRangeValue("bri_range");
+	return getNormalizedRangeValue("brightness");
 }
 
 function getNormalizedRangeValue(elementId) {
