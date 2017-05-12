@@ -27,17 +27,20 @@ function switchOnOff (i) {
   })
 }
 
-function setSliders (id) {
+function setSlidersFromB (id) {
   var light = lights.find(function (el) {
     return el.id === id
   })
+  setSliders(Math.round(light.hue), Math.round(light.sat), Math.round(light.bri))
+}
 
+function setSliders(hue, sat, bri) {
   var hueSlider = document.getElementById('hue_range')
-  hueSlider.value = Math.round(light.hue)
+  hueSlider.value = hue
   var satSlider = document.getElementById('sat_range')
-  satSlider.value = Math.round(light.sat)
+  satSlider.value = sat
   var briSlider = document.getElementById('bri_range')
-  briSlider.value = Math.round(light.bri)
+  briSlider.value = bri
 }
 
 function runParty(){

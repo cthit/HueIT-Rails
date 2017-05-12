@@ -20,7 +20,7 @@ $ ->
         togglePartyMode()
 
     $('.bulb').on 'click', (e) ->
-      setSliders(parseInt(e.target.dataset.lightId))
+      setSlidersFromBulb(parseInt(e.target.dataset.lightId))
       draw_hue_canvas()
       draw_sat_canvas()
 
@@ -37,5 +37,10 @@ $ ->
                 renderLamps()
 
     $('.update').on 'input', (e) ->
+        draw_hue_canvas()
+        draw_sat_canvas()
+
+    $('.preset-color').on 'click', (e) ->
+        setSlidersFromPresetColor(parseInt(e.target.dataset.presetColorId))
         draw_hue_canvas()
         draw_sat_canvas()

@@ -5,7 +5,7 @@
 				let lights = <%= @lights.to_json.html_safe %>
 				let isPartyOn = <%= ($is_party_on || false).to_s.html_safe %>
 				let isLocked = <%= (is_locked? || false).to_s.html_safe %>
-				let preset_colors = <%= @preset_colors.to_json.html_safe %>
+				let presetColors = <%= @preset_colors.to_json.html_safe %>
 				$(document).ready(ready);
 			</script>
 		<% end %>
