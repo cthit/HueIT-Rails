@@ -17,7 +17,10 @@ class PresetColorsController < ApplicationController
   # DELETE /preset_colors/1
   # DELETE /preset_colors/1.json
   def destroy
-    @preset_color.destroy
+    #If two people remove the same colour without updating the site, we have a race condition.
+    if !@preset_color.blank?
+      @preset_color.destroy
+    end
 
     render :preset_colors
   end
