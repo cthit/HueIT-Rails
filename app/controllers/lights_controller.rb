@@ -139,7 +139,7 @@ class LightsController < ApplicationController
          sat_array[i] = light.sat
          bri_array[i] = light.bri
       end
-      hue_array, sat_array, bri_array
+      return hue_array, sat_array, bri_array
    end
 
    def party_off
