@@ -87,21 +87,6 @@
   -moz-user-select: none;
 }
 
-.bulb {
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #ededed;
-  transition: background 900ms;
-}
-
-.bulb:hover {
-  opacity: 0.8;
-}
-
 .align-container {
   display: flex;
   align-content: center;
@@ -112,23 +97,6 @@
   min-width: 50%;
 }
 
-[type="checkbox"].filled-in:not(:checked)+label:after {
-  margin-top: 2.5px;
-}
-
-[type="checkbox"].filled-in:checked+label:after {
-  margin-top: 2.5px;
-}
-
-[type="checkbox"].filled-in+label:before, [type="checkbox"].filled-in+label:after {
-  margin-top: 4px;
-}
-
-.right {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .submit {
   margin-bottom: 0px;
 }
@@ -137,31 +105,6 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-}
-
-.switch-paddle {
-  border-radius: 2px;
-  background: white;
-  color: #5f5f5f;
-  user-select: none;
-  -moz-user-select: none;
-
-  &::after {
-    background: #1779ba;
-    border-radius: 2px;
-  }
-}
-
-.switch-input:checked + .switch-paddle {
-  color: white;
-
-  &::after {
-    background: #5f5f5f;
-  }
-}
-
-.switch-active {
-  margin-left: 2px;
 }
 
 .light-actions {

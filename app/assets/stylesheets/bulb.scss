@@ -1,0 +1,12 @@
+.bulb {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  transition: all 500ms;
+}
+
+.bulb:hover {
+  opacity: 0.6;
+  box-shadow: 0 0px 1px rgba(0, 0, 0, 0.6);
+}
