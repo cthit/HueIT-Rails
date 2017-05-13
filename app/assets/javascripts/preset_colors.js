@@ -17,7 +17,9 @@ function createPresetColor(id, colors) {
     .prop('rel', 'nofollow')
     .attr('data-method', 'delete')
     .attr('href', '/preset_colors/' + id)
-    .click(function(e) {removePresetColor(parseInt(e.currentTarget.parentElement.dataset.presetColorId))})
+    .click(function(e) {
+      removePresetColor(parseInt(e.currentTarget.parentElement.dataset.presetColorId))
+    })
 
   const $span = $('<span/>').prop('aria-hidden', true).append("&times;")
   $a.append($span)
