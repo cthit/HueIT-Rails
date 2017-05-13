@@ -27,7 +27,7 @@ function switchOnOff (i) {
   })
 }
 
-function setSlidersFromB (id) {
+function setSlidersFromBulb (id) {
   var light = lights.find(function (el) {
     return el.id === id
   })
