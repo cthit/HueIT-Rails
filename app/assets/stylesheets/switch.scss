@@ -1,0 +1,28 @@
+.switch-paddle {
+  border-radius: 2px;
+  background: white;
+  color: #5f5f5f;
+  user-select: none;
+  -moz-user-select: none;
+
+  &::after {
+    background: #1779ba;
+    border-radius: 2px;
+  }
+}
+
+.switch-input:checked + .switch-paddle {
+  color: white;
+
+  &::after {
+    background: #5f5f5f;
+  }
+}
+
+.switch-active {
+  margin-left: 2px;
+}
+
+.switch {
+  margin: 0px;
+}
