@@ -28,9 +28,7 @@ function createPresetColor(id, colors) {
 }
 
 function renderPresetColors() {
-  presetColors.forEach(function (preset_color) {
-    draw('#preset-color-' + preset_color.id, preset_color.hue / 65535, preset_color.saturation / 255, preset_color.brightness / 255)
-  })
+  presetColors.forEach(appendPresetColor)
 }
 
 function setSlidersFromPresetColor (id) {
@@ -42,10 +40,13 @@ function setSlidersFromPresetColor (id) {
   )
 }
 
-function addPresetColor(preset_colors) {
-  const presetColor = preset_colors[preset_colors.length - 1]
-  presetColors = preset_colors
+function appendPresetColor(presetColor) {
   $(".preset-color-list").append(createPresetColor(presetColor.id, HSVtoRGB(presetColor.hue / 65535, presetColor.saturation / 255, presetColor.brightness / 255)))
+}
+
+function addNewPresetColor(preset_colors) {
+  presetColors = preset_colors
+  appendPresetColor(preset_colors[preset_colors.length - 1])
 }
 
 function removePresetColor(id) {

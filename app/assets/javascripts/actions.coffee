@@ -50,4 +50,4 @@ $ ->
 
     $('#add-preset-color').on 'click', (e) ->
         $.post '/preset_colors', $("#hue-form").serialize(), (data) ->
-            addPresetColor(data.preset_colors)
+            addNewPresetColor(data.preset_colors)
