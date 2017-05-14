@@ -62,7 +62,7 @@ function renderLamps () {
 */
 function draw (id, hue, sat, brightness) {
   var rgb = HSVtoRGB(hue, sat, brightness)
-  $(id)[0].style.backgroundColor = RGBtoCSS(rgb)
+  $(id).css("background-color", RGBtoCSS(rgb))
 }
 
 // Used when disregarding the value of the selectors, only wanting to draw the color of the bulb or if it is off
