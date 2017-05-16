@@ -27,17 +27,20 @@ function switchOnOff (i) {
   })
 }
 
-function setSliders (id) {
+function setSlidersFromBulb (id) {
   var light = lights.find(function (el) {
     return el.id === id
   })
+  setSliders(Math.round(light.hue), Math.round(light.sat), Math.round(light.bri))
+}
 
-  var hueSlider = document.getElementById('hue_range')
-  hueSlider.value = Math.round(light.hue)
-  var satSlider = document.getElementById('sat_range')
-  satSlider.value = Math.round(light.sat)
-  var briSlider = document.getElementById('bri_range')
-  briSlider.value = Math.round(light.bri)
+function setSliders(hue, sat, bri) {
+  var hueSlider = document.getElementById('hue')
+  hueSlider.value = hue
+  var satSlider = document.getElementById('saturation')
+  satSlider.value = sat
+  var briSlider = document.getElementById('brightness')
+  briSlider.value = bri
 }
 
 function runParty(){
@@ -70,6 +73,7 @@ function sse_waiter() {
 
 var ready = function () {
   renderLamps()
+  renderPresetColors()
   draw_hue_canvas()
   draw_sat_canvas()
   draw_bri_canvas()
