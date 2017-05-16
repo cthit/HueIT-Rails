@@ -6,11 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-if Rails.env.development?
-  PresetColor.create(hue: 0,  saturation: 255, brightness: 255)
-  PresetColor.create(hue: 5000,  saturation: 255, brightness: 255)
-  PresetColor.create(hue: 20000,  saturation: 255, brightness: 255)
-  PresetColor.create(hue: 42000,  saturation: 255, brightness: 255)
-  PresetColor.create(hue: 55000,  saturation: 255, brightness: 255)
-  PresetColor.create(hue: 62000,  saturation: 255, brightness: 255)
-end
+PresetColor.create(hue: 0,  saturation: 255, brightness: 255)
+PresetColor.create(hue: 5000,  saturation: 255, brightness: 255)
+PresetColor.create(hue: 20000,  saturation: 255, brightness: 255)
+PresetColor.create(hue: 42000,  saturation: 255, brightness: 255)
+PresetColor.create(hue: 55000,  saturation: 255, brightness: 255)
+PresetColor.create(hue: 62000,  saturation: 255, brightness: 255)
