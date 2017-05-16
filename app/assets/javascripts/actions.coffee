@@ -40,14 +40,6 @@ $ ->
         draw_hue_canvas()
         draw_sat_canvas()
 
-    $('.preset-color').on 'click', (e) ->
-        setSlidersFromPresetColor(parseInt(e.target.dataset.presetColorId))
-        draw_hue_canvas()
-        draw_sat_canvas()
-
-    $('.remove-preset-color').on 'click', (e) ->
-        removePresetColor(parseInt(e.currentTarget.parentElement.dataset.presetColorId))
-
     $('#add-preset-color').on 'click', (e) ->
         $.post '/preset_colors', $("#hue-form").serialize(), (data) ->
             addNewPresetColor(data.preset_colors)

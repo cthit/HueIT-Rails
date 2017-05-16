@@ -10,6 +10,11 @@ function createPresetColor(id, colors) {
     .addClass('preset-color shadow')
     .attr('data-preset-color-id', id)
     .css('background-color', RGBtoCSS(colors))
+    .click(function(e) {
+      setSlidersFromPresetColor(parseInt(e.target.dataset.presetColorId))
+      draw_hue_canvas()
+      draw_sat_canvas()
+    })
 
   const $a = $('<a/>')
     .addClass('remove-preset-color')
