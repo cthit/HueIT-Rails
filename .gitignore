@@ -100,7 +100,6 @@ bower.json
 .powenv
 
 # Bundler
-bin/*
 .bundle/*
 
 .kitchen/
