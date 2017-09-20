@@ -1,35 +1,13 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  cid        :string(255)      primary key
-#  first_name :string(255)
-#  last_name  :string(255)
-#  nick       :string(255)
-#  mail       :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#
+require 'active_resource'
 
-class User < ActiveRecord::Base
-	include HTTParty
+class User < ActiveResource::Base
 	self.primary_key = :cid
+  self.site = Rails.configuration.account_ip
 
-	validates :cid, :nick, :mail, :first_name, :last_name, presence: true
-	validates :cid, :mail, uniqueness: true
-
-	attr_accessor :groups
-
-
-	base_uri "https://account.chalmers.it/userInfo.php"
+	attr_reader :groups
 
 	@@ADMIN_GROUPS = [:digit, :prit]
 	@@FILTER = [:digit, :styrit, :prit, :nollkit, :sexit, :fanbarerit, :'8bit', :drawit, :armit, :hookit, :fritid, :snit, :flashit]
-
-
-	def groups
-		@groups ||= refresh_groups
-	end
 
 	def admin?
 		(groups & @@ADMIN_GROUPS).present?
@@ -37,18 +15,6 @@ class User < ActiveRecord::Base
 
 	def in_group?(group)
 		groups.include? group.to_sym
-	end
-
-	def self.find_by_token(token)
-		send_request query: { token: token }
-	end
-
-	def self.find(cid)
-		super
-	rescue ActiveRecord::RecordNotFound
-		user = send_request query: { cid: cid }
-		user.save!
-		user
 	end
 
 	def user_profile_path
@@ -62,23 +28,21 @@ class User < ActiveRecord::Base
 	alias_method :full_name, :to_s
 
 	private
-		def refresh_groups
-			user = HTTParty.get('https://account.chalmers.it/userInfo.php', query: { cid: cid })
-			groups = (user['groups']  || []).uniq.map { |g| g.downcase.to_sym }
-			@groups = groups & @@FILTER
-		end
+		def self.find(id)
+	    return nil unless id.present?
+	    Rails.cache.fetch("users/#{id}.json") do
+	      user = super id
+	      groups = (user['groups']  || []).uniq.map { |g| g.downcase.to_sym }
+				user.groups = groups & @@FILTER
+	      user
+	    end
+	  end
 
-		def self.send_request(options)
-			resp = get("", options)
-			if resp.success? && resp['cid'].present?
-				groups = resp['groups'].uniq.map { |g| g.downcase.to_sym }
-				@groups = groups & @@FILTER
-				self.new(cid: resp['cid'], first_name: resp['firstname'], last_name: resp['lastname'],
-					nick: resp['nick'], mail: resp['mail'])
-			else
-				raise SecurityError, 'Not signed in!'
-			end
-		end
+	  def self.headers
+      { 'authorization' => "Bearer #{ActiveResource::Base.auth_token}"}
+  	end
+
+
 end
 
 class Symbol

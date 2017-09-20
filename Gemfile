@@ -6,6 +6,8 @@ gem 'rails', '5.1.0'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
+gem 'activeresource'
+
 #mysql
 gem 'mysql2', '~> 0.3.18'
 
@@ -46,7 +48,7 @@ gem 'will_paginate', '~> 3.0.6'
 #Foundation styling for the will_paginate gem
 gem 'will_paginate-foundation'
 
-gem 'omniauth-oauth2'
+gem 'omniauth-oauth2', '~> 1.3.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
