@@ -5,12 +5,12 @@ class User < ActiveResource::Base
 	@@ADMIN_GROUPS = [:digit, :prit]
 	@@FILTER = [:digit, :styrit, :prit, :nollkit, :sexit, :fanbarerit, :'8bit', :drawit, :armit, :hookit, :fritid, :snit, :flashit]
 
-	def admin?
-		(groups & @@ADMIN_GROUPS).present?
+  def admin?
+	  (self.groups & @@ADMIN_GROUPS).present?
 	end
 
-	def in_group?(group)
-		groups.include? group.to_sym
+  def in_group?(group)
+	  self.groups.include? group
   end
 
   def valid_groups
