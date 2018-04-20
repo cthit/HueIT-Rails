@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   private
   def current_user
-    raise UserNotFoundError if session[:user_id].nil? 
+    raise UserNotFoundError if session[:user_id].nil?
     @current_user ||= User.find(session[:user_id])
   end
 
@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_active_resource_header
-    ActiveResource::Base.auth_token = session[:token]
+    User.oauth_bearer_token = session[:token]
   end
 
   helper_method :current_user, :signed_in?

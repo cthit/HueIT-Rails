@@ -1,0 +1,18 @@
+version: '3'
+services:
+  db:
+    image: mariadb
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+  web:
+    build: .
+    command: bundle exec rails s -b '0.0.0.0'
+    environment:
+      - OAUTH_ID=xx
+      - OAUTH_SECRET=xx
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
