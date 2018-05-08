@@ -1,3 +1,5 @@
-( rake db:migrate && rake db:seed && echo "i have migrated"|| (rake db:setup && rake db:seed && echo "done with seedin'")) && \
+( rake db:migrate && rake db:seed && echo "i have migrated"|| (rake db:setup && rake db:seed && echo "done with seedin'")) \
+
+rails assets:precompile
 
 rails server -b 0.0.0.0
