@@ -6,7 +6,7 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
   web:
     build: .
-    command: bundle exec rails s -b '0.0.0.0'
+    command: bash -c 'rm -f tmp/pids/server.pid && bundle exec rails s -b "0.0.0.0"'
     environment:
       - OAUTH_ID=xx
       - OAUTH_SECRET=xx

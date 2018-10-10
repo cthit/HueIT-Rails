@@ -1,12 +1,12 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
-    # Prevent CSRF attacks by raising an exception.
+  # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_action :set_active_resource_header
+  before_action :set_user_api_token
 
   rescue_from UserNotFoundError do |exception|
-    session[:user_id] = nil
+    reset_session
     redirect_to signin_path
   end
 
@@ -20,8 +20,8 @@ class ApplicationController < ActionController::Base
     current_user.present?
   end
 
-  def set_active_resource_header
-    User.oauth_bearer_token = session[:token]
+  def set_user_api_token
+    RequestStore.store[:account_token] = session[:token]
   end
 
   helper_method :current_user, :signed_in?
