@@ -29,18 +29,10 @@ GEM
       globalid (>= 0.3.6)
     activemodel (5.1.0)
       activesupport (= 5.1.0)
-    activemodel-serializers-xml (1.0.2)
-      activemodel (> 5.x)
-      activesupport (> 5.x)
-      builder (~> 3.1)
     activerecord (5.1.0)
       activemodel (= 5.1.0)
       activesupport (= 5.1.0)
       arel (~> 8.0)
-    activeresource (5.0.0)
-      activemodel (>= 5.0, < 6)
-      activemodel-serializers-xml (~> 1.0)
-      activesupport (>= 5.0, < 6)
     activesupport (5.1.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
@@ -77,6 +69,10 @@ GEM
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     hashie (3.5.6)
+    her (1.0.2)
+      activemodel (>= 4.2.1)
+      faraday (>= 0.8, < 1.0)
+      multi_json (~> 1.7)
     httparty (0.14.0)
       multi_xml (>= 0.5.2)
     huey (2.1.0)
@@ -158,6 +154,8 @@ GEM
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
     rdoc (4.3.0)
+    request_store (1.4.1)
+      rack (>= 1.4)
     sass (3.4.23)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -205,10 +203,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activeresource
   byebug
   coffee-rails
   foundation-rails
+  her (~> 1.0.2)
   huey
   jbuilder (~> 2.0)
   jquery-rails
@@ -216,6 +214,7 @@ DEPENDENCIES
   mysql2 (~> 0.3.18)
   omniauth-oauth2 (~> 1.3.1)
   rails (= 5.1.0)
+  request_store (~> 1.4.1)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spring

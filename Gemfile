@@ -6,7 +6,9 @@ gem 'rails', '5.1.0'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
-gem 'activeresource'
+# active resource but for the 20th-century
+gem 'her', '~> 1.0.2'
+gem 'request_store', '~> 1.4.1'
 
 #mysql
 gem 'mysql2', '~> 0.3.18'
